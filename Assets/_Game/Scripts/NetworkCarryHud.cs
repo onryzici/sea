@@ -9,6 +9,14 @@ namespace SalvageCrew
         [SerializeField] private TextMeshProUGUI label;
         private void LateUpdate()
         {
+            if (player.Driving)
+            { label.text = "Dümen — W/S: İleri/Geri · A/D: Dönüş\nE — Bırak · Tab/Esc: Girdi durur"; return; }
+            if (player.HelmTarget)
+            {
+                label.text = player.Held != null ? "Dümen için önce hurdayı bırak."
+                    : NetworkBoat.Instance.Driver.Value != NetworkScrap.Nobody ? "Dümeni başka bir oyuncu kullanıyor." : "Dümen\nE — Kullan";
+                return;
+            }
             var held = player.Held;
             var target = held != null ? held : player.Target;
             if (target == null) { label.text = player.Feedback; return; }

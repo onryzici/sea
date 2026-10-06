@@ -85,12 +85,16 @@ namespace SalvageCrew
             if (obstructedTime > obstructionGrace) { Drop(); return; }
 
             Vector3 target = view.position + view.forward * Held.HoldDistance - Vector3.up * .25f;
+            var boat = motor.Passenger != null ? motor.Passenger.Reference : null;
+            Vector3 platformVelocity = boat != null ? boat.PointVelocity(target) : Vector3.zero;
+            // Render/CC support follows interpolated poses; server forces use the matching physics pose.
+            if (boat != null && boat.IsServer) target = boat.PhysicsPoint(boat.transform.InverseTransformPoint(target));
             // A capped PD force, with no accumulated integral or stored spring energy.
             Vector3 force = (target - body.worldCenterOfMass) * Held.SpringForce
-                - body.linearVelocity * Held.DampingForce;
+                - (body.linearVelocity - platformVelocity) * Held.DampingForce;
             if (body.useGravity) force -= Physics.gravity * body.mass;
             body.AddForce(Vector3.ClampMagnitude(force, Held.MaximumForce), ForceMode.Force);
-            body.linearVelocity = Vector3.ClampMagnitude(body.linearVelocity, Held.MaximumSpeed);
+            body.linearVelocity = platformVelocity + Vector3.ClampMagnitude(body.linearVelocity - platformVelocity, Held.MaximumSpeed);
             body.angularVelocity = Vector3.ClampMagnitude(body.angularVelocity, angularSpeedLimit);
         }
         public void Drop()
@@ -101,7 +105,8 @@ namespace SalvageCrew
             var body = item.Body;
             body.interpolation = previousInterpolation;
             body.collisionDetectionMode = previousDetection;
-            body.linearVelocity = Vector3.ClampMagnitude(body.linearVelocity, releaseSpeedLimit);
+            Vector3 platformVelocity = motor.Passenger != null ? motor.Passenger.PlatformVelocity : Vector3.zero;
+            body.linearVelocity = platformVelocity + Vector3.ClampMagnitude(body.linearVelocity - platformVelocity, releaseSpeedLimit);
             body.angularVelocity = Vector3.ClampMagnitude(body.angularVelocity, angularSpeedLimit);
             foreach (var pair in ignoredPairs)
                 if (pair.item != null && pair.player != null)

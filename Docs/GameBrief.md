@@ -33,6 +33,10 @@ Hazırlık sonrasında ilk oynanabilir aşama eklendi: HarborPrototype, kıyı/i
 
 Direct-IP host/client (127.0.0.1:7777 varsayılan), NGO 2.13.3 ve Unity Transport ile aynı limanda iki oyuncu ve üç ortak hurda bulunur. Hurda Rigidbody/kuvvet/kurtarma yalnızca server'da çalışır. Client tutma/bırakma isteği gönderir; server kimlik, menzil, görüş ve tek sahiplik doğrular. Oyuncu CharacterController'ı yerelde tepkili çalışır; server hız/alan/sıklık sınırları ve remote collider hareketiyle pozları doğrulayıp yayınlar. Bu sınırlı co-op modeli tam tahmin/reconciliation veya anti-cheat değildir. Offline oyun bağımsız korunur; bağlantı paneli ve pencere odağı tek bilgisayarda sırayla testi destekler. Steam, Relay, Lobby, hesap ve host migration yoktur. Gerçek doğrulama sonuçları Progress'tedir.
 
+## Aşama 4A — tekne sürüşü ve hareketli güverte
+
+Ağ modunda aynı 10×4 m tekneyi host veya client E ile tek sahipli dümen noktasından kullanabilir. Server sakin su yüzdürmesi/direnci ve düşük hızlı ileri/geri/dönüş fiziğini simüle eder; client tekneyi interpolasyonla gösterir. Pitch/roll prototipte kilitlidir; dalga ve yük dengesi yoktur. CharacterController güverte ötelemesi/dönüşünü izler; zıplama platform hızını alır. Hurdalar server'da dinamik ve sürtünmeli kalır; taşıma kuvvetleri platforma göre hesaplanır. Kalkışta rampa kapanır. Ağ kurtarması güncel güvenli güverteyi kullanır; offline sabit tekne ve iskele kurtarması korunur. Yanaşma/otomatik rampa açılması, vinç, satış ve düşman bu aşamanın dışında kalır. Gerçek iki instance, gecikme ve kalan manuel kontroller Progress ve MultiplayerTest'tedir.
+
 ## Henüz kararlaştırılmayanlar
 
 Başlangıç: Unity 6000.5.6f1, URP 17.5.0, masaüstü ve ilk doğrulama hedefi macOS. LTS geçişi yapılmadı. Ticari hedef platformlar, internette oturum keşfi/katılımı ve ekipman geliştirmesinin ayrıntıları henüz belirlenmedi. Yerel prototip NGO/UTP direct-IP kullanır; monetizasyon kapsam dışıdır.

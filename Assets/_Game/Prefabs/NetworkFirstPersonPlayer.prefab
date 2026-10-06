@@ -520,6 +520,7 @@ GameObject:
   - component: {fileID: 3411444543192254560}
   - component: {fileID: 3457186646480819867}
   - component: {fileID: 3595229384494101511}
+  - component: {fileID: 1344651773735361597}
   m_Layer: 0
   m_Name: NetworkFirstPersonPlayer
   m_TagString: Untagged
@@ -682,6 +683,19 @@ MonoBehaviour:
   sendRate: 20
   commandInterval: 0.1
   poseTimeout: 1.5
+--- !u!114 &1344651773735361597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3442218330660438807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8e8be00d39a2454983998b7371fa6b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SalvageCrew.DeckPassenger
+  supportProbe: 0.32
 --- !u!1 &4349530866351321664
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,7 +976,7 @@ MonoBehaviour:
     WASD  Move    Shift  Sprint    Space 
     Jump
 
-    Mouse  Look    R  Return to pier
+    Mouse  Look    R  Return to boat
 
     Esc  Release cursor    Click 
     Resume

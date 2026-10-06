@@ -2,7 +2,62 @@
 
 ## Mevcut durum — 2026-10-06
 
-Hazırlık, Aşama 1/2 ve Aşama 3 iki oyunculu direct-IP prototipi uygulanmıştır. Aşama 3 çekirdek ağ/fizik kontrolleri gerçek Editor host + macOS standalone client ile geçti; fiziksel klavye/mouse ile tam iki pencere turu hâlâ manuel kontroldür. Kök: `/Users/trexoinnovation/salvage`. Başlangıç commit'i d6155e6 ve Git temizdi; mevcut kullanıcı değişikliği silinmedi. Aşağıdaki Aşama 1/2 bölümleri o aşamaların tarihsel sonuçlarını korur; güncel ağ ve arka plan ayarları bu bölümde belirtilmiştir.
+Hazırlık, Aşama 1/2/3 ve Aşama 4A tekne sürüşü/hareketli güverte uygulanmıştır. Gerçek Editor host + macOS standalone client çekirdek testleri normal ağ ve 100 ms/yön + %1 kayıpta geçti. Native pencere odağı ve fiziksel klavye/mouse ile tam iki pencere turu hâlâ manuel kontroldür. Kök: `/Users/trexoinnovation/salvage`. Bu görevin başlangıcı 877d2ab ve Git temizdi; kullanıcı değişikliği silinmedi. Aşağıdaki eski aşama bölümleri tarihsel sonuçlardır; güncel 4A sonuçları aşağıdadır.
+
+## Aşama 4A — ağ üzerinden tekne sürüşü ve hareketli güverte
+
+### Uygulama ve ön kontrol
+
+- HarborPrototype adı ve gerçek Hierarchy (Harbor/BoardingRamp, tekne Hull/Deck/korkuluk/Cabin, oyuncu, üç hurda, session/panel) canlı Editor üzerinden okundu; başlangıçta Play kapalıydı. Console ground truth derleme hatası göstermedi; geçmiş hata/uyarılar temizlenmeden ayrıldı. Editor 6000.5.6f1, URP 17.5.0, NGO 2.13.3 ve kurulu Transport/Input System değişmedi. Aktif lisans ve StandaloneOSX hedef desteği doğrulandı.
+- `NetworkBoat`: server-owned tek 2500 kg Rigidbody, mevcut görünümden Editor ile üretilmiş compound collider prefabı; client snapshot'ları 20 Hz alıp interpolasyon + sınırlı extrapolation ile gösterir. Başlangıç iskele kelepçesi kinematic'tir; ilk motor girdisi rampayı ve iki kılavuzu kapatıp server body'yi dinamik yapar. **Bu yalnız ilk demirleme içindir; serbest hurda sabitlenmez.** Sakin su düşey yayı/sönümü, su ve yan direnç, sınırlı ivme/yaw uygulanır; pitch/roll kilitlidir. Varsayılan gerçek ileri denge hızı≈1,2 m/s; Inspector maksimumu 2,5 m/s, ivme 0,6 m/s² ve direnç 0,5/s olduğundan hedef hızın tamamına ulaşmaz. Bu bilinçli düşük hızlı ilk prototiptir.
+- Dümen kabin önündeki gri bloktur. E kullan/bırak; WASD sürüş, yürüme/zıplama kilitli ama bakış açık. Server sender, güncel pose, 2,5 m kamera menzili/görüş, boş sahiplik ve elde hurda olmamasını doğrular. Girdi normalize/rate-limit edilir; 0,35 s timeout/panel/odak kaybında sıfırlanır. Ayrılma/R kontrolü serbest bırakır. Motorun girdi olmadığında tekneyi aniden durdurması yerine su direnci yavaşlatır.
+- `DeckPassenger`: parent olmadan yerel CC'ye bir platform öteleme/yaw delta'sı, ardından normal yürüyüş; zıplamada platform nokta hızı, inişte yeniden destek. Server/remote pozları boat-local konum/yaw ile mutlak dönüştürülür; client'ta ikinci platform delta'sı uygulanmaz. Server hız doğrulaması platform hareketini yürüme saymaz, alan/güncellik/sıklık/epoch sınırlarını korur. Model hâlâ yerel CC tahmini + sınırlı server doğrulamasıdır; tam reconciliation/anti-cheat değildir.
+- `PhysicsCarry` server'da mevcut sınırlandırılmış PD kuvvetini platforma göre sönümler/hız sınırlar; bırakma platform hızını korur. Üç network hurdanın sürtünmesi ve solver ayarları güverteye uygun; serbestken dinamik, parent yok, kinematic deck-lock yok. Oyuncu–tutulan eşya ignore pair restorasyonu ve ağırlık kısıtları korunur.
+- Ağ modunda R/düşme: önce tutma/dümen temizlenir, güncel kıç güvertesinde collider'larla boşluğu kontrol edilen bir nokta seçilir; client epoch/boat-local ack ile aynı güncel tekneye döner. Güverteye yüklenmiş hurdalar deniz kurtarmasında server tarafından güncel tekne boş slotuna, tekne hızıyla döner. Yüklenmemiş pier hurdaları eski başlangıcını kullanır. Kalkmış tekneye geç katılım güncel güvenli güverteden olur. Offline sabit tekne, rampa ve eski iskele kurtarması korunur.
+- `Setup Moving Boat Prototype` tekrar tekrar çalıştırıldı: bir session/EventSystem, beş prefab kaydı, tek boat prefabı ve üç rampa bağlantısı; çoğalma yok. Sahne değişikliği yalnız altı serialized bağlantı satırıdır; mevcut liman Transform'ları/tekne görünümü değişmedi. Offline prefablar, SampleScene, paketler ve render ayarları korundu.
+
+### Gerçek Play / iki instance sonuçları
+
+| Kontrol | Gerçek sonuç |
+| --- | --- |
+| Normal iki instance | Canlı Editor HOST + çalıştırılmış macOS CLIENT, 127.0.0.1:7777; bir ağ teknesi, iki oyuncu, üç ortak hurda |
+| Güverteye geçiş | Her iki oyuncu kalkıştan önce gerçek motor adımıyla iskele/rampadan güverteye çıktı; kalkışta rampalar kapandı |
+| Host sürer / client yolcu | Düz sürüş, dönüş, geri ve süzülme; client güvertede durdu/yürüdü; owner düzeltme sayısı 0 |
+| Client sürer / host yolcu | Aynı sürüş ve yolcu hareketi; host güvertede durdu/yürüdü; 0 owner düzeltmesi |
+| Zıplama / iniş | Her iki rolde hareketli güvertede destek kesildi, yükseklik arttı ve inişte destek geri geldi; client tekne-local y≈2,33→1,53 |
+| Üç dinamik hurda | Tekrarlanabilir server fixture'ıyla üçü kıç güverteye yerleştirildi; gerçek Rigidbody/FixedUpdate sürüş/dönüşte güvertede kaldı. Bu fixture, üç hurdanın bu aşamada rampadan elle yüklendiği kanıtı değildir |
+| Host ve client taşıma | Her iki oyuncu 3/12/35 kg eşyayı karşı oyuncu aktif sürerken gerçek RPC ile tuttu, kısa yürüdü, gerçek kuvvetle taşıdı/bıraktı; holder/kütle/aktif driver birlikte kontrol edildi |
+| Ağırlık kısıtları | 0,95 / 0,75 / 0,50 hareket katsayısı; 35 kg'da koşu false; drop/R sonrası 1/true |
+| Dümen tek sahiplik | Client sahibiyken host isteği meşgul açıklamasıyla reddedildi. Elde hurda ile dümen reddi ve açıklaması final build'de geçti. Gerçek eşzamanlı dümen yarışı bu aşamada otomatik denenmedi; sıralı test yarış diye sayılmadı |
+| Sürücü ayrılması | Normal ve gecikmeli ağda client ayrılınca Driver boş, motor girdisi 0, host yolcusu güvertede; su direnci hızı azalttı (gecikmeli son gözlem≈1,11→0,065 m/s) |
+| R / düşme / hurda kurtarma | Host/client R tutma ve dümeni kaldırdı. Client açık bordadan gerçekten yürüyerek suya düştü ve güncel güverteye döndü. Server deniz-altı fixture'ına alınan motor gerçek 1,5 s kurtarma ile güncel tekneye döndü; client aynı sonucu gördü |
+| Geç katılma / yeniden bağlanma | Ayrılıp tekrar bağlanan final client kalkmış teknenin güncel güvenli güvertesinde doğdu; mevcut üç hurda durumları korundu, oyuncu/tekne çoğalmadı |
+| Gecikme / kayıp | Gerçek loopback UDP proxy: her yönde 100 ms, yaklaşık 200 ms ek RTT, %1 kayıp. İki sürücü yönü, yolcu yürüyüş/zıplama, her oyuncuda üç hurda taşı/bırak, R ve hurda kurtarma ile sürücü ayrılması geçti; 0 owner correction / probe exception. Gecikmeli ayrı geri-sürüş, gerçek suya yürüme ve geç-katılma turu tekrar edilmedi; normal ağ sonuçları bunların yerine gecikmeli kanıt sayılmaz |
+| Odak / arka plan | Gerçek Input System W/Space ile 5 BoatInputChecks geçti: dümen girdisi, yürüme/zıplama kilidi, simüle focus-loss sıfırlama, panel input engeli, kare ilerlemesi/runInBackground. **Native OS odak değişimi doğrulanmadı** |
+
+Network test probe development-only/opt-in'dir. Motor adımı ve komut adaptörü cihaz input'unu atlayabilir; tutma/dümen gerçek NGO RPC, fizik gerçek server FixedUpdate'tır. İki instance ağ simülasyonu taklit edilmedi. Fiziksel klavye/mouse ve gözle sürekli kamera titremesi değerlendirmesi yerine geçmez. Sonuç snapshot'ları [Stage4AResults.json](Verification/Stage4AResults.json), tek kişinin uygulayacağı liste [MultiplayerTest.md](MultiplayerTest.md), gerçek Game view [hareketli güverte screenshot'ı](Screenshots/Stage4AMovingDeck.png). Screenshot probe ile konumlandırılmış gerçek sahneyi gösterir; native klavye test kanıtı değildir.
+
+### Denemeler ve kalan fizik sınırları
+
+- İlk dinamik demirleme turunda rampanın çarpışması tekneyi girdisiz kaydırdı; ilk demirleme kelepçesi ve hull inertia düzeltmesiyle dock konumu sabit kaldı. İlk hareketli güverte zıplaması platform Move'unun grounded durumunu temizlemesi nedeniyle atlamadı; motor grounded durumunu platform adımından önce kaydedince gerçek havalanma/iniş tekrar geçti.
+- Bazı erken taşıma snapshot adları “client drives” dese de sürüş süresi bitmişti veya yanlış eşya raycast'i kabul edilmişti; bu turlar başarı sayılmadı. Sonraki sıkı kontroller holder, tam kütle, aktif driver ve tekne hızını birlikte doğruladı. JSON'da başarısız/eksik fixture kayıtları da tutulur.
+- Güverte/dümen önüne yığılan hurda CC'yi engelleyebilir veya sürücüyü menzil dışına itebilir; güvenli server menzil reddi kontrolü bırakır. Dinamik yük üstünde destek takibi eklendi, fakat büyük yığın/uzun stres/iki oyuncu sıkışması test edilmedi. Düşük hız, yüksek sürtünme ve kilitli pitch/roll sakin su içindir; sert dönüş/hız yükseltme, dalga, yükten batma/yatma yoktur. Son numerik örneklerde pitch/roll küçük solver sapması≈0,001–0,003°; serbest yükler hâlâ fiziksel olarak kayabilir.
+- Native UI köprüsü `Sky Computer Use native pipe startup failed` verdi; gerçek iki pencere W basılı odak değişimi ve insan eliyle kamera titremesi değerlendirmesi manuel listededir. Callback/input simülasyonu OS testi diye sunulmadı. NUnit EditMode süiti çalıştırılmadı; canlı Play kontrolleri ayrıdır. Internet/WAN, Windows/Linux ve uzun süreli stres yoktur.
+- Rampalar kalkışta gizlenir ve collider'ları kapanır; geri yanaşınca otomatik açılmaz. Yeni oturum/offline dönüş açar. Mevcut deniz görseli sınırlıdır; tekneye dünya ±1000 m sınırı dışında serbest seyir veya yeni açık dünya eklenmedi.
+- Bilinen Pipeline RuntimePipelineConfig build uyarısı korundu. Import/domain reload sırasında geçici CLI bağlantı/queue hataları ve HUD son düzeltmesinde kesilen ilk offline taşıma testi başarı sayılmadı; hazır Editor/temiz Play'de yeniden kontroller aşağıda belirtilir. Pipeline/URP uyarıları için ilgisiz paket değişikliği yapılmadı.
+- HUD Editor scriptini Play sırasında değiştirmem canlı oturumda domain reload oluşturdu: Console seq 95–98 dört Input System map assertion'ı; 99–100 iki NGO NetworkSceneManager.Dispose NullReferenceException kaydetti. **Bunlar gerçek hatalardır, eski uyarı veya yalnız araç hatası değildir.** Oturum temiz yeniden başlatıldı; offline testler ve son üç bağlantı/kesme/host kapanışı 0 yeni hata ile geçti. Bu prototipte canlı NGO hot-reload desteklenmez; sonraki script düzenlemesinden önce Play durdurma kuralı AGENTS'e eklendi. Paket kaynakları değiştirilmedi.
+- İlk güvenlik/input regresyonu bağlantı paneli açıkken çalıştı; doğru biçimde engellenen input nedeniyle sekiz assertion false döndü. Başarı sayılmadı. Panel kapatılıp simüle focus true ile tekrarlanan 18 kontrolün tamamı geçti; ilk sonuç da regresyon JSON'unda korunur.
+
+### Son teslim kontrolleri
+
+- Son macOS Development build **Succeeded**, 7,576 s, **0 hata / 1 bilinen RuntimePipelineConfig uyarısı**. Çıktı `Builds/Stage4A/macOS/SalvageCrew.app` (Git dışında). Build'den sonra gerçek executable yeniden çalıştırılıp Editor host'a 7777 üzerinden bağlandı; client dümen/ileri-dönüş sürerken host 12 kg kasayı gerçek RPC ile tuttu; iki probe 0 error/exception, owner correction 0.
+- Son build'de üç client bağlantı/kesme döngüsü: iki oyuncu/tek tekne/üç hurda; kalkmış tekneye geç katılan client güncel güvertede doğdu. Host kapanışında client “Host bağlantısı kapandı… host shutting down” mesajıyla açık panel/SOLO'ya döndü. Restore kontrolü: ağ teknesi 0, ağ oyuncusu 0, offline hurda 3, eski sabit tekne/rampa açık.
+- Offline canlı Play regresyonu: **12 motor/collider, 24 taşıma, 18 güvenlik/input, 7 yürüyüş/koşu, 5 panel/simüle odak** geçti. [Gerçek sonuçlar ve başarısız ilk panel-açık deneme](Verification/Stage4ARegressionResults.json). Son build'de 5 BoatInputChecks tekrar geçti. Native OS odağı doğrulanmış değildir.
+- C# derleme/Console ground truth: compilationFailed=false, compiling=false, ConsoleErrors=0. Son temiz ağ oturumu ve kapanıştan sonra **cursor 105 sonrası yeni error/warning yok**; önceki 95–100 hot-reload hataları geçmişte korunur. Standalone teslim logunda error/exception eşleşmesi yok. NUnit EditMode süiti çalıştırılmadı.
+- Strict proje kontrolü: **257 asset dosyası, 0 hata / 0 uyarı**, eksik/orphan meta, yinelenen GUID, conflict marker, manifest/editor drift yok. Kod/belge whitespace kontrolü temiz. SampleScene/offline prefab/paket/ProjectSettings/render değişikliği yok. Unity assetleri meta'larıyla korunur; fontun geçici glyph/cache farkı teslim diff'ine girmedi.
+- Değişenler: yeni NetworkBoat prefabı, DeckGrip physics materyali, NetworkBoat/DeckPassenger runtime ve BoatPrototypeSetup Editor scriptleri + meta'ları; network oyuncu/üç hurda prefabı ve iki kayıt listesi; HarborPrototype yalnız session bağlantıları; motor/crew/session/carry/item/HUD/probe adaptörleri ve multiplayer setup'ın 4A yeniden bağlantısı; AGENTS/GameBrief/Progress/MultiplayerTest, BoatInputChecks, iki sonuç JSON'u ve screenshot. Tam dosya listesi yerel commit'tedir.
+- Unity CLI ve uGUI becerileri mevcut Editor üzerinden idempotent asset/Inspector kurulumunu ve mevcut Canvas HUD'unu korumayı yönlendirdi; Multiplayer Services kurulumu direct-IP kapsamını genişletmemek için uygulanmadı.
+- Teslimde HarborPrototype açık, **Play kapalı**; test client/proxy süreçleri durduruldu. Arka plan ağ/simülasyon ayarı runInBackground=true korundu. Yalnız bu görevin geçici Assets screenshot kopyası Editor üzerinden silindi; kalıcı Docs PNG korunur. Vinç/dalga/yük dengesi/satış/düşman/görsel iyileştirme eklenmedi. Sonraki adım [tek kişilik iki pencere manuel turu](MultiplayerTest.md); özellikle native W-basılı odak değişimi ve görsel titreme değerlendirilmeli.
 
 ## Aşama 3 — iki oyuncu ve ortak hurda
 
@@ -198,7 +253,7 @@ Unity modülleri manifestte listelenir. Multiplayer Center yalnız şablon araç
 | 1 — Birinci şahıs liman | Oyuncu, kamera, iskele/rampa/sabit tekne ve HUD | Tamamlandı |
 | 2 — Fizik tabanlı hurda taşıma | Yerel tutma, taşıma, bırakma ve kurtarma | Tamamlandı |
 | 3 — İki oyuncu ve ortak hurda | Direct-IP host/client, oyuncu eşleme ve host fiziği | Uygulandı; gerçek iki instance çekirdek testleri geçti, manuel kullanıcı turu bekliyor |
-| Sonraki — Ortak tekne ve yük | Host otoriteli fizik | Başlanmadı |
+| 4A — Ortak tekne ve hareketli güverte | Host otoriteli sürüş, yolcu, yük ve kurtarma | Uygulandı; gerçek iki instance normal/gecikmeli çekirdek testler geçti, native manuel tur bekliyor |
 | Sonraki — Hurda ve vinç | Çıkarma ve güverteye yükleme | Başlanmadı |
 | Sonraki — Liman ve ekonomi | Satış ve basit ekipman geliştirmesi | Başlanmadı |
 | Sonraki — Doğrulama | İki oyuncuyla tam döngü, ardından 1–4 oyuncu | Başlanmadı |
@@ -218,7 +273,7 @@ Her görev yalnızca açıkça istenen aşamayı uygular. Aşama 1'de tekne stat
 
 ## Kalanlar ve sonraki aşama
 
-Güncel durum: Aşama 3 NGO/UTP direct-IP ve gerçek iki instance testleri yukarıdadır; kapsam genişletmeden önce manuel kullanıcı turu önerilir. Ticari platformlar ve internet oturum keşfi henüz belirlenmedi. 6000.5.6f1 korundu; LTS geçişi ve Windows/Linux build yapılmadı. Pipeline experimental'dır. Vinç, fırlatma, satış, düşman veya hareketli tekne eklenmedi.
+Güncel durum: Aşama 4A tekne sürüşü/hareketli güverte ve gerçek iki instance sonuçları yukarıdadır; kapsam genişletmeden önce manuel iki pencere turu önerilir. Ticari platformlar ve internet oturum keşfi henüz belirlenmedi. 6000.5.6f1 korundu; LTS geçişi ve Windows/Linux build yapılmadı. Pipeline experimental'dır. Vinç, fırlatma, satış, düşman eklenmedi.
 
 Console geçmişinde URP Core paketinin `RuntimeDebugWindow_PanelSettings.asset` dosyasının immutable package içinde değiştiği uyarısı da görüldü. Paket kaynakları elle değiştirilmedi; bu uyarı package cache/import sırasında ortaya çıktı. Kaynak kontrolüne dahil olmayan Library/PackageCache içindedir; kök nedeni bu hazırlıkta giderilmedi. Build başarılı ve son Console kontrolünde compile hatası yok; ileride paket importunda yeniden kontrol edilmeli.
 

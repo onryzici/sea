@@ -5703,6 +5703,12 @@ MonoBehaviour:
   - {fileID: 5043139270715035459, guid: 8808b7d2195d7409ab56f8fbc2cc7ffb, type: 3}
   - {fileID: 1739292593741236019, guid: e5baa8a815dd34799a4525367bfb38f8, type: 3}
   - {fileID: 8229281296967280675, guid: 39ec9cf7540864f3ca8749fb04e238bb, type: 3}
+  boatPrefab: {fileID: 6579795371264588178, guid: bce738488b8c84d79a2ddb7d7d971246, type: 3}
+  offlineBoat: {fileID: 1261516118}
+  boardingRamp:
+  - {fileID: 1176273140}
+  - {fileID: 672432153}
+  - {fileID: 729380583}
   panel: {fileID: 753600535}
   address: {fileID: 443037137}
   port: {fileID: 990535547}

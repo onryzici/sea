@@ -23,6 +23,7 @@ namespace SalvageCrew
         private Quaternion spawnRotation;
         private float submergedTime;
         private PhysicsCarry owner;
+        private NetworkBoat recoveryBoat;
         public Rigidbody Body { get; private set; }
         public string DisplayName => displayName;
         public float Mass => mass;
@@ -57,17 +58,20 @@ namespace SalvageCrew
         public void ReleaseClaim(PhysicsCarry holder) { if (owner == holder) owner = null; }
         private void FixedUpdate()
         {
+            var boat = NetworkBoat.Instance;
+            if (boat != null && boat.IsServer && boat.ContainsPassenger(boat.transform.InverseTransformPoint(Body.position))) recoveryBoat = boat;
+            Vector3 recoveryCenter = recoveryBoat != null ? recoveryBoat.Body.position : spawnPosition;
             bool outside = Body.position.y < rescueHeight
-                || Vector3.Distance(Body.position, spawnPosition) > rescueDistance;
+                || Vector3.Distance(Body.position, recoveryCenter) > rescueDistance;
             submergedTime = outside ? submergedTime + Time.fixedDeltaTime : 0f;
             if (submergedTime >= rescueDelay) Recover();
         }
         public void Recover()
         {
             if (owner != null) owner.Drop();
-            Body.position = spawnPosition;
-            Body.rotation = spawnRotation;
-            Body.linearVelocity = Vector3.zero;
+            Body.position = recoveryBoat != null ? recoveryBoat.ScrapRescuePoint(this) : spawnPosition;
+            Body.rotation = recoveryBoat != null ? recoveryBoat.Body.rotation : spawnRotation;
+            Body.linearVelocity = recoveryBoat != null ? recoveryBoat.PointVelocity(Body.position) : Vector3.zero;
             Body.angularVelocity = Vector3.zero;
             submergedTime = 0f;
             // Let gravity settle the recovered body if its spawn was slightly above the pier.

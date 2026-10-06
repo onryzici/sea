@@ -21,6 +21,9 @@ namespace SalvageCrew
 
         private CharacterController controller;
         private LocalPlayerInput input;
+        private DeckPassenger passenger;
+        public bool MovementLocked { get; set; }
+        public DeckPassenger Passenger => passenger;
         private Vector3 initialPosition;
         private Quaternion initialRotation;
         private float verticalSpeed, pitch;
@@ -43,6 +46,7 @@ namespace SalvageCrew
         {
             controller = GetComponent<CharacterController>();
             input = GetComponent<LocalPlayerInput>();
+            passenger = GetComponent<DeckPassenger>();
             initialPosition = transform.position;
             initialRotation = transform.rotation;
         }
@@ -62,20 +66,24 @@ namespace SalvageCrew
         public void Step(LocalPlayerInput.Sample sample, float deltaTime)
         {
             if (deltaTime <= 0f) return;
+            bool grounded = controller.isGrounded;
+            passenger?.BeginStep();
             // Mouse delta is already a per-frame displacement: do not multiply by deltaTime.
             transform.Rotate(0f, sample.Look.x * mouseSensitivity, 0f);
             pitch = Mathf.Clamp(pitch - sample.Look.y * mouseSensitivity, -pitchLimit, pitchLimit);
             cameraPivot.localRotation = Quaternion.Euler(pitch, 0f, 0f);
 
-            bool grounded = controller.isGrounded;
             if (grounded && verticalSpeed < 0f) verticalSpeed = -2f;
-            if (grounded && sample.Jump) verticalSpeed = Mathf.Sqrt(2f * gravity * jumpHeight);
+            if (grounded && sample.Jump && !MovementLocked)
+            { verticalSpeed = Mathf.Sqrt(2f * gravity * jumpHeight); passenger?.TakeOff(); }
             verticalSpeed = Mathf.Max(verticalSpeed - gravity * deltaTime, -40f);
-            Vector2 movement = Vector2.ClampMagnitude(sample.Move, 1f);
+            Vector2 movement = MovementLocked ? Vector2.zero : Vector2.ClampMagnitude(sample.Move, 1f);
             Vector3 planar = (transform.right * movement.x + transform.forward * movement.y)
                 * (sample.Sprint && CarryAllowsSprint ? sprintSpeed : walkSpeed) * CarrySpeedMultiplier;
+            if (passenger != null && passenger.Support == null) planar += Vector3.ProjectOnPlane(passenger.AirVelocity, Vector3.up);
             CollisionFlags flags = controller.Move((planar + Vector3.up * verticalSpeed) * deltaTime);
             if ((flags & CollisionFlags.Above) != 0 && verticalSpeed > 0f) verticalSpeed = 0f;
+            passenger?.EndStep(verticalSpeed > 0f);
             if (transform.position.y < rescueHeight) ReturnToSpawn();
         }
 
@@ -91,6 +99,7 @@ namespace SalvageCrew
         public void CompleteRespawn()
         {
             BeforeRespawn?.Invoke();
+            passenger?.Clear(); MovementLocked = false;
             controller.enabled = false;
             transform.SetPositionAndRotation(spawnPoint != null ? spawnPoint.position : initialPosition,
                 spawnPoint != null ? spawnPoint.rotation : initialRotation);
@@ -99,6 +108,7 @@ namespace SalvageCrew
             cameraPivot.localRotation = Quaternion.identity;
             controller.enabled = true;
             Physics.SyncTransforms();
+            passenger?.Reacquire();
         }
     }
 }

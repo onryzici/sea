@@ -10,13 +10,15 @@ namespace SalvageCrew
         public Vector3 Position;
         public float Yaw, Pitch;
         public uint Epoch;
+        public ulong Boat;
         public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
-        { serializer.SerializeValue(ref Position); serializer.SerializeValue(ref Yaw); serializer.SerializeValue(ref Pitch); serializer.SerializeValue(ref Epoch); }
-        public bool Equals(CrewPose other) => Position == other.Position && Yaw == other.Yaw && Pitch == other.Pitch && Epoch == other.Epoch;
+        { serializer.SerializeValue(ref Position); serializer.SerializeValue(ref Yaw); serializer.SerializeValue(ref Pitch); serializer.SerializeValue(ref Epoch); serializer.SerializeValue(ref Boat); }
+        public bool Equals(CrewPose other) => Position == other.Position && Yaw == other.Yaw && Pitch == other.Pitch && Epoch == other.Epoch && Boat == other.Boat;
     }
 
     // Local CharacterController prediction, server-validated 20 Hz pose replication.
     // This is a co-op prototype, not a complete prediction/reconciliation or anti-cheat system.
+    [DefaultExecutionOrder(-20)]
     public sealed class NetworkCrewPlayer : NetworkBehaviour
     {
         [SerializeField] private Transform cameraPivot;
@@ -39,6 +41,14 @@ namespace SalvageCrew
         private float lastReceivedPose = -100;
         private uint epoch;
         private bool resetPending;
+        private float nextDrive;
+        private Vector3 smoothedLocal;
+        private float smoothedYaw;
+        private ulong renderedBoat = NetworkScrap.Nobody;
+        public int Corrections { get; private set; }
+        public bool FreshPose => Time.unscaledTime - lastPoseTime <= poseTimeout;
+        public bool Driving => NetworkBoat.Instance != null && NetworkBoat.Instance.Driver.Value == OwnerClientId;
+        public bool HelmTarget => NetworkBoat.Instance != null && NetworkBoat.Instance.CanSeeHelm(carry);
         private readonly List<(Collider item, Collider player, bool ignored)> localIgnoredPairs = new();
         public string Feedback { get; private set; } = "";
         public PhysicsCarry Carry => carry;
@@ -69,7 +79,7 @@ namespace SalvageCrew
             foreach (var renderer in remoteVisual.GetComponentsInChildren<Renderer>()) renderer.material.color = color;
             if (IsServer)
             {
-                pose.Value = new CrewPose { Position = spawnPosition, Yaw = spawnRotation.eulerAngles.y };
+                pose.Value = new CrewPose { Position = spawnPosition, Yaw = spawnRotation.eulerAngles.y, Boat = NetworkScrap.Nobody };
                 lastPoseTime = Time.unscaledTime;
             }
             HeldId.OnValueChanged += HeldChanged;
@@ -81,10 +91,34 @@ namespace SalvageCrew
             }
             ApplyMovement();
         }
-        private void Sample(LocalPlayerInput.Sample sample) { if (sample.Interact && input.GameplayActive) RequestToggle(); }
+        private void Update()
+        {
+            if (!IsSpawned) return;
+            motor.MovementLocked = Driving;
+            if (IsServer && !IsOwner) FollowServerPlatform();
+        }
+        private void FixedUpdate() { if (IsSpawned && IsServer && !IsOwner) FollowServerPlatform(); }
+        private void FollowServerPlatform()
+        {
+            var boat = ResolveBoat(pose.Value.Boat);
+            if (boat == null) return;
+            // Absolute support-space pose: never add a second platform delta on remote replicas.
+            controller.Move(boat.transform.TransformPoint(pose.Value.Position) - transform.position);
+            transform.rotation = Quaternion.Euler(0, boat.transform.eulerAngles.y + pose.Value.Yaw, 0);
+            motor.Passenger?.Reacquire();
+            motor.Passenger?.SetNetworkReference(boat);
+        }
+        private void Sample(LocalPlayerInput.Sample sample)
+        {
+            if (Driving && Time.unscaledTime >= nextDrive)
+            { nextDrive = Time.unscaledTime + .1f; NetworkBoat.Instance.SubmitDrive(input.GameplayActive ? sample.Move : Vector2.zero); }
+            if (sample.Interact && input.GameplayActive) RequestToggle();
+        }
+        public void SubmitDriving(Vector2 value) { if (IsOwner && Driving) NetworkBoat.Instance.SubmitDrive(value); }
         public void RequestToggle()
         {
             if (!IsSpawned || !IsOwner || resetPending) return;
+            if (Driving || HelmTarget) { NetworkBoat.Instance.RequestHelm(); return; }
             var target = Target;
             CarryRequestRpc(HeldId.Value != NetworkScrap.Nobody, target != null ? target.NetworkObjectId : NetworkScrap.Nobody);
         }
@@ -100,15 +134,20 @@ namespace SalvageCrew
             {
                 nextSend = Time.unscaledTime + 1f / Mathf.Clamp(sendRate, 5, 20);
                 float pitch = Mathf.Asin(Mathf.Clamp(-carry.View.forward.y, -1, 1)) * Mathf.Rad2Deg;
-                SubmitPoseRpc(transform.position, transform.eulerAngles.y, pitch, epoch);
+                var boat = motor.Passenger != null ? motor.Passenger.Reference : null;
+                SubmitPoseRpc(boat != null ? boat.transform.InverseTransformPoint(transform.position) : transform.position,
+                    transform.eulerAngles.y - (boat != null ? boat.transform.eulerAngles.y : 0), pitch, epoch,
+                    boat != null ? boat.NetworkObjectId : NetworkScrap.Nobody);
             }
             if (!IsOwner && !IsServer)
             {
                 float blend = 1f - Mathf.Exp(-18f * Time.deltaTime);
-                if (Vector3.Distance(transform.position, pose.Value.Position) > 3)
-                    transform.position = pose.Value.Position;
-                else transform.position = Vector3.Lerp(transform.position, pose.Value.Position, blend);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, pose.Value.Yaw, 0), blend);
+                var boat = ResolveBoat(pose.Value.Boat);
+                if (renderedBoat != pose.Value.Boat || Vector3.Distance(smoothedLocal, pose.Value.Position) > 3)
+                { smoothedLocal = pose.Value.Position; smoothedYaw = pose.Value.Yaw; renderedBoat = pose.Value.Boat; }
+                else { smoothedLocal = Vector3.Lerp(smoothedLocal, pose.Value.Position, blend); smoothedYaw = Mathf.LerpAngle(smoothedYaw, pose.Value.Yaw, blend); }
+                transform.position = boat != null ? boat.transform.TransformPoint(smoothedLocal) : smoothedLocal;
+                transform.rotation = Quaternion.Euler(0, smoothedYaw + (boat != null ? boat.transform.eulerAngles.y : 0), 0);
                 cameraPivot.localRotation = Quaternion.Euler(pose.Value.Pitch, 0, 0);
             }
             lookMarker.localRotation = Quaternion.Euler(pose.Value.Pitch, 0, 0);
@@ -120,7 +159,7 @@ namespace SalvageCrew
             }
         }
         [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner, Delivery = RpcDelivery.Unreliable)]
-        private void SubmitPoseRpc(Vector3 position, float yaw, float pitch, uint sentEpoch, RpcParams rpc = default)
+        private void SubmitPoseRpc(Vector3 position, float yaw, float pitch, uint sentEpoch, ulong boatId, RpcParams rpc = default)
         {
             if (!IsServer || rpc.Receive.SenderClientId != OwnerClientId || sentEpoch != epoch) return;
             float now = Time.unscaledTime;
@@ -128,34 +167,45 @@ namespace SalvageCrew
             lastReceivedPose = now;
             if (!Finite(position.x) || !Finite(position.y) || !Finite(position.z) || !Finite(yaw) || !Finite(pitch)) return;
             float dt = Mathf.Clamp(now - lastPoseTime, .02f, .5f);
-            var delta = position - pose.Value.Position;
+            var boat = ResolveBoat(boatId);
+            var beforeBoat = ResolveBoat(pose.Value.Boat);
+            Vector3 world = boat != null ? boat.transform.TransformPoint(position) : position;
+            Vector3 previousWorld = beforeBoat != null ? beforeBoat.transform.TransformPoint(pose.Value.Position) : pose.Value.Position;
+            var delta = boat != null && beforeBoat == boat ? position - pose.Value.Position : world - previousWorld;
             float speed = carry.Held != null ? 6.5f * carry.Held.MovementMultiplier : 6.5f;
             if (carry.Held != null && !carry.Held.AllowSprint) speed = 4f * carry.Held.MovementMultiplier;
             bool valid = new Vector2(delta.x, delta.z).magnitude <= speed * dt + .22f
-                && Mathf.Abs(delta.y) <= 40 * dt + .3f && Mathf.Abs(position.x) < 50
-                && position.z > -40 && position.z < 50 && position.y > -15 && position.y < 20;
-            if (!valid) { CorrectOwnerRpc(pose.Value.Position, pose.Value.Yaw); return; }
+                && Mathf.Abs(delta.y) <= 40 * dt + .3f && Mathf.Abs(world.x) < 1000
+                && Mathf.Abs(world.z) < 1000 && world.y > -15 && world.y < 20
+                && (boatId == NetworkScrap.Nobody || (boat != null && boat.ContainsPassenger(position)))
+                && (!Driving || new Vector2(delta.x, delta.z).magnitude < .25f);
+            if (!valid) { CorrectOwnerRpc(previousWorld, pose.Value.Yaw + (beforeBoat != null ? beforeBoat.transform.eulerAngles.y : 0)); return; }
             lastPoseTime = now;
             if (!IsOwner)
             {
-                controller.Move(position - transform.position);
-                position = transform.position;
-                transform.rotation = Quaternion.Euler(0, yaw, 0);
+                controller.Move(world - transform.position);
+                position = boat != null ? boat.transform.InverseTransformPoint(transform.position) : transform.position;
+                transform.rotation = Quaternion.Euler(0, yaw + (boat != null ? boat.transform.eulerAngles.y : 0), 0);
                 cameraPivot.localRotation = Quaternion.Euler(Mathf.Clamp(pitch, -80, 80), 0, 0);
+                motor.Passenger?.Reacquire();
+                motor.Passenger?.SetNetworkReference(boat);
             }
-            pose.Value = new CrewPose { Position = position, Yaw = yaw, Pitch = Mathf.Clamp(pitch, -80, 80), Epoch = epoch };
+            pose.Value = new CrewPose { Position = position, Yaw = yaw, Pitch = Mathf.Clamp(pitch, -80, 80), Epoch = epoch, Boat = boatId };
         }
         [Rpc(SendTo.Owner)]
         private void CorrectOwnerRpc(Vector3 position, float yaw)
         {
             if (!IsOwner) return;
+            Corrections++; motor.Passenger?.Clear();
             controller.enabled = false; transform.SetPositionAndRotation(position, Quaternion.Euler(0, yaw, 0));
             controller.enabled = true;
+            motor.Passenger?.Reacquire();
         }
         [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
         private void CarryRequestRpc(bool drop, ulong targetId, RpcParams rpc = default)
         {
             if (!IsServer || rpc.Receive.SenderClientId != OwnerClientId) return;
+            if (Driving) { ReplyRpc("Dümeni bırakmadan hurda tutamazsın."); return; }
             if (drop) { carry.Drop(); HeldId.Value = NetworkScrap.Nobody; ReplyRpc(""); return; }
             if (Time.unscaledTime - lastCommandTime < commandInterval) { ReplyRpc("İstek çok hızlı; yeniden dene."); return; }
             lastCommandTime = Time.unscaledTime;
@@ -169,22 +219,34 @@ namespace SalvageCrew
         }
         [Rpc(SendTo.Owner)]
         private void ReplyRpc(string text) { Feedback = text; ApplyMovement(); }
+        public void SendFeedback(string text) { if (IsServer) ReplyRpc(text); }
         [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
         private void RescueRequestRpc(RpcParams rpc = default)
         { if (IsServer && rpc.Receive.SenderClientId == OwnerClientId) RescueServer(); }
         private void RescueServer()
         {
             carry.Drop(); HeldId.Value = NetworkScrap.Nobody;
+            var boat = NetworkBoat.Instance;
+            if (boat != null)
+            {
+                boat.ReleaseFor(OwnerClientId);
+                spawnPosition = boat.RescuePoint(OwnerClientId); spawnRotation = Quaternion.Euler(0, boat.transform.eulerAngles.y, 0);
+                motor.ConfigureSpawn(spawnPosition, spawnRotation);
+            }
             epoch++;
             motor.CompleteRespawn();
-            pose.Value = new CrewPose { Position = spawnPosition, Yaw = spawnRotation.eulerAngles.y, Epoch = epoch };
+            pose.Value = new CrewPose { Position = boat != null ? boat.transform.InverseTransformPoint(spawnPosition) : spawnPosition,
+                Yaw = boat != null ? 0 : spawnRotation.eulerAngles.y, Epoch = epoch, Boat = boat != null ? boat.NetworkObjectId : NetworkScrap.Nobody };
             lastPoseTime = Time.unscaledTime;
-            RescueOwnerRpc(epoch);
+            RescueOwnerRpc(epoch, pose.Value);
         }
         [Rpc(SendTo.Owner)]
-        private void RescueOwnerRpc(uint newEpoch)
+        private void RescueOwnerRpc(uint newEpoch, CrewPose rescue)
         {
             epoch = newEpoch; resetPending = false;
+            var boat = ResolveBoat(rescue.Boat);
+            motor.ConfigureSpawn(boat != null ? boat.transform.TransformPoint(rescue.Position) : rescue.Position,
+                Quaternion.Euler(0, rescue.Yaw + (boat != null ? boat.transform.eulerAngles.y : 0), 0));
             motor.CompleteRespawn(); motor.SetCarryMovement(1, true); Feedback = "";
         }
         private void HeldChanged(ulong before, ulong after) { ApplyMovement(); }
@@ -219,9 +281,11 @@ namespace SalvageCrew
                 ? obj.GetComponent<NetworkScrap>() : null;
         }
         private static bool Finite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
+        private NetworkBoat ResolveBoat(ulong id) => NetworkBoat.Instance != null && NetworkBoat.Instance.NetworkObjectId == id ? NetworkBoat.Instance : null;
         public override void OnNetworkDespawn()
         {
             carry.Drop(); HeldId.OnValueChanged -= HeldChanged;
+            NetworkBoat.Instance?.ReleaseFor(OwnerClientId);
             RestoreLocalCollisions();
             motor.InputSampled -= Sample; motor.RespawnGuard = null;
         }

@@ -59,6 +59,7 @@ namespace SalvageCrew.Editor
             PlayerSettings.defaultScreenWidth = 1280; PlayerSettings.defaultScreenHeight = 720;
             EditorSceneManager.MarkSceneDirty(UnityEngine.SceneManagement.SceneManager.GetActiveScene());
             EditorSceneManager.SaveOpenScenes(); AssetDatabase.SaveAssets();
+            if (AssetDatabase.LoadAssetAtPath<GameObject>(BoatPrototypeSetup.BoatPath) != null) BoatPrototypeSetup.Apply();
         }
         private static GameObject BuildScrap(string name)
         {

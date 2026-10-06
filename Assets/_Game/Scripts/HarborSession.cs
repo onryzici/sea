@@ -16,6 +16,9 @@ namespace SalvageCrew
         [SerializeField] private GameObject offlineHud;
         [SerializeField] private Transform offlineScraps;
         [SerializeField] private GameObject[] scrapPrefabs;
+        [SerializeField] private GameObject boatPrefab;
+        [SerializeField] private GameObject offlineBoat;
+        [SerializeField] private GameObject[] boardingRamp;
         [SerializeField] private GameObject panel;
         [SerializeField] private TMP_InputField address;
         [SerializeField] private TMP_InputField port;
@@ -79,6 +82,7 @@ namespace SalvageCrew
             { Status = "Geçerli bir IPv4 adresi ve 1–65535 port gir."; return; }
             offlinePlayer.GetComponent<PhysicsCarry>().Drop();
             offlinePlayer.SetActive(false); offlineHud.SetActive(false); offlineScraps.gameObject.SetActive(false);
+            if (offlineBoat != null) offlineBoat.SetActive(false);
             sessionActive = true; intentionalDisconnect = false; slots.Clear(); localPlayer = null;
             transport.SetConnectionData(ip.ToString(), number, host ? "0.0.0.0" : null);
             bool started = host ? manager.StartHost() : manager.StartClient();
@@ -87,6 +91,8 @@ namespace SalvageCrew
             SetPanelOpen(true);
             if (host)
             {
+                if (boatPrefab != null)
+                    Instantiate(boatPrefab, new Vector3(7, 0, 10), Quaternion.identity).GetComponent<NetworkObject>().Spawn();
                 for (int i = 0; i < scrapPrefabs.Length; i++)
                 {
                     var source = offlineScraps.GetChild(i);
@@ -106,6 +112,9 @@ namespace SalvageCrew
             slots[request.ClientNetworkId] = slot;
             response.Position = slot == 0 ? new Vector3(0, 1.25f, 4) : new Vector3(-.9f, 1.25f, 4.9f);
             response.Rotation = Quaternion.Euler(0, slot == 0 ? 58 : 90, 0);
+            var boat = NetworkBoat.Instance;
+            if (boat != null && boat.Departed.Value)
+            { response.Position = boat.RescuePoint(request.ClientNetworkId); response.Rotation = Quaternion.Euler(0, boat.transform.eulerAngles.y, 0); }
         }
         private void Connected(ulong id)
         { Status = manager.IsHost ? $"Host: {manager.ConnectedClients.Count}/2 oyuncu bağlı." : $"Client bağlı — {address.text}:{port.text}."; }
@@ -134,6 +143,8 @@ namespace SalvageCrew
         private void RestoreOffline()
         {
             sessionActive = restorePending = false; localPlayer = null; slots.Clear();
+            if (offlineBoat != null) offlineBoat.SetActive(true);
+            SetRampActive(true);
             offlineScraps.gameObject.SetActive(true);
             foreach (var item in offlineScraps.GetComponentsInChildren<ScrapItem>()) item.Recover();
             offlinePlayer.SetActive(true); offlineHud.SetActive(true);
@@ -142,6 +153,7 @@ namespace SalvageCrew
         }
         private void Update()
         {
+            if (sessionActive && NetworkBoat.Instance != null && NetworkBoat.Instance.Departed.Value) SetRampActive(false);
             if (restorePending && !manager.IsListening && !manager.ShutdownInProgress) RestoreOffline();
             statusLabel.text = Status;
             string role = manager.IsHost ? "HOST" : manager.IsConnectedClient ? "CLIENT" : sessionActive ? "CLIENT / CONNECTING" : "SOLO";
@@ -150,6 +162,8 @@ namespace SalvageCrew
             disconnectButton.interactable = sessionActive;
             resumeButton.interactable = !sessionActive || localPlayer != null;
         }
+        public void SetRampActive(bool active)
+        { if (boardingRamp != null) foreach (var part in boardingRamp) if (part != null) part.SetActive(active); }
         private void OnDestroy()
         {
             if (manager != null)
