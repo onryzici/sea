@@ -2,9 +2,53 @@
 
 ## Mevcut durum — 2026-10-06
 
-Hazırlık, Aşama 1/2/3 ve Aşama 4A tekne sürüşü/hareketli güverte uygulanmıştır. Gerçek Editor host + macOS standalone client çekirdek testleri normal ağ ve 100 ms/yön + %1 kayıpta geçti. Native pencere odağı ve fiziksel klavye/mouse ile tam iki pencere turu hâlâ manuel kontroldür. Kök: `/Users/trexoinnovation/salvage`. Bu görevin başlangıcı 877d2ab ve Git temizdi; kullanıcı değişikliği silinmedi. Aşağıdaki eski aşama bölümleri tarihsel sonuçlardır; güncel 4A sonuçları aşağıdadır.
+Hazırlık, Aşama 1/2/3, Aşama 4A tekne sürüşü/hareketli güverte ve ilk konsept görsel geçişi uygulanmıştır. Görsel geçişin başlangıcı `6dc4906`, Git temizdi; kullanıcı değişikliği silinmedi. Yeni macOS build + gerçek Editor host/client normal ağ regresyon turu geçti. 100 ms/yön + %1 kayıp sonuçları **önceki 4A aşamasına** aittir; görsel geçişte yeniden yapılmadı. Native pencere odağı, fiziksel klavye/mouse turu ve iki native pencerenin gözle görsel değerlendirmesi manuel kontroldür. Kök: `/Users/trexoinnovation/salvage`. Aşağıdaki önceki aşama bölümleri tarihsel sonuçları korur.
 
-## Aşama 4A — ağ üzerinden tekne sürüşü ve hareketli güverte
+## Ara aşama — ilk konsept görsel geçişi
+
+### Uygulama
+
+- AGENTS, GameBrief, Progress, MultiplayerTest ve mevcut motor/input/taşıma/session/tekne kurulumları incelendi. Canlı Editor bağlantısı HarborPrototype ve gerçek Harbor/Pier/BoardingRamp, StaticBoat/Hull/Deck/Cabin, oyuncu, üç hurda ve HarborNetworkSession kökleriyle doğrulandı. Düzenleme öncesi Play kapatıldı. Unity 6000.5.6f1, URP 17.5.0, NGO 2.13.3, Transport ve Input System korunur; paket/pipeline/PlayerSettings değişikliği yok.
+- Kenney Pirate 2.1, Factory 3.0, Suburban 2.0 ve Watercraft 2.1 paketlerinden 12 FBX + dört özgün palette PNG indirildi. Arşivlerin kendi CC0/ticari kullanım lisansları kontrol edilip saklandı. Kaynaklar/atıf/kullanım ve alternatiflerin elenme nedenleri `ArtSources.md` içinde. Harici script çalıştırılmadı; ücretli/giriş gerektiren indirme aşılmadı.
+- Tekne: mevcut 10 × 4 m fizik/geçiş düzeni üzerinde turkuaz görsel gövde, ahşap güverte tahtaları, krem kabin, sarı mast/dümen ayrıntıları, lastik tampon, can simidi, halat ve küçük pas/boya aşınmaları. Ana tekne düzenine uygun ücretsiz tam model bulunmadığı için yürünebilir ana tekne iyileştirildi; küçük balıkçı modeli uzak dekor olarak kullanıldı.
+- İskele modülleri, üç hurda görsel adaptörü, uzak kayalar, küçük beyaz–terracotta binalar, basit ada/teras ve deniz feneri yerleştirildi. Yeni dekorların collider'ı yok; uzak ada yeni oynanabilir alan değil. Mevcut yürüme/rampa alanı ve rampa kalkış davranışı korunur.
+- Hafif URP su: turkuaz, hareketli pixel normal/desen, sade ripple köpüğü/parıltı; geometrik dalga, su fiziği/depth/reflection veya yeni render feature yok. Sıcak güneş, soft shadow/trilight ambient; mevcut GlobalVolume değişmedi, sis kapalı. Kontrol HUD'u küçük sol-alt panel; reticle, etkileşim bilgisi, bağlantı paneli ve rol göstergeleri korunur. Sahte ekonomi/can/görev göstergesi yok.
+- `HarborArtSetup.Apply` Editor aracı yalnız kendi ArtVisuals alt ağaçlarını yeniler. Sahne/prefab/Inspector işlemleri gerçek Editor API'leriyle yapıldı; ham YAML yazılmadı. Tekrar uygulamada 135 MeshRenderer değişmeden kaldı: çoğalma yok. Başlangıç commit'iyle 62 Rigidbody/collider ve 25 proje gameplay MonoBehaviour serialized bloğu **birebir aynı**; prefab GUID'leri ve NetworkObject hash'leri korunur. Yerel/ağ hurda ve NetworkBoat görselleri ayrı fizik köklerini paylaşmadan aynı görsel düzeni kullanır.
+
+### Kontrol sonuçları — bu görevde gerçekten yapılanlar
+
+| Kontrol türü | Sonuç / kanıt |
+| --- | --- |
+| Dosya / prefab bütünlüğü | 62 fizik + 25 gameplay bileşeni değişmedi; ikinci kurulum çoğaltmadı; strict project verify 0 hata/uyarı, meta/GUID/conflict/manifest/sürüm denetimleri geçti |
+| Editor derleme / shader | compilationFailed=false, compiling=false; özel su shader'ında ShaderUtil mesajı yok; Play materyal taramasında null/unsupported/InternalErrorShader yok |
+| Gerçek offline Play, hareket | `ArtHarborResults.json`: 12 kontrol geçti; frame-rate/çapraz hız, koşu, rampa/güverte, korkuluk/kabin, zıplama/iniş, pitch, R ve düşme dönüşü |
+| Gerçek offline Play, taşıma | `ArtCarryResults.json`: 24 kontrol geçti; 3/12/35 kg ayrı ayrı kuvvetle rampadan güverteye taşındı, çarpışma ignore/hız kısıtları ve bırakma geri yüklendi, yükler kararlı durdu |
+| Gerçek offline Play, güvenlik/input | `ArtSafetyResults.json`: 18 kontrol geçti; gerçek Input System queue E/seri E/Escape/tıklama/R, duvar engeli, güvenli bırakma/kurtarma ve serbest imleç davranışları. Simüle input/callback, fiziksel klavye veya OS odak testi değildir |
+| macOS development build | `ArtBuildResults.json`: Succeeded, 0 hata, 1 eski tür uyarı, ~8,1 s incremental build, 316.099.061 byte; çıktı `Builds/ArtPass/macOS/SalvageCrew.app`; aktif Personal lisansı + StandaloneOSX desteği kontrol edildi |
+| Gerçek Editor host + yeni standalone client | `ArtNetworkResults.json`: 8/8 kontrol; 127.0.0.1:7777, iki gerçek process, iki oyuncu/üç hurda, yalnız yerel kamera/input; host 12 kg kasayı ve client 3 kg kutuyu rampadan taşıdı; diğer tarafta tutma/konum state eşleşti; ayrılma temiz |
+| Hareketli güverte kısa regresyon | Aynı gerçek oturumda host dümenle ileri/dönüş sürdü, client tekne-yerel hedefe yürüyüp yerde/platformda kaldı; client correction=0, server tekne dynamic/client kinematic; yük hızları sonlu ve sınırlı, probe hata sayıları 0. Ağır yük/rolleri ters çevirme/gecikme matrisi bu görsel turda tekrar edilmedi |
+| Console / standalone | Başlangıç cursor105 → son110: yeni oyun error/exception yok; eski hot-reload Input assertion/NGO exception geçmişi silinmedi. Tek yeni warning, önceden de bulunan RuntimePipelineConfig olmadığı için Player araç sunucusunun kapalı kalması; oyun ağı değildir |
+| Görüntüler | 1600 × 900 Game view: aynı poz/yaw/FOV başlangıç, güverte ve taşıma önce/sonra; altı PNG `Screenshots/ArtBefore*.png` / `ArtAfter*.png`; görüntüler açılarak kontrol edildi. Taşıma eşleştirme görüntüsü fixture yerleştirmesi + gerçek PhysicsCarry tutmasıdır; tek başına rampa testi kanıtı değildir |
+| Sınırlı performans kontrolü | `ArtPerformanceResults.json`: aynı kamera, 160 sample/capped Editor A/B; art+water kapalı median16,75/p9519,18 ms, açık median16,76/p9517,63 ms; enabled renderer46→128. Belirgin sürekli frame-time gerilemesi görülmedi. Bu HEAD karşılaştırması veya GPU/standalone/stress benchmark değildir |
+| EditMode test suite | Ayrı Unity Test Runner EditMode süiti çalıştırılmadı; yukarıdaki serialized/API bütünlük kontrolleri suite testi olarak raporlanmaz |
+
+İlk kurulum çağrısında henüz olmayan ArtVisuals'a IsChildOf(null) kullanımı araç hatası verdi; null guard düzeltildi, tamamlanan ve ikinci uygulama geçti. İlk taşıma regresyonu ekran görüntüsü fixture'ının güvertede bıraktığı kasa yüzünden yürüyüş hedefinde durdu; bütün hurdalar başlangıcına alındıktan sonra 24/24 geçti. Gameplay/collider değiştirilerek test zorlanmadı. Yeni runtime exception sayılmadı; başarısız denemeler başarılı test gibi sunulmadı.
+
+### Test edilemeyenler / sınırlar
+
+- Native araç envanteri `Sky Computer Use native pipe startup failed` döndü. OS odak değişimi, fiziksel mouse hissi, iki pencereyi insan gibi izleyerek görsel akıcılık/pembe materyal değerlendirmesi doğrulanmadı. Editor Game view görüntüleri ve renderer/material taraması başarılı; bu, client native ekranının gözle incelenmesi değildir.
+- Gerçek eşzamanlı tutma yarışı, client'ın elde yükle ayrılması, ağır hurdanın client tarafından taşınması, client dümeni, geç katılma/yeniden bağlanma ve 100 ms/yön/%1 kayıp matrisi **bu görsel ara aşamada tekrar test edilmedi**. Önceki aşama sonuçları aşağıda korunur; bu görev sonuçlarına kopyalanmadı.
+- Stil ilk geçiştir: yoğun pas, yüksek detaylı motor/tekne, gerçek halat simülasyonu, gerçekçi ıslak güverte/deniz köpüğü yok. Binalar stylized kit uyarlamasıdır; tam Ege mimari asseti değildir. Ana tekne collider'ı hâlâ blockout compound, yeni dış gövde/bow görseliyle küçük kenar farkları vardır. Mevcut küçük pitch/roll/yüzdürme ve fizik sınırları aynı.
+- LFS kontrol edildi, takip deseni yok; küçük 2,8 MB Art içeriği normal Git'te. Tüm FBX/PNG/lisans/.meta dahil; build/log/ZIP/cache dahil değil. Sahne dışına kopyalanan altı doğrulama PNG'sinin geçici Assets/Docs kopyası Editor AssetDatabase ile silindi; asılları Docs/Screenshots'ta korunur.
+
+### Kısa manuel teslim turu
+
+1. HarborPrototype → Play → Solo devam; iskele/rampa/güverte yürüyüşü, koşu/zıplama, korkuluk/kabin, üç hurda taşı/bırak, Escape/tıkla/R/denize düşme.
+2. Yeni macOS uygulaması + Editor host, 127.0.0.1:7777; iki yönde yük taşı, diğer pencerede gözle. Tab ve rol etiketlerini kontrol et.
+3. Host ve client dümeni sırayla kullan; diğer oyuncu güvertede yürü/zıpla; üç yükle normal sürüş ve kurtarma. Native odak ile input durmasını özellikle dene.
+4. `MultiplayerTest.md` görsel geçiş turunu tamamla; Console/client Player logunda yeni hata ve shader sorunu arayın. İsteğe bağlı gecikme proxy turunu tekrar edin.
+
+## Aşama 4A — ağ üzerinden tekne sürüşü ve hareketli güverte (tarihsel sonuçlar)
 
 ### Uygulama ve ön kontrol
 
@@ -254,6 +298,7 @@ Unity modülleri manifestte listelenir. Multiplayer Center yalnız şablon araç
 | 2 — Fizik tabanlı hurda taşıma | Yerel tutma, taşıma, bırakma ve kurtarma | Tamamlandı |
 | 3 — İki oyuncu ve ortak hurda | Direct-IP host/client, oyuncu eşleme ve host fiziği | Uygulandı; gerçek iki instance çekirdek testleri geçti, manuel kullanıcı turu bekliyor |
 | 4A — Ortak tekne ve hareketli güverte | Host otoriteli sürüş, yolcu, yük ve kurtarma | Uygulandı; gerçek iki instance normal/gecikmeli çekirdek testler geçti, native manuel tur bekliyor |
+| Ara — İlk görsel geçiş | CC0 model adaptörleri, tekne/liman/su/ışık ve sade HUD | Uygulandı; build/offline/gerçek iki instance kısa regresyon geçti, native görsel/odak turu bekliyor |
 | Sonraki — Hurda ve vinç | Çıkarma ve güverteye yükleme | Başlanmadı |
 | Sonraki — Liman ve ekonomi | Satış ve basit ekipman geliştirmesi | Başlanmadı |
 | Sonraki — Doğrulama | İki oyuncuyla tam döngü, ardından 1–4 oyuncu | Başlanmadı |
@@ -273,7 +318,7 @@ Her görev yalnızca açıkça istenen aşamayı uygular. Aşama 1'de tekne stat
 
 ## Kalanlar ve sonraki aşama
 
-Güncel durum: Aşama 4A tekne sürüşü/hareketli güverte ve gerçek iki instance sonuçları yukarıdadır; kapsam genişletmeden önce manuel iki pencere turu önerilir. Ticari platformlar ve internet oturum keşfi henüz belirlenmedi. 6000.5.6f1 korundu; LTS geçişi ve Windows/Linux build yapılmadı. Pipeline experimental'dır. Vinç, fırlatma, satış, düşman eklenmedi.
+Güncel durum: İlk görsel geçiş ve Aşama 4A tekne sürüşü/hareketli güverte sonuçları yukarıdadır; kapsam genişletmeden önce yeni build ile manuel iki pencere görsel/odak turu önerilir. Ticari platformlar ve internet oturum keşfi henüz belirlenmedi. 6000.5.6f1 korundu; LTS geçişi ve Windows/Linux build yapılmadı. Pipeline experimental'dır. Vinç, fırlatma, satış, düşman eklenmedi.
 
 Console geçmişinde URP Core paketinin `RuntimeDebugWindow_PanelSettings.asset` dosyasının immutable package içinde değiştiği uyarısı da görüldü. Paket kaynakları elle değiştirilmedi; bu uyarı package cache/import sırasında ortaya çıktı. Kaynak kontrolüne dahil olmayan Library/PackageCache içindedir; kök nedeni bu hazırlıkta giderilmedi. Build başarılı ve son Console kontrolünde compile hatası yok; ileride paket importunda yeniden kontrol edilmeli.
 

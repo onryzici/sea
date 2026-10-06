@@ -729,11 +729,11 @@ RectTransform:
   - {fileID: 6283273945410270987}
   m_Father: {fileID: 320352636762410718}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 24, y: -24}
-  m_SizeDelta: {x: 420, y: 170}
-  m_Pivot: {x: 0, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 20, y: 20}
+  m_SizeDelta: {x: 455, y: 94}
+  m_Pivot: {x: 0, y: 0}
 --- !u!222 &6393797188624255055
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -755,7 +755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.025, g: 0.08, b: 0.1, a: 0.82}
+  m_Color: {r: 0.025, g: 0.09, b: 0.1, a: 0.76}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -971,17 +971,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>SALVAGECREW / HARBOR</b>
-
-    WASD  Move    Shift  Sprint    Space 
-    Jump
-
-    Mouse  Look    R  Return to boat
-
-    Esc  Release cursor    Click 
-    Resume
-
-    E  Hold / Drop scrap'
+  m_text: "WASD Y\xFCr\xFC  \xB7  Shift Ko\u015F  \xB7  Space Z\u0131pla\nE Tut /
+    B\u0131rak / D\xFCmen  \xB7  R Kurtar\nEsc \u0130mle\xE7  \xB7  T\u0131kla Devam 
+    \xB7  Tab Ba\u011Flant\u0131"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1008,8 +1000,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 17
+  m_fontSizeBase: 17
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

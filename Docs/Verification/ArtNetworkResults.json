@@ -1,0 +1,1286 @@
+{
+  "checks": {
+    "TwoRealInstances": true,
+    "LocalOnlyCameraInput": true,
+    "HostCarryVisibleInClientState": true,
+    "ClientCarryVisibleInHostState": true,
+    "MovingDeckClientWalk": true,
+    "ServerBoatClientKinematic": true,
+    "CargoRemainsFinite": true,
+    "DisconnectClean": true
+  },
+  "evidence": {
+    "HostCarry": {
+      "distance": 0.15702604049549268,
+      "host": {
+        "frame": 949,
+        "sequence": 7,
+        "errors": 0,
+        "time": 16.008434295654297,
+        "role": "HOST",
+        "status": "Host: 2/2 oyuncu bağlı.",
+        "action": "walk",
+        "result": "Reached",
+        "lastError": "",
+        "toggleUtcMillis": 1791288202186,
+        "panel": false,
+        "focused": true,
+        "players": [
+          {
+            "client": 1,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": false,
+            "supported": false,
+            "driving": false,
+            "position": {
+              "x": -0.8999999761581421,
+              "y": 1.2300000190734863,
+              "z": 4.900000095367432
+            },
+            "forward": {
+              "x": 1.0000001192092896,
+              "y": 0.0,
+              "z": -1.1920928955078125e-07
+            },
+            "boatLocal": {
+              "x": -7.900000095367432,
+              "y": 1.2300000190734863,
+              "z": -5.099999904632568
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          },
+          {
+            "client": 0,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 6.1497483253479,
+              "y": 1.5299954414367676,
+              "z": 7.498396873474121
+            },
+            "forward": {
+              "x": 0.9998722672462463,
+              "y": 1.9794548222762387e-08,
+              "z": 0.015987694263458252
+            },
+            "boatLocal": {
+              "x": -0.8502516746520996,
+              "y": 1.5299954414367676,
+              "z": -2.501603126525879
+            },
+            "held": 4,
+            "speedMultiplier": 0.75,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          }
+        ],
+        "items": [
+          {
+            "id": 5,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5,
+              "z": 6.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 3,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 4,
+            "holder": 0,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 7.562236785888672,
+              "y": 2.9268462657928467,
+              "z": 7.520984172821045
+            },
+            "velocity": {
+              "x": 0.6710001230239868,
+              "y": 0.0004883763031102717,
+              "z": 0.011275824159383774
+            },
+            "kinematic": false,
+            "recovery": true
+          }
+        ],
+        "boat": {
+          "driver": 18446744073709551615,
+          "departed": false,
+          "kinematic": true,
+          "position": {
+            "x": 7.0,
+            "y": 0.0,
+            "z": 10.0
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "client": {
+        "frame": 324,
+        "sequence": 2,
+        "errors": 0,
+        "time": 5.4868693351745605,
+        "role": "CLIENT",
+        "status": "Client bağlı — 127.0.0.1:7777.",
+        "action": "resume",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 0,
+        "panel": false,
+        "focused": true,
+        "players": [
+          {
+            "client": 1,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": false,
+            "driving": false,
+            "position": {
+              "x": -0.8999999761581421,
+              "y": 1.2300000190734863,
+              "z": 4.900000095367432
+            },
+            "forward": {
+              "x": 1.0000001192092896,
+              "y": 0.0,
+              "z": -1.1920928955078125e-07
+            },
+            "boatLocal": {
+              "x": -7.900000095367432,
+              "y": 1.2300043106079102,
+              "z": -5.099999904632568
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          },
+          {
+            "client": 0,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": false,
+            "supported": false,
+            "driving": false,
+            "position": {
+              "x": 6.149735927581787,
+              "y": 1.5299913883209229,
+              "z": 7.498396873474121
+            },
+            "forward": {
+              "x": 0.9998721480369568,
+              "y": 1.9794548222762387e-08,
+              "z": 0.015987694263458252
+            },
+            "boatLocal": {
+              "x": -0.8502640724182129,
+              "y": 1.5299956798553467,
+              "z": -2.501603126525879
+            },
+            "held": 4,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          }
+        ],
+        "items": [
+          {
+            "id": 3,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 5,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5,
+              "z": 6.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 4,
+            "holder": 0,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 7.405244827270508,
+              "y": 2.925379991531372,
+              "z": 7.518059730529785
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          }
+        ],
+        "boat": {
+          "driver": 18446744073709551615,
+          "departed": false,
+          "kinematic": true,
+          "position": {
+            "x": 7.0,
+            "y": -4.231929779052734e-06,
+            "z": 10.0
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 0.0,
+            "y": -2.0010318735330657e-08,
+            "z": 0.0
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      }
+    },
+    "ClientCarry": {
+      "host": {
+        "frame": 1354,
+        "sequence": 9,
+        "errors": 0,
+        "time": 22.757369995117188,
+        "role": "HOST",
+        "status": "Host: 2/2 oyuncu bağlı.",
+        "action": "walk",
+        "result": "Reached",
+        "lastError": "",
+        "toggleUtcMillis": 1791288206552,
+        "panel": false,
+        "focused": true,
+        "players": [
+          {
+            "client": 1,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": false,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 6.163522720336914,
+              "y": 1.5299997329711914,
+              "z": 7.499075412750244
+            },
+            "forward": {
+              "x": 0.9999428391456604,
+              "y": 8.562754771901382e-08,
+              "z": 0.010688245296478271
+            },
+            "boatLocal": {
+              "x": -0.8364772796630859,
+              "y": 1.5299997329711914,
+              "z": -2.500924587249756
+            },
+            "held": 3,
+            "speedMultiplier": 0.949999988079071,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          },
+          {
+            "client": 0,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 6.1034722328186035,
+              "y": 1.5299954414367676,
+              "z": 8.895187377929688
+            },
+            "forward": {
+              "x": -0.033112384378910065,
+              "y": 1.9794546446405548e-08,
+              "z": 0.9994516372680664
+            },
+            "boatLocal": {
+              "x": -0.8965277671813965,
+              "y": 1.5299954414367676,
+              "z": -1.1048126220703125
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          }
+        ],
+        "items": [
+          {
+            "id": 5,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5,
+              "z": 6.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 3,
+            "holder": 1,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 7.666204452514648,
+              "y": 2.930055618286133,
+              "z": 7.515138626098633
+            },
+            "velocity": {
+              "x": 0.006607942283153534,
+              "y": -0.0007145658601075411,
+              "z": 6.400528945960104e-05
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 4,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 7.732469081878662,
+              "y": 1.824995756149292,
+              "z": 7.523630142211914
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          }
+        ],
+        "boat": {
+          "driver": 18446744073709551615,
+          "departed": false,
+          "kinematic": true,
+          "position": {
+            "x": 7.0,
+            "y": 0.0,
+            "z": 10.0
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "client": {
+        "frame": 721,
+        "sequence": 7,
+        "errors": 0,
+        "time": 12.153410911560059,
+        "role": "CLIENT",
+        "status": "Client bağlı — 127.0.0.1:7777.",
+        "action": "walk",
+        "result": "Reached",
+        "lastError": "",
+        "toggleUtcMillis": 1791288208738,
+        "panel": false,
+        "focused": true,
+        "players": [
+          {
+            "client": 1,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 6.163522720336914,
+              "y": 1.5299954414367676,
+              "z": 7.499075412750244
+            },
+            "forward": {
+              "x": 0.9999428987503052,
+              "y": 8.562754771901382e-08,
+              "z": 0.010688066482543945
+            },
+            "boatLocal": {
+              "x": -0.8364772796630859,
+              "y": 1.5299997329711914,
+              "z": -2.500924587249756
+            },
+            "held": 3,
+            "speedMultiplier": 0.949999988079071,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          },
+          {
+            "client": 0,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": false,
+            "supported": false,
+            "driving": false,
+            "position": {
+              "x": 6.1034722328186035,
+              "y": 1.5299913883209229,
+              "z": 8.895187377929688
+            },
+            "forward": {
+              "x": -0.033112239092588425,
+              "y": 1.9794546446405548e-08,
+              "z": 0.9994516372680664
+            },
+            "boatLocal": {
+              "x": -0.8965277671813965,
+              "y": 1.5299956798553467,
+              "z": -1.1048126220703125
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          }
+        ],
+        "items": [
+          {
+            "id": 3,
+            "holder": 1,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 7.636733055114746,
+              "y": 2.930778741836548,
+              "z": 7.514105319976807
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 5,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5,
+              "z": 6.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 4,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 7.732436180114746,
+              "y": 1.8294355869293213,
+              "z": 7.523159980773926
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          }
+        ],
+        "boat": {
+          "driver": 18446744073709551615,
+          "departed": false,
+          "kinematic": true,
+          "position": {
+            "x": 7.0,
+            "y": -4.231929779052734e-06,
+            "z": 10.0
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 0.0,
+            "y": -2.0010318735330657e-08,
+            "z": 0.0
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      }
+    },
+    "MovingDeck": {
+      "before": {
+        "frame": 804,
+        "sequence": 9,
+        "errors": 0,
+        "time": 13.570140838623047,
+        "role": "CLIENT",
+        "status": "Client bağlı — 127.0.0.1:7777.",
+        "action": "walk",
+        "result": "Reached",
+        "lastError": "",
+        "toggleUtcMillis": 1791288213288,
+        "panel": false,
+        "focused": true,
+        "players": [
+          {
+            "client": 1,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 6.023233890533447,
+              "y": 1.5299954414367676,
+              "z": 8.100410461425781
+            },
+            "forward": {
+              "x": -0.2271953672170639,
+              "y": 8.562754771901382e-08,
+              "z": 0.9738491773605347
+            },
+            "boatLocal": {
+              "x": -0.9767661094665527,
+              "y": 1.5299997329711914,
+              "z": -1.8995895385742188
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          },
+          {
+            "client": 0,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": false,
+            "supported": false,
+            "driving": false,
+            "position": {
+              "x": 6.947346210479736,
+              "y": 1.5299913883209229,
+              "z": 9.74686050415039
+            },
+            "forward": {
+              "x": 0.06380297243595123,
+              "y": -0.568475067615509,
+              "z": 0.8202226758003235
+            },
+            "boatLocal": {
+              "x": -0.05265378952026367,
+              "y": 1.5299956798553467,
+              "z": -0.2531394958496094
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          }
+        ],
+        "items": [
+          {
+            "id": 3,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 7.662492752075195,
+              "y": 2.4644360542297363,
+              "z": 7.513857841491699
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 5,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5,
+              "z": 6.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 4,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 7.732450008392334,
+              "y": 1.8271373510360718,
+              "z": 7.523430824279785
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          }
+        ],
+        "boat": {
+          "driver": 18446744073709551615,
+          "departed": false,
+          "kinematic": true,
+          "position": {
+            "x": 7.0,
+            "y": -4.231929779052734e-06,
+            "z": 10.0
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 0.0,
+            "y": -2.0010318735330657e-08,
+            "z": 0.0
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "after": {
+        "frame": 972,
+        "sequence": 10,
+        "errors": 0,
+        "time": 16.38684844970703,
+        "role": "CLIENT",
+        "status": "Client bağlı — 127.0.0.1:7777.",
+        "action": "walkBoat",
+        "result": "Reached",
+        "lastError": "",
+        "toggleUtcMillis": 1791288213288,
+        "panel": false,
+        "focused": true,
+        "players": [
+          {
+            "client": 1,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 5.688082695007324,
+              "y": 1.5251142978668213,
+              "z": 8.391593933105469
+            },
+            "forward": {
+              "x": -0.14617179334163666,
+              "y": 8.562755482444118e-08,
+              "z": -0.9892593622207642
+            },
+            "boatLocal": {
+              "x": -0.9983469247817993,
+              "y": 1.5300008058547974,
+              "z": -3.1141884326934814
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          },
+          {
+            "client": 0,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": false,
+            "supported": false,
+            "driving": true,
+            "position": {
+              "x": 6.9942474365234375,
+              "y": 1.5251137018203735,
+              "z": 11.0935697555542
+            },
+            "forward": {
+              "x": 0.1385432928800583,
+              "y": -0.568475067615509,
+              "z": 0.8109512329101562
+            },
+            "boatLocal": {
+              "x": -0.05145780369639397,
+              "y": 1.5300002098083496,
+              "z": -0.26635751128196716
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          }
+        ],
+        "items": [
+          {
+            "id": 3,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 7.421769142150879,
+              "y": 2.455308198928833,
+              "z": 8.712034225463867
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 5,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5,
+              "z": 6.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 4,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 7.492616176605225,
+              "y": 1.8201839923858643,
+              "z": 8.713212013244629
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          }
+        ],
+        "boat": {
+          "driver": 0,
+          "departed": true,
+          "kinematic": true,
+          "position": {
+            "x": 7.079617977142334,
+            "y": -0.004886494483798742,
+            "z": 11.351069450378418
+          },
+          "velocity": {
+            "x": 0.09432841837406158,
+            "y": -1.5995115973055363e-05,
+            "z": 0.8626627922058105
+          },
+          "rotation": {
+            "x": 0.0,
+            "y": 7.407931804656982,
+            "z": 0.0
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "host": {
+        "frame": 1606,
+        "sequence": 13,
+        "errors": 0,
+        "time": 26.965497970581055,
+        "role": "HOST",
+        "status": "Host: 2/2 oyuncu bağlı.",
+        "action": "drive",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 1791288214492,
+        "panel": false,
+        "focused": true,
+        "players": [
+          {
+            "client": 1,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": false,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 5.679828643798828,
+              "y": 1.5251071453094482,
+              "z": 8.498117446899414
+            },
+            "forward": {
+              "x": -0.15258045494556427,
+              "y": 8.562755482444118e-08,
+              "z": -0.9882910251617432
+            },
+            "boatLocal": {
+              "x": -1.001509428024292,
+              "y": 1.5300006866455078,
+              "z": -3.099429130554199
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          },
+          {
+            "client": 0,
+            "owner": true,
+            "motor": false,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": true,
+            "driving": true,
+            "position": {
+              "x": 7.003479480743408,
+              "y": 1.5251097679138184,
+              "z": 11.191570281982422
+            },
+            "forward": {
+              "x": 0.1437966227531433,
+              "y": -0.568475067615509,
+              "z": 0.8100362420082092
+            },
+            "boatLocal": {
+              "x": -0.05199141055345535,
+              "y": 1.5299999713897705,
+              "z": -0.2524736225605011
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          }
+        ],
+        "items": [
+          {
+            "id": 5,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5,
+              "z": 6.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 3,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 7.409882068634033,
+              "y": 2.45521879196167,
+              "z": 8.89584732055664
+            },
+            "velocity": {
+              "x": -0.04591313749551773,
+              "y": -0.0036473870277404785,
+              "z": 0.8625922799110413
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 4,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 7.480737686157227,
+              "y": 1.8201007843017578,
+              "z": 8.89612102508545
+            },
+            "velocity": {
+              "x": -0.04604979604482651,
+              "y": -0.0015972405672073364,
+              "z": 0.8562383651733398
+            },
+            "kinematic": false,
+            "recovery": true
+          }
+        ],
+        "boat": {
+          "driver": 0,
+          "departed": true,
+          "kinematic": false,
+          "position": {
+            "x": 7.088924407958984,
+            "y": -0.004889446776360273,
+            "z": 11.434772491455078
+          },
+          "velocity": {
+            "x": 0.10100635886192322,
+            "y": -9.10868402570486e-06,
+            "z": 0.8780354261398315
+          },
+          "rotation": {
+            "x": -0.0003037351998500526,
+            "y": 7.726411819458008,
+            "z": -0.0007130206213332713
+          },
+          "drive": {
+            "x": 0.330350399017334,
+            "y": 0.9438583254814148
+          }
+        }
+      }
+    },
+    "Final": {
+      "host": {
+        "frame": 1630,
+        "sequence": 14,
+        "errors": 0,
+        "time": 27.36638832092285,
+        "role": "HOST",
+        "status": "Client ayrıldı; taşıdığı hurda server'da serbest bırakıldı.",
+        "action": "toggle",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 1791288217325,
+        "panel": false,
+        "focused": true,
+        "players": [
+          {
+            "client": 0,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 7.0378947257995605,
+              "y": 1.5251061916351318,
+              "z": 11.504735946655273
+            },
+            "forward": {
+              "x": 0.15703925490379333,
+              "y": -0.568475067615509,
+              "z": 0.8075734376907349
+            },
+            "boatLocal": {
+              "x": -0.051649656146764755,
+              "y": 1.5300003290176392,
+              "z": -0.26428741216659546
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          }
+        ],
+        "items": [
+          {
+            "id": 5,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5,
+              "z": 6.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 3,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 7.408595085144043,
+              "y": 2.455148220062256,
+              "z": 9.213232040405273
+            },
+            "velocity": {
+              "x": 0.03751164302229881,
+              "y": -0.0026679635047912598,
+              "z": 0.7227535247802734
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 4,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 7.47944974899292,
+              "y": 1.820078730583191,
+              "z": 9.211647033691406
+            },
+            "velocity": {
+              "x": 0.03644614666700363,
+              "y": -0.0005541741847991943,
+              "z": 0.7193176746368408
+            },
+            "kinematic": false,
+            "recovery": true
+          }
+        ],
+        "boat": {
+          "driver": 18446744073709551615,
+          "departed": true,
+          "kinematic": false,
+          "position": {
+            "x": 7.128852367401123,
+            "y": -0.004893424455076456,
+            "z": 11.758200645446777
+          },
+          "velocity": {
+            "x": 0.09623055160045624,
+            "y": 3.301887772977352e-06,
+            "z": 0.726616382598877
+          },
+          "rotation": {
+            "x": -0.0002912780619226396,
+            "y": 8.687278747558594,
+            "z": -0.0007181995897553861
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "client": {
+        "frame": 996,
+        "sequence": 11,
+        "errors": 0,
+        "time": 16.8033447265625,
+        "role": "SOLO",
+        "status": "Bağlantı kesildi. Tek oyuncu moduna dönüldü.",
+        "action": "disconnect",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 1791288213288,
+        "panel": true,
+        "focused": true,
+        "players": [
+
+        ],
+        "items": [
+
+        ],
+        "boat": {
+          "driver": 0,
+          "departed": false,
+          "kinematic": false,
+          "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      }
+    }
+  },
+  "temp": "/var/folders/0v/f03lpblj5wd7y2wqgzqxxr7w0000gn/T/salvage-art-network.20261006-85852-1cvhvrh"
+}

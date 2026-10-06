@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "command": "projects",
+  "data": {
+    "project": "/Users/<user>/salvage",
+    "ok": true,
+    "checks": [
+      "META_MISSING",
+      "META_ORPHAN",
+      "GUID_DUPLICATE",
+      "CONFLICT_MARKERS",
+      "MANIFEST_INVALID",
+      "EDITOR_VERSION_DRIFT"
+    ],
+    "findings": [],
+    "summary": {
+      "errors": 0,
+      "warnings": 0,
+      "filesScanned": 383,
+      "unverifiable": 0
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

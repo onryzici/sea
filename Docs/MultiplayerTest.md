@@ -1,6 +1,18 @@
 # Aynı bilgisayarda iki oyuncu testi
 
-Unity 6000.5.6f1 ile HarborPrototype'ı aç. Güncel macOS client build'i: `Builds/Stage4A/macOS/SalvageCrew.app`. Build almak bağlantı testinin yerine geçmez; iki pencere de çalışmalı.
+Unity 6000.5.6f1 ile HarborPrototype'ı aç. Güncel görsel geçiş macOS client build'i: `Builds/ArtPass/macOS/SalvageCrew.app`. Önceki Aşama 4A build'i `Builds/Stage4A/macOS/SalvageCrew.app` altında korunur. Build almak bağlantı testinin yerine geçmez; iki pencere de çalışmalı.
+
+## Görsel geçiş — tek kişi, iki pencere
+
+1. Editor Play → Host, yeni standalone → Client (`127.0.0.1:7777`). HOST/CLIENT etiketi ve tek yerel HUD görünmeli. Tab panel açıkken imleç serbest olmalı. İki pencerede turkuaz tekne, tahta güverte, lastikler, üç hurda modeli ve su görünmeli; pembe/eksik mesh olmamalı.
+2. Host ile metal kasayı E ile tut, rampadan güverteye taşı/bırak. Tab ile panel açıp client'a geç; aynı kasanın modelini ve hareketini gözle. Client ile hafif kutuyu taşı, host'ta gözle. Ağır motorla tekrarla; taşıma/kamera/korkuluk davranışı değişmemeli.
+3. Elde hurda varken Escape → E çalışmamalı; Game view'a tıklamak yalnız imleci kilitlemeli. R ve denize düşme kurtarmasını dene. Mevcut fizik collider'ı ile yeni görsel arasında belirgin boşluk/taşma olup olmadığını kontrol et.
+4. İki oyuncuyu ve yükleri güverteye çıkar. Host dümenini E/WASD ile kullan; panel açıp client'ta güvertede yürü/zıpla. Tekne görsel çocukları fizik köküyle beraber gitmeli; rampa kalkışta kapanmalı. Sonra rolleri ters çevir. Tek kişi pencere değiştirince dümen girdisi sıfırlanır; sürekli eşzamanlı sürüş/yürüme bu elle turda doğrulanmaz.
+5. Client taşıma sırasında bağlantıyı kes; host'ta yük serbest kalsın. Yeniden bağlan; görsel/HUD/tekne/hurda çoğalmasın. Meşgul yükü sırayla almaya çalışmak gerçek eşzamanlı sahiplik yarışı değildir.
+6. OS odağını W basılıyken değiştir; eski input durmalı, arka planda ağ ve fizik sürmeli. Native araç köprüsü bu görevde de açılamadı; **bu kontrol manuel olarak bekliyor**.
+7. Console ve standalone Player logunda yeni exception, shader hatası veya sürekli ağ hatası arayın. Görsel okunabilirlik ve titremeyi iki pencereyi gerçekten izleyerek değerlendirin. Bu görevde yeni gecikme/kayıp turu yapılmadı; aşağıdaki proxy turu isteğe bağlı manuel regresyondur.
+
+Gerçek otomatik tur `Verification/ArtNetworkResults.json` içinde: yeni standalone + Editor, iki yönde hurda taşıma durum eşleşmesi, host sürüşü/client güverte yürüyüşü, ayrılma; sıfır probe hatası. Bu veri kontrolü, native iki pencere görüntülerinin insan tarafından izlenmesi değildir. Tekrar: Play'e girip import tamamlandıktan sonra proje kökünde `ruby Docs/Verification/ArtNetworkSmoke.rb`; script sadece opt-in development probe kullanır, sonunda client'ı kapatır ve host bağlantısını keser.
 
 ## Aşama 4A — tek kişi, iki pencere
 

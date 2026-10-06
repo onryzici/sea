@@ -1,0 +1,20 @@
+{
+  "baseline": "6dc4906",
+  "counts": {
+    "existingTransforms": 94,
+    "physics": 62,
+    "gameplay": 25,
+    "networkObjects": 5
+  },
+  "allowed_visual_changes": [
+    {
+      "path": "Assets/_Game/Scenes/HarborPrototype.unity",
+      "object": "Daylight",
+      "property": "rotation"
+    }
+  ],
+  "preserved": true,
+  "changes": [
+
+  ]
+}

@@ -26,7 +26,9 @@
 - `Docs/Progress.md`: aşamalar, inceleme bulguları, doğrulamalar ve bekleyen işler.
 - `Assets/_Game/Scenes`, `Scripts`, `Prefabs`, `Materials`, `Audio`, `Settings`: oyuna ait içerik.
 
-Hazırlık, Aşama 1 liman/birinci şahıs, Aşama 2 yerel taşıma, Aşama 3 iki oyunculu direct-IP ve Aşama 4A ağ üzerinden tekne sürüşü/hareketli güverte prototipi vardır. Proje Unity 6000.5.6f1, URP 17.5.0 ve masaüstü başlangıç hedefi kullanır. Vinç, satış ve düşman yoktur. Sonraki görevlerde yalnızca açıkça istenen aşama uygulanır.
+Hazırlık, Aşama 1 liman/birinci şahıs, Aşama 2 yerel taşıma, Aşama 3 iki oyunculu direct-IP, Aşama 4A ağ üzerinden tekne sürüşü/hareketli güverte ve ilk görsel geçiş vardır. Proje Unity 6000.5.6f1, URP 17.5.0 ve masaüstü başlangıç hedefi kullanır. Vinç, satış ve düşman yoktur. Sonraki görevlerde yalnızca açıkça istenen aşama uygulanır.
+
+Görsel geçiş: Play kapalı ve HarborPrototype açıkken `SalvageCrew/Apply Harbor Art Pass`. Kaynak/lisans kaydı `Docs/ArtSources.md`. Bu araç yalnız kendi `ArtVisuals` alt ağaçlarını yeniler; bu alt ağaçlardaki elle düzenlemeler yeniden uygulamada kaybolur. Dış model meshleri görsel çocuklardır; NetworkObject, Rigidbody, collider, GUID ve Inspector gameplay bağlantıları korunur. Ana `Build Harbor Prototype` komutunu çalıştırmak bu geçişi siler; kullanıcı değişikliklerini kontrol etmeden çalıştırma. Güncel iki pencere görsel test build'i `Builds/ArtPass/macOS/SalvageCrew.app`.
 
 Liman sahnesi: `Assets/_Game/Scenes/HarborPrototype.unity`. Yeniden kurulum: `SalvageCrew/Build Harbor Prototype`; yalnızca `HarborPrototypeGenerated` kökünü yeniden üretir. Bu kökte elle yapılan değişiklikler yeniden kurulumda kaybolur; kullanıcı düzenlemelerini korumak için bu komutu çalıştırmadan önce incele. `SampleScene` korunur. `LocalPlayerInput` yalnızca yerel input/imleç işlerini, `FirstPersonMotor` hareket ve kurtarmayı yönetir.
 

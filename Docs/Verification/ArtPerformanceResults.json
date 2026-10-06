@@ -1,0 +1,26 @@
+{
+  "diagnostics": [],
+  "compileMs": 211,
+  "executeMs": 12974,
+  "assemblyName": "PipelineRunScript_ArtVisualChecks_b6e104f967704c2da8546551d5dbac34",
+  "success": true,
+  "result": {
+    "method": "Same-camera capped Editor A/B: visual subtrees + water off/on. Not a HEAD/GPU benchmark.",
+    "withoutArt": {
+      "sampleFrames": 160,
+      "medianMs": 16.7453785,
+      "p95Ms": 19.1785011,
+      "enabledRenderers": 46,
+      "badMaterials": [],
+      "background": true
+    },
+    "withArt": {
+      "sampleFrames": 160,
+      "medianMs": 16.7588787,
+      "p95Ms": 17.6289539,
+      "enabledRenderers": 128,
+      "badMaterials": [],
+      "background": true
+    }
+  }
+}
