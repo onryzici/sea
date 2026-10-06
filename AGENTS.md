@@ -25,4 +25,6 @@
 - `Docs/Progress.md`: aşamalar, inceleme bulguları, doğrulamalar ve bekleyen işler.
 - `Assets/_Game/Scenes`, `Scripts`, `Prefabs`, `Materials`, `Audio`, `Settings`: oyuna ait içerik.
 
-Hazırlık ve kullanıcının ek isteğiyle gerçek Unity proje başlangıcı tamamlandı. Proje Unity 6000.5.6f1, URP ve masaüstü başlangıç hedefi kullanır. Oyuncu, tekne, vinç veya multiplayer sistemi henüz oluşturulmadı. Sonraki görevlerde yalnızca açıkça istenen aşama uygulanır.
+Hazırlık ve Aşama 1 liman/birinci şahıs prototipi tamamlandı. Proje Unity 6000.5.6f1, URP 17.5.0 ve masaüstü başlangıç hedefi kullanır. Yerel oyuncu ve sabit tekne maketi vardır; vinç, tekne sürüşü ve multiplayer henüz yoktur. Sonraki görevlerde yalnızca açıkça istenen aşama uygulanır.
+
+Liman sahnesi: `Assets/_Game/Scenes/HarborPrototype.unity`. Yeniden kurulum: `SalvageCrew/Build Harbor Prototype`; yalnızca `HarborPrototypeGenerated` kökünü yeniden üretir. Bu kökte elle yapılan değişiklikler yeniden kurulumda kaybolur; kullanıcı düzenlemelerini korumak için bu komutu çalıştırmadan önce incele. `SampleScene` korunur. `LocalPlayerInput` yalnızca yerel input/imleç işlerini, `FirstPersonMotor` hareket ve kurtarmayı yönetir.

@@ -1,0 +1,15 @@
+{
+  "status": "completed",
+  "result": "Succeeded",
+  "platform": "StandaloneOSX",
+  "outputPath": "/Users/trexoinnovation/salvage/Builds/HarborPrototype/macOS/SalvageCrew.app",
+  "totalErrors": 0,
+  "totalWarnings": 1,
+  "buildTimeMs": 36960,
+  "warnings": [
+    {
+      "message": "Pipeline: No RuntimePipelineConfig asset found (Project Settings > Pipeline > Runtime). Pipeline will be disabled in Player builds."
+    }
+  ],
+  "errors": []
+}

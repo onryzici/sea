@@ -2,7 +2,50 @@
 
 ## Mevcut durum — 2026-10-06
 
-Hazırlık ve gerçek Unity proje başlangıcı tamamlandı. Kök: `/Users/trexoinnovation/salvage`. İlk incelemede klasör tamamen boştu; Unity projesi, paket manifesti, sahne, Git deposu ve mevcut talimatlar yoktu. Kullanıcının ek isteğiyle resmi Universal 3D şablonundan gerçek proje oluşturuldu. Hazırlık belgeleri korundu; kullanıcı değişikliği silinmedi.
+Hazırlık, gerçek Unity proje başlangıcı ve kullanıcının Aşama 1 olarak istediği birinci şahıs/yürünebilir liman prototipi tamamlandı. Kök: `/Users/trexoinnovation/salvage`. İlk incelemede klasör tamamen boştu; resmi Universal 3D şablonundan oluşturulan proje korunarak geliştirildi. Görev başlangıcında Git temizdi; kullanıcı değişikliği silinmedi.
+
+## Aşama 1 — birinci şahıs ve yürünebilir liman
+
+- Sahne: `Assets/_Game/Scenes/HarborPrototype.unity`. Kıyı, iskele, hafif eğimli rampa, 10×4 metre sabit tekne, yürünebilir güverte, alçak korkuluklar ve kabin maketi. Deniz görsel bir yüzeydir, collider ve su fiziği içermez.
+- Prefab: `Assets/_Game/Prefabs/FirstPersonPlayer.prefab`. CharacterController, 1,8 metre boy/0,3 metre yarıçap, kamera pivotu, AudioListener, URP kamera bileşeni ve iki oyun scripti bağlıdır. Sahne instance'ında PierSpawn bağlantısı ayrıca doğrulandı.
+- `LocalPlayerInput`: Input System 1.20.0 action asset'ini oyuncuya özel kopyalar; WASD/mouse/Space/Left Shift/R/Escape/sol tıklama bağlantıları hazırdır. Kısa basışlar normal Update tarafından okunana kadar saklanır; focus kaybında temizlenir.
+- `FirstPersonMotor`: 4 m/s yürüme, 6,5 m/s koşu, 1 metre zıplama, yerçekimi, zemin/baş çarpışması, normalize çapraz hareket ve ±80 derece bakış sınırı. Inspector'da hız, zıplama ve mouse hassasiyeti ayarlanabilir. R veya oyuncu ayağının y<0,2 olması spawn'a döndürür; düşme hızı ve bakış sıfırlanır.
+- uGUI/TMP HUD: merkez nişangâhı ve küçük kontrol alanı. TMP Essential Resources, paket eklenmeden kurulu uGUI paketinden non-interactive import edildi.
+- Editor kurulum komutu: `SalvageCrew/Build Harbor Prototype`. Yalnızca kendi `HarborPrototypeGenerated` kökünü yeniden üretir; diğer kökler korunur. Bu kökteki manuel düzenlemeler yeniden kurulumda kaybolur. İki çalıştırma sonrası 53 Transform → 53 Transform ve tek oyuncu doğrulandı.
+- HarborPrototype build listesinin başına eklendi. SampleScene, eski input asset'i, Unity sürümü, URP pipeline assetleri ve paket manifest/lock dosyaları korundu.
+
+### Gerçek doğrulama sonuçları
+
+| Kontrol | Sonuç |
+| --- | --- |
+| Başlangıç bağlantısı | Aktif SampleScene, üç gerçek kök nesne ve Console okundu; Play kapalıydı |
+| C# derleme | Unity recompile geçti; 0 compile hatası/uyarısı |
+| Canlı Play fizik kontrolleri | Gerçek CharacterController ve sahne collider'larıyla 12 kontrol geçti |
+| FPS ve çapraz hız | 30/120 adımda 4/4 metre; düz/çapraz 4/4 metre |
+| İskele → rampa → güverte | Oyuncu (6,67; 1,53; 7,50) konumuna yürüyerek geçti; yerde |
+| Korkuluk ve kabin | Oyuncu korkulukta x=8,49, kabinde z=10,87 noktasında durdu; içinden geçmedi |
+| Zıplama | İlk hız 5,99 m/s; havada ikinci basış hız artırmadı; tepe yaklaşık 0,947 metre ve tekrar iniş başarılı |
+| Bakış sınırı | Pitch mutlak değeri 80 dereceyi aşmadı |
+| Gerçek input olayları | WASD yönleri, Space zıplama, Left Shift koşma, R dönüş, Escape bırakma ve tıklama kilitleme geçti |
+| Mouse olayı | 80/20 piksel delta sonrası yaw 58→67,6; pitch 0→−2,4 derece |
+| Canlı Update kurtarma | Oyuncu harita altına taşındıktan sonra (0; 1,23; 4) iskele spawn'ına otomatik döndü |
+| Build | HarborPrototype için StandaloneOSX başarılı, 36,96 saniye, 0 hata/1 bilinen uyarı |
+| Proje bütünlüğü | Strict verify: 199 dosya, 0 hata, 0 uyarı; meta/GUID/manifest kontrolleri geçti |
+| Son durum | HarborPrototype açık, Play kapalı; geçici runInBackground ayarı false'a geri alındı |
+
+Fizik kontrolleri motorun gerçek hareket adımını farklı deltaTime değerleriyle çağırır. Input kontrolleri ayrıca Input System'e keyboard/mouse olayları göndererek oyuncunun normal Update döngüsünü çalıştırdı. Fizik ve input doğrulama scriptleri ile sonuç JSON dosyaları `Docs/Verification` altında tekrar çalıştırılabilir şekilde tutulur; NUnit EditMode test süiti çalıştırılmadı. Fiziksel klavye/mouse ile insan eliyle baştan sona yürüyüş ve standalone uygulama çalıştırma testi yapılmadı.
+
+Build: `Builds/HarborPrototype/macOS/SalvageCrew.app` (Git dışında). [İskele başlangıcından ekran görüntüsü](Screenshots/HarborPrototype.png) gerçek Game view ve HUD'dan alındı, görsel olarak incelendi. Yakalama aracının Assets altında oluşturduğu geçici kopya silindi; kalıcı görüntü Docs/Screenshots altında korundu.
+
+### Önceki uyarılar ve bu görevin sorunları
+
+Başlangıç Console geçmişinde önceki Pipeline 5 saniye timeout hatası, immutable URP paket asset uyarısı ve RuntimePipelineConfig eksikliği vardı. Bu görevde ilk sahne kurulum çağrısı da 5 saniyeyi aştı; sahnenin gerçekten oluşturulduğu okunarak doğrulandı, ikinci kurulum daha geniş timeout ile geçti. Domain reload sırasında iki bağlantı çağrısı başarısız oldu; Editor yeniden hazır olduğunda kontroller tamamlandı. Bir geçici Inspector sorgusu olmayan bir API'yi kullandı; sorgu düzeltildi, proje kaynaklarında derleme hatası oluşmadı.
+
+İlk input denemesinde kısa tuş basışları birden fazla input güncellemesi arasında kayboldu; event saklama ile düzeltildi ve R/Escape/Space tekrar geçti. Async sprint testi ilk denemede duvar saati üzerinden karşılaştırma yaptığı için başarısız oldu; oyun zamanı üzerinden hız ölçümüyle yürüme≈4, koşu≈6,5 m/s doğrulandı. Son test aralığında oyun kaynaklı yeni error/exception yok. Build'in tek uyarısı eski RuntimePipelineConfig eksikliği; paket/pipeline değişikliği yapılmadı. Immutable package uyarısı yeniden üretilmedi ve kapsam dışında bırakıldı.
+
+### Değiştirilen dosya grupları
+
+`Assets/_Game/Scenes/HarborPrototype.unity`, oyuncu prefabı, iki runtime scripti, Editor kurulum scripti, `PlayerControls.inputactions`, dokuz URP materyali ve bunların `.meta` dosyaları; gerekli TMP kaynakları; `ProjectSettings/EditorBuildSettings.asset` ve Unity'nin yeni sahne oluştururken ürettiği `SceneTemplateSettings.json`; AGENTS ve Docs belgeleri, doğrulama scriptleri/sonuçları ve screenshot. SampleScene ile render/paket yapılandırmasında diff yok.
 
 ## Proje ve araçlar
 
@@ -13,8 +56,8 @@ Hazırlık ve gerçek Unity proje başlangıcı tamamlandı. Kök: `/Users/trexo
 | Hedef | Masaüstü başlangıcı, ilk build kontrolü macOS; PC kalite seviyesi |
 | Lisans | Unity CLI aktif Unity Personal lisansı ve oturum bildirdi |
 | Editor araçları | Unity CLI 1.0.0-beta.12 ve com.unity.pipeline 0.8.0-exp.1; localhost bağlantısı hazır |
-| Sahne | Assets/Scenes/SampleScene.unity; build listesinde etkin |
-| Gerçek Hierarchy | Main Camera (Camera, AudioListener, UniversalAdditionalCameraData), Directional Light (Light, UniversalAdditionalLightData), Global Volume (Volume) |
+| Sahne | Assets/_Game/Scenes/HarborPrototype.unity; build listesinde ilk sırada. SampleScene korundu |
+| Gerçek Hierarchy | HarborPrototypeGenerated altında Harbor, StaticBoat_10m_x_4m, Daylight, GlobalVolume, PierSpawn, FirstPersonPlayer, HarborHUD |
 | Git | Yerel main deposu; hazırlık ve proje başlangıcı ilk commit'e kaydedildi (e138bde); uzak depo oluşturulmadı |
 | Asset düzeni | Assets/_Game altında Scenes, Scripts, Prefabs, Materials, Audio ve Settings; Editor'ın ürettiği .meta dosyaları |
 | Unity VCS ayarları | Force Text ve Visible Meta Files |
@@ -42,7 +85,7 @@ Manifest ve lock dosyaları kaynak kontrolüne dahildir. Unity ile gelen yerel �
 
 Unity modülleri manifestte listelenir. Multiplayer Center şablonun araç paketidir; bir networking çözümü veya uygulanmış multiplayer sistemi değildir. Ağ paketi/transport seçimi bekliyor.
 
-## Kontroller
+## Hazırlık aşamasının geçmiş kontrolleri
 
 - Proje bütünlüğü: `unity projects verify --strict --expect-editor 6000.5.6f1` geçti; 0 hata, 0 uyarı. Eksik/orphan meta, yinelenen GUID, conflict marker ve manifest hatası bulunmadı.
 - Derleme durumu: canlı Console `compilationFailed=false`, `compiling=false` bildirdi.
@@ -58,27 +101,27 @@ Unity modülleri manifestte listelenir. Multiplayer Center şablonun araç paket
 | Aşama | Kapsam | Durum |
 | --- | --- | --- |
 | 0 — Hazırlık | Talimatlar, kapsam, ilerleme, klasörler, ignore | Tamamlandı |
-| 1 — Unity başlangıcı | Gerçek proje, pipeline, Editor bağlantısı, Play/build kontrolü | Tamamlandı |
-| 2 — Birinci şahıs temel | Oyuncu, kamera, etkileşim ve test sahnesi | Başlanmadı |
-| 3 — İki oyuncu temeli | Ağ paketi/transport, host/client ve oyuncu eşleme | Başlanmadı |
-| 4 — Ortak tekne ve yük | Host otoriteli fizik | Başlanmadı |
-| 5 — Hurda ve vinç | Çıkarma ve güverteye yükleme | Başlanmadı |
-| 6 — Liman ve ekonomi | Satış ve basit ekipman geliştirmesi | Başlanmadı |
-| 7 — Doğrulama | İki oyuncuyla tam döngü, ardından 1–4 oyuncu | Başlanmadı |
+| Hazırlık — Unity başlangıcı | Gerçek proje, pipeline, Editor bağlantısı, Play/build kontrolü | Tamamlandı |
+| 1 — Birinci şahıs liman | Oyuncu, kamera, iskele/rampa/sabit tekne ve HUD | Tamamlandı |
+| 2 — İki oyuncu temeli | Ağ paketi/transport, host/client ve oyuncu eşleme | Başlanmadı |
+| 3 — Ortak tekne ve yük | Host otoriteli fizik | Başlanmadı |
+| 4 — Hurda ve vinç | Çıkarma ve güverteye yükleme | Başlanmadı |
+| 5 — Liman ve ekonomi | Satış ve basit ekipman geliştirmesi | Başlanmadı |
+| 6 — Doğrulama | İki oyuncuyla tam döngü, ardından 1–4 oyuncu | Başlanmadı |
 
-Her görev yalnızca açıkça istenen aşamayı uygular. Bu görevde oyuncu, tekne, vinç, oyun prefabı veya multiplayer sistemi oluşturulmadı. Şablonun sahne, render ayarları ve Readme araç kodu korundu.
+Her görev yalnızca açıkça istenen aşamayı uygular. Aşama 1'de tekne statik makettir; su/tekne fiziği, eşya taşıma, vinç, satış, düşman ve multiplayer eklenmedi. Şablonun SampleScene, render ayarları ve Readme araç kodu korundu.
 
 ## Kısa manuel test
 
 1. Unity Hub'dan bu proje kökünü Unity 6000.5.6f1 ile aç.
-2. Assets/Scenes/SampleScene.unity sahnesini aç; Hierarchy'de Main Camera, Directional Light ve Global Volume'ü kontrol et.
-3. Play'e gir; Game görünümünün render ettiğini ve Console'da yeni hata olmadığını kontrol et; Play'den çık.
-4. Assets/_Game altındaki altı klasörü ve .meta dosyalarını kontrol et.
-5. Builds/macOS/SalvageCrew.app uygulamasını aç; başlangıç sahnesini kontrol et. Build başarıyla alındı; standalone uygulama ayrıca çalıştırılmadı.
+2. Assets/_Game/Scenes/HarborPrototype.unity sahnesini aç, Play'e gir ve Game view'a tıkla.
+3. WASD/Left Shift/Space ile iskelede yürü, koş ve zıpla; rampadan güverteye geç. Korkuluk ve kabine yürüyerek çarpışmayı kontrol et.
+4. Mouse ile bak; yukarı/aşağı sınırını dene. Escape ile imleci bırak, Game view'a tıklayıp yeniden kilitle. R ile iskeleye dön; iskele kenarından denize düşüp otomatik kurtarmayı kontrol et.
+5. HUD ve Console'u kontrol et; Play'den çık. İsteğe bağlı olarak Builds/HarborPrototype/macOS/SalvageCrew.app çıktısını aç; standalone çalıştırma ayrıca doğrulanmadı.
 
 ## Kalanlar ve sonraki aşama
 
-Sonraki uygulama aşaması birinci şahıs temel prototiptir; kapsamı ayrıca istenmeli. Ticari hedef platformlar ve networking tercihi henüz belirlenmedi. Kurulu 6000.5.6f1 kullanıldı; LTS sürümüne geçiş yapılmadı. Windows/Linux build ve iki oyunculu test yapılmadı. Pipeline paketi experimental sürümdür.
+Sonraki planlanan aşama iki oyuncu temeli; kapsamı ayrıca istenmeli. Ticari hedef platformlar ve networking tercihi henüz belirlenmedi. Kurulu 6000.5.6f1 korundu; LTS sürümüne geçiş yapılmadı. Windows/Linux build ve iki oyunculu test yapılmadı. Pipeline paketi experimental sürümdür. Önceden belgelenen araç/paket uyarıları dışında Aşama 1 için bilinen oyun engeli yok.
 
 Console geçmişinde URP Core paketinin `RuntimeDebugWindow_PanelSettings.asset` dosyasının immutable package içinde değiştiği uyarısı da görüldü. Paket kaynakları elle değiştirilmedi; bu uyarı package cache/import sırasında ortaya çıktı. Kaynak kontrolüne dahil olmayan Library/PackageCache içindedir; kök nedeni bu hazırlıkta giderilmedi. Build başarılı ve son Console kontrolünde compile hatası yok; ileride paket importunda yeniden kontrol edilmeli.
 

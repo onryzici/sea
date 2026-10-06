@@ -17,9 +17,13 @@ Oyuncular küçük bir tekneyle denize çıkar, denizden hurda çıkarır, vinç
 
 Prototipin kabulü: iki oyuncunun denize çıkış → çıkarma → yükleme → limana dönüş → satış → geliştirme döngüsünü birlikte tamamlaması. Tek oyuncu ve 3–4 oyuncu desteği sonraki doğrulama hedefleridir.
 
-## Bu görevdeki sınır
+## Hazırlık geçmişi
 
 Proje incelemesi, talimatlar, belgeler, klasör yapısı ve `.gitignore` hazırlanır. Kullanıcının ek isteğiyle gerçek Unity projesi de resmi Universal 3D şablonundan oluşturulur, Editor bağlantısı ve başlangıç Play/build kontrolleri yapılır. Oyun sistemleri geliştirilmez. Şablon paketleri ve Editor araç bağlantısı için Pipeline paketi kullanılır; oyun prefabı oluşturulmaz.
+
+## Aşama 1 — yürünebilir liman
+
+Hazırlık sonrasında ilk oynanabilir aşama eklendi: HarborPrototype, kıyı/iskele, rampa, yaklaşık 10×4 metre sabit tekne ve yeniden kullanılabilir CharacterController oyuncu prefabı. WASD, mouse, Space, Left Shift, Escape/tıklama, R ve düşme sonrası kurtarma desteklenir. Deniz yalnızca görseldir. HUD nişangâh ve kontrol bilgisi gösterir. Eşya taşıma, vinç, tekne sürüşü, düşman, satış ve multiplayer bu aşamanın dışında kalır.
 
 ## Henüz kararlaştırılmayanlar
 

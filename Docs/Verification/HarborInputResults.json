@@ -1,0 +1,16 @@
+{
+  "diagnostics": [],
+  "compileMs": 135,
+  "executeMs": 2494,
+  "assemblyName": "PipelineRunScript_HarborInputChecks_2bc5fc71c0e64bfba0bc58a4c6fd5a4d",
+  "success": true,
+  "result": {
+    "LivePlayer": true,
+    "W": "(0.00, 0.00, 4.00)",
+    "S": "(0.00, -0.03, -4.00)",
+    "A": "(-4.00, -0.04, 0.00)",
+    "D": "(4.00, -0.04, 0.00)",
+    "LeftShift": "walk=3.999976, sprint=6.500014",
+    "AutomaticFallRecovery": "(0.00, 1.23, 4.00)"
+  }
+}
