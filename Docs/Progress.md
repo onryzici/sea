@@ -2,7 +2,58 @@
 
 ## Mevcut durum — 2026-10-06
 
-Hazırlık, gerçek Unity proje başlangıcı, Aşama 1 birinci şahıs/yürünebilir liman ve Aşama 2 yerel fizik tabanlı hurda taşıma tamamlandı. Kök: `/Users/trexoinnovation/salvage`. İlk incelemede klasör tamamen boştu; resmi Universal 3D şablonundan oluşturulan proje korunarak geliştirildi. Aşama 2 başlangıcında Git temizdi (önceki commit dd781b0); kullanıcı değişikliği silinmedi.
+Hazırlık, Aşama 1/2 ve Aşama 3 iki oyunculu direct-IP prototipi uygulanmıştır. Aşama 3 çekirdek ağ/fizik kontrolleri gerçek Editor host + macOS standalone client ile geçti; fiziksel klavye/mouse ile tam iki pencere turu hâlâ manuel kontroldür. Kök: `/Users/trexoinnovation/salvage`. Başlangıç commit'i d6155e6 ve Git temizdi; mevcut kullanıcı değişikliği silinmedi. Aşağıdaki Aşama 1/2 bölümleri o aşamaların tarihsel sonuçlarını korur; güncel ağ ve arka plan ayarları bu bölümde belirtilmiştir.
+
+## Aşama 3 — iki oyuncu ve ortak hurda
+
+### Uygulama ve otorite
+
+- Canlı Editor bağlantısı yeniden doğrulandı: HarborPrototype, gerçek HarborPrototypeGenerated/Harbor/StaticBoat, oyuncu ve üç hurda okundu; Console başlangıç durumu ayrıldı. Sahne/prefab/Inspector bağlantıları Editor üzerinden üretildi; ham YAML yazılmadı. SampleScene, mevcut liman geometrisi, offline oyuncu ve hurda prefablarının GUID'leri korundu.
+- NGO 2.13.3 + Unity Transport kullanılıyor. UPM manifest isteği Transport 2.6.0; Unity 6000.5.6f1 bunu builtin 6.5.0 olarak çözüyor (lock ve canlı paket listesi). Unity/URP 17.5.0 ve ilgisiz paket sürümleri değiştirilmedi.
+- Bağlantı paneli Host/Client/Kes/Devam, IPv4/port ve durum/hata mesajı içerir; varsayılan 127.0.0.1:7777. Rol sürekli görünür. Tab paneli açar ve imleci bırakır; Escape yalnızca imleci bırakır, panel kapalıyken tıklama tekrar kilitler. Panel açıkken oyun input'u kapalıdır. runInBackground=true ve 60 FPS hedefi iki pencere testini destekler. Odak kaybı action map'i kapatır, bekleyen hareket/eylem isteklerini temizler; ağ ve fizik durmaz.
+- Network oyuncusu bağlantı onayıyla oluşturulur; en çok iki oyuncu ve farklı spawn'lar. Ağ prefabında motor/input/camera/AudioListener başlangıçta kapalıdır; yalnız owner spawn'ında açılır, remote oluşturulması yerel imleci etkilemez. Yerel HUD yalnızca owner'da; diğer oyuncu renkli kapsül ve bakış işaretidir. Offline akış bağlantı kurulana kadar bağımsız çalışır; kesilince tek oyuncu/üç yerel hurda geri açılır.
+- Oyuncu hareketi **yerel CharacterController tahmini + server doğrulamalı pose yayınlama** modelidir. Konum/yaw/pitch en çok 20 Hz gönderilir; sender/ownership, finite değerler, alan/hız/delta sınırları ve remote server CharacterController çarpışması doğrulanır. Server pose'u diğer oyunculara interpolasyonla gösterilir. Tutma hedefi client tarafından ayrı bir eşya konumu olarak gönderilmez: kabul edilen oyuncu/kamera pose'undan server hold point üretir. Tam reconciliation, lag compensation ve güçlü anti-cheat değildir; host güvenilir kabul edilir, diğer oyuncuyla temas veya yüksek gecikmede düzeltme sıçraması olabilir.
+- Üç NetworkScrap daima server ownership'inde kalır. Yalnız server Rigidbody/PhysicsCarry kuvveti ve ScrapItem kurtarması çalışır; client NetworkRigidbody kopyaları kinematic, kurtarma kapalıdır. Tut/bırak RPC'si sender, 2,5 m raycast/görüş, güncel pose, tek eşya/tek taşıyıcı ve 0,1 s pickup sıklığı kontrol eder. Pose güncellemeleri rate/hız/mesafe açısından sınırlıdır. Client konumu hurdaya doğrudan uygulanmaz. Accept sonrası NetworkVariable tutma durumu hareket katsayısını ve ağır koşu yasağını owner'a uygular; ret/drop/despawn geri yükler.
+- Taşıyan oyuncu–eşya collision pair'i hem server'da hem owner client kopyasında geçici ignore edilir, önceki değer bırakma/despawn'da geri yüklenir. Çevre çarpışmaları açık kalır. R/düşmede server önce bırakır, sonra epoch'lu rescue ack ile oyuncuyu kendi spawn'ına döndürür; eski pose paketleri reddedilir. Client ayrılınca taşıma kaldırılır. Host migration yoktur.
+- `SalvageCrew/Setup Multiplayer Prototype` iki kez çalıştırıldı: bir session, bir EventSystem, üç offline hurda, dört network prefab kaydı. Geometriyi yeniden kurmaz ve mevcut prefab ayarlarını korur. Tam Harbor kurulum aracı da ağ bağlantılarını yeniden bağlar; bu tam aracın kendi generated kökünü değiştirme uyarısı hâlâ geçerlidir.
+
+### Gerçek doğrulama sonuçları
+
+| Kontrol | Sonuç |
+| --- | --- |
+| C# derleme | Son recompile: 0 hata / 0 uyarı |
+| macOS build | Development standalone başarılı; son build 11,777 s, 0 hata / 1 bilinen Pipeline uyarısı |
+| İki gerçek instance | Editor HOST + çalıştırılan macOS CLIENT, 127.0.0.1; iki oyuncu/üç ortak NetworkObject, owner başına tek aktif kamera/input/motor |
+| Hareket/bakış | Client yürüyüşü ve host bakışı karşı tarafta okundu; kamera/input remote'da kapalı |
+| Hurda otoritesi | Host dynamic/recovery açık; client kinematic/recovery kapalı; bütün hurda ownership=0 |
+| Host taşıması | Kasa iskele → rampa → güverte; client'taki konum aynı sonucu gösterdi; bırakılan kasa hız 0 ile yerleşti |
+| Client taşıması | Hafif kutu aynı rotada host tarafından görüldü; motor/kasa kabul edildi; her iki oyuncu üç türü ayrı ayrı tuttu |
+| Ağırlık | Kabulden sonra 0,95 / 0,75 / 0,50; motor koşusu false; bırakma/R sonrası 1/true |
+| Meşgul eşya reddi | Host'un tuttuğu kasayı client istedi: “Başka bir oyuncu taşıyor”, kontrol değişmedi; bu test yarış diye sayılmadı |
+| Gerçek eşzamanlı yarış | İki gerçek instance aynı boş kasaya planlanmış UTC ile RPC gönderdi. İlk tur 3 ms fark: host kazandı. Çarpışma düzeltmeli tur 8 ms fark: client kazandı, host reddedildi. Her tur tek taşıyıcı, server ownership korundu. Prefab başlangıç ayarı sonrası son smoke turu 74 ms farkla tek client taşıyıcı üretti; daha yakın yarış kanıtı ilk iki turdur |
+| Taşıyan client ayrılması | Motor ve son build'de kasa serbest kaldı; client oyuncusu kaldırıldı, host simülasyonu devam etti |
+| Geç katılma | Güvertedeki eşya konumları korundu; üç son reconnect turunda host'un tuttuğu kasa holder=0 doğru görüldü |
+| Yeniden bağlanma | Üç son döngüde tam iki oyuncu/üç hurda; shutdown sonrası bir offline oyuncu/üç yerel hurda/tek session/tek EventSystem, network oyuncusu 0 |
+| R ve oyuncu düşmesi | Client R tutmayı kaldırıp spawn'a döndü; host R motor/kasa tutmayı kaldırdı. Son client kasayı tutarken iskele kenarından gerçekten yürüyerek denize düştü; spawn (−0,9; 1,23; 4,9), tutma yok, normal hareket |
+| Hurda deniz kurtarması | Server motoru deniz altı test fixture'ına aldı; gerçek FixedUpdate/1,5 s kurtarma sonrası başlangıca döndü, hız 0; client sonucu gördü |
+| Host kapanışı | Client açık panel/SOLO moduna “Host bağlantısı kapandı… host shutting down” mesajıyla döndü; bilinçli kesme ayrı mesaj |
+| Gecikme/paket kaybı | Gerçek loopback UDP proxy: **her yönde 100 ms (yaklaşık 200 ms ek RTT), %1 kayıp**. Son build client motoru rampadan güverteye taşıdı, 0 exception. Hareket sırasında gecikme görünür; durunca replica farkı≈0,0044 m |
+| Offline regresyon | 12 motor/collider, 24 taşıma, 18 güvenlik/input, 7 WASD/Shift/düşme ve 5 panel/odak kontrolü geçti |
+| Console | Son oyun oturumlarında iki probe da 0 error/exception; son cursor 73 sonrası yeni error/warning yok. Son derleme tek eski RuntimePipelineConfig uyarısıyla geçti; aradaki araç hataları aşağıda ayrı belirtilir |
+
+Build: `Builds/Stage3/macOS/SalvageCrew.app` (Git dışında). [Tek kişilik test listesi](MultiplayerTest.md), [ölçümler ve iki instance snapshot'ları](Verification/Stage3Results.json), [son prefab/build smoke sonuçları](Verification/Stage3FinalSmoke.json), [host güvertede kasa](Screenshots/Stage3HostCarry.png). Son prefab ayarından sonra gerçek iki instance ile client motoru tekrar rampadan güverteye taşıdı, R/ayrılma/yeniden bağlantı/host kapanışı tekrar geçti; her iki hata sayısı 0. Eski sahne GameObject adları ve Transform konum/rotasyon/ölçek/parent alanları d6155e6 ile karşılaştırıldı: değişiklik yok. Strict proje/meta/GUID kontrolü 247 assette 0 hata/uyarı; prefab ve session Inspector referansları tamdır. Editor HarborPrototype açık/Play kapalı bırakıldı; test client/proxy süreçleri kapatıldı, runInBackground=true istenen proje ayarı olarak korundu. Ekran görüntüsü gerçek Game view/HUD'dan alındı ve incelendi; geçici Assets kopyası kaldırıldı. Host/client rol paneli native ekranlarda da görüldü. Test probe development-only ve opt-in'dir; normal açılışta etkinleşmez, release build'de bulunmaz. Hareket testleri gerçek motor adımını, tutma testleri gerçek RPC ve Rigidbody/FixedUpdate'ı kullanır; ağ simülasyonu taklit edilmedi.
+
+### Denemeler, uyarılar ve sınırlar
+
+- İlk NGO 2.7.0 denemesi bu Unity sürümünün EntityId API'siyle paket içinde 12 CS0619 ve geçici Burst assembly çözüm hatası üretti. Paket kaynaklarına yama yapılmadı; UPM'nin bu Editor için çözdüğü 2.13.3 seçildi ve yeniden derleme temiz geçti. Bu deneme hataları mevcut gameplay hatası diye gizlenmedi. En yeni registry sürümü değil, uyumlu çözülen sürüm kullanıldı.
+- İlk standalone bağlantı denemesinde Editor kareleri ilerlemedi ve bağlantı timeout verdi. Auto-tick/gerçek kare ilerlemesi tekrar doğrulanıp düşük çözünürlüklü client ile test tamamlandı; ilk deneme başarı sayılmadı. Import/domain reload sırasında bazı CLI çağrıları geçici bağlantı hatası verdi; hazır durumdan sonra tekrarlandı. Son prefab kaydı/recompile kuyruğunda Pipeline 5/30 s timeout, HTTP connection reset ve headers-sent araç hataları da kaydedildi. Bu aralıktaki build “uncompiled code changes” uyarısı verdi; son teslim build'i için derleme up_to_date/Console temizliği doğrulanıp build tekrarlandı. Bunlar oyun exception'ı veya temiz test diye raporlanmadı.
+- Gecikmeli ilk ağır taşıma turu başarısızdı: client oyuncu–kinematic hurda çarpışması kapalı değildi. Pair bazlı ignore/restorasyon eklendi; yeniden build ve aynı ağır rota geçti. Genel layer/pipeline ayarları değiştirilmedi.
+- Server'daki remote oyuncuyu doğrudan deniz altına ışınlayan fixture, gelen client pose'u ile yarıştığı için spawn doğrulaması için yeterli değildi; başarı sayılmadı. Yerine client'ın gerçek motorla iskeleden yürüyerek düşmesi doğrulandı.
+- Odak kaybı testi OnApplicationFocus callback'ini simüle edip gerçek Input System W state'iyle hareketin durduğunu ve panel engelini ölçtü. **Native pencere değişiminde fiziksel W basılı tutma ve fiziksel klavye/mouse ile tam network turu tamamlanmadı.** Ek network keyboard injection denemeleri unfocused Editor'da ilk pickup assertion'ını geçmedi; başarı sayılmadı. Native UI köprüsü sonradan “Sky Computer Use native pipe startup failed” verdi. Offline gerçek Input System E/Escape/click/R regresyonu geçti; kalan insan testi MultiplayerTest'tedir.
+- NUnit EditMode süiti çalıştırılmadı. Gerçek ağ testleri canlı Play/standalone ve opt-in probe ile yapıldı. Yarış iki örnekle geçti; uzun süreli/stres, internet/WAN, Windows/Linux ve kötü niyetli client testi yapılmadı. Hareket doğrulaması prototip düzeyindedir; tam reconciliation/anti-cheat değildir.
+- Pipeline RuntimePipelineConfig eksikliği eski araç uyarısıdır; Player'da Pipeline sunucusu bilerek kapalı kalır. Önceki immutable URP package uyarısına müdahale edilmedi. URP ve render assetlerinde değişiklik yok. Steam/Relay/Lobby/hesap, vinç, tekne hareketi, satış, düşman ve görsel iyileştirme eklenmedi.
+
+Değişiklik grupları: HarborPrototype sahne bağlantıları/panel, dört network prefab + kayıt listesi ve geçici kapsül materyali, beş network/session/HUD/probe scripti ve Editor kurulum aracı; motor/input/carry/item'e sınırlı adaptörler; NGO/UTP manifest/lock; PlayerSettings pencere/arka plan; AGENTS/GameBrief/Progress ve test/kanıt belgeleri. Bütün Unity assetleri meta'larıyla tutulur; cache/build/log/probe çalışma dosyaları Git dışındadır. Sonraki aşamanın kapsamı kullanıcı tarafından ayrıca belirlenmelidir; önce manuel iki pencere listesini uygulamak önerilir.
 
 ## Aşama 2 — fizik tabanlı tutma, taşıma ve bırakma
 
@@ -106,7 +157,7 @@ Sahne adı ve nesneler dosya tahminiyle değil, çalışan Editor üzerinden oku
 
 ## Kurulu paketler
 
-Manifest ve lock dosyaları kaynak kontrolüne dahildir. Unity ile gelen yerel şablonun sürümleri kullanıldı; eklenen tek araç paketi Pipeline'dır.
+Manifest ve lock kaynak kontrolündedir. Şablon sürümleri korundu; Pipeline araç paketi ve Aşama 3 NGO/Transport eklendi.
 
 | Paket | Sürüm |
 | --- | --- |
@@ -122,8 +173,10 @@ Manifest ve lock dosyaları kaynak kontrolüne dahildir. Unity ile gelen yerel �
 | Rider Editor | 3.0.38 |
 | Visual Studio Editor | 2.0.26 |
 | Pipeline | 0.8.0-exp.1 |
+| Netcode for GameObjects | 2.13.3 |
+| Unity Transport | 6.5.0 builtin (manifest isteği 2.6.0) |
 
-Unity modülleri manifestte listelenir. Multiplayer Center şablonun araç paketidir; bir networking çözümü veya uygulanmış multiplayer sistemi değildir. Ağ paketi/transport seçimi bekliyor.
+Unity modülleri manifestte listelenir. Multiplayer Center yalnız şablon araç paketidir; uygulanan ağ çözümü Aşama 3 NGO/Transport direct-IP'dir.
 
 ## Hazırlık aşamasının geçmiş kontrolleri
 
@@ -144,7 +197,7 @@ Unity modülleri manifestte listelenir. Multiplayer Center şablonun araç paket
 | Hazırlık — Unity başlangıcı | Gerçek proje, pipeline, Editor bağlantısı, Play/build kontrolü | Tamamlandı |
 | 1 — Birinci şahıs liman | Oyuncu, kamera, iskele/rampa/sabit tekne ve HUD | Tamamlandı |
 | 2 — Fizik tabanlı hurda taşıma | Yerel tutma, taşıma, bırakma ve kurtarma | Tamamlandı |
-| Sonraki — İki oyuncu temeli | Ağ paketi/transport, host/client ve oyuncu eşleme | Başlanmadı |
+| 3 — İki oyuncu ve ortak hurda | Direct-IP host/client, oyuncu eşleme ve host fiziği | Uygulandı; gerçek iki instance çekirdek testleri geçti, manuel kullanıcı turu bekliyor |
 | Sonraki — Ortak tekne ve yük | Host otoriteli fizik | Başlanmadı |
 | Sonraki — Hurda ve vinç | Çıkarma ve güverteye yükleme | Başlanmadı |
 | Sonraki — Liman ve ekonomi | Satış ve basit ekipman geliştirmesi | Başlanmadı |
@@ -165,7 +218,7 @@ Her görev yalnızca açıkça istenen aşamayı uygular. Aşama 1'de tekne stat
 
 ## Kalanlar ve sonraki aşama
 
-Sonraki planlanan aşama iki oyuncu temeli; kapsamı ayrıca istenmeli. Ticari hedef platformlar ve networking tercihi henüz belirlenmedi. Kurulu 6000.5.6f1 korundu; LTS sürümüne geçiş yapılmadı. Windows/Linux build ve iki oyunculu test yapılmadı. Pipeline paketi experimental sürümdür. Son başarılı Aşama 2 kontrollerinde bilinen oyun engeli yok; gerçek insan kullanımı ve standalone çalıştırma kontrolü hâlâ önerilir. Multiplayer, vinç, fırlatma, satış, düşman veya tekne hareketi eklenmedi.
+Güncel durum: Aşama 3 NGO/UTP direct-IP ve gerçek iki instance testleri yukarıdadır; kapsam genişletmeden önce manuel kullanıcı turu önerilir. Ticari platformlar ve internet oturum keşfi henüz belirlenmedi. 6000.5.6f1 korundu; LTS geçişi ve Windows/Linux build yapılmadı. Pipeline experimental'dır. Vinç, fırlatma, satış, düşman veya hareketli tekne eklenmedi.
 
 Console geçmişinde URP Core paketinin `RuntimeDebugWindow_PanelSettings.asset` dosyasının immutable package içinde değiştiği uyarısı da görüldü. Paket kaynakları elle değiştirilmedi; bu uyarı package cache/import sırasında ortaya çıktı. Kaynak kontrolüne dahil olmayan Library/PackageCache içindedir; kök nedeni bu hazırlıkta giderilmedi. Build başarılı ve son Console kontrolünde compile hatası yok; ileride paket importunda yeniden kontrol edilmeli.
 

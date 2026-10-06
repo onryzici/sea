@@ -1,0 +1,1084 @@
+{
+  "date": "2026-10-06",
+  "build": {
+    "result": "Succeeded",
+    "buildTimeMs": 11777,
+    "errors": 0,
+    "warnings": 1,
+    "warning": "Known missing RuntimePipelineConfig only",
+    "path": "/Users/trexoinnovation/salvage/Builds/Stage3/macOS/SalvageCrew.app"
+  },
+  "purpose": "Repeat actual two-instance tests after network prefab starts with disabled owner-only components",
+  "raceNote": "Additional close-time requests 74 ms apart, single carrier; stricter earlier races at 3 and 8 ms remain in Stage3Results",
+  "geometryBaselineCheck": {
+    "oldGameObjectNamesChanged": [],
+    "oldTransformFieldsChanged": []
+  },
+  "smoke": {
+    "connected": {
+      "host": {
+        "frame": 2288,
+        "sequence": 34,
+        "errors": 0,
+        "time": 40.618282318115234,
+        "role": "HOST",
+        "status": "Host: 2/2 oyuncu bağlı.",
+        "action": "host",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 0,
+        "panel": true,
+        "focused": true,
+        "players": [
+          {
+            "client": 1,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "position": {
+              "x": -0.8999999761581421,
+              "y": 1.2300000190734863,
+              "z": 4.900000095367432
+            },
+            "forward": {
+              "x": 1.0000001192092896,
+              "y": 0,
+              "z": -1.1920928955078125e-7
+            },
+            "held": "Nobody",
+            "speedMultiplier": 1,
+            "sprint": true,
+            "feedback": ""
+          },
+          {
+            "client": 0,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "position": {
+              "x": 0,
+              "y": 1.2299995422363281,
+              "z": 4
+            },
+            "forward": {
+              "x": 0.8480480909347534,
+              "y": 0,
+              "z": 0.5299192667007446
+            },
+            "held": "Nobody",
+            "speedMultiplier": 1,
+            "sprint": true,
+            "feedback": ""
+          }
+        ],
+        "items": [
+          {
+            "id": 4,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 35,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5000001192092896,
+              "z": 6
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 2,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 3,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 3,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 12,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5250000953674316,
+              "z": 4
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": false,
+            "recovery": true
+          }
+        ]
+      },
+      "client": {
+        "frame": 1829,
+        "sequence": 54,
+        "errors": 0,
+        "time": 31.822839736938477,
+        "role": "CLIENT",
+        "status": "Client bağlı — 127.0.0.1:7777.",
+        "action": "client",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 0,
+        "panel": true,
+        "focused": true,
+        "players": [
+          {
+            "client": 0,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "position": {
+              "x": 0,
+              "y": 1.2299997806549072,
+              "z": 4
+            },
+            "forward": {
+              "x": 0.8480480909347534,
+              "y": 0,
+              "z": 0.5299192667007446
+            },
+            "held": "Nobody",
+            "speedMultiplier": 1,
+            "sprint": true,
+            "feedback": ""
+          },
+          {
+            "client": 1,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "position": {
+              "x": -0.8999999761581421,
+              "y": 1.2300000190734863,
+              "z": 4.900000095367432
+            },
+            "forward": {
+              "x": 1.0000001192092896,
+              "y": 0,
+              "z": -1.1920928955078125e-7
+            },
+            "held": "Nobody",
+            "speedMultiplier": 1,
+            "sprint": true,
+            "feedback": ""
+          }
+        ],
+        "items": [
+          {
+            "id": 3,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 12,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5250000953674316,
+              "z": 4
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 2,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 3,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 4,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 35,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5000001192092896,
+              "z": 6
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": true,
+            "recovery": false
+          }
+        ]
+      }
+    },
+    "heavyDeck": {
+      "host": {
+        "frame": 2637,
+        "sequence": 34,
+        "errors": 0,
+        "time": 47.62181854248047,
+        "role": "HOST",
+        "status": "Host: 2/2 oyuncu bağlı.",
+        "action": "host",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 0,
+        "panel": true,
+        "focused": true,
+        "players": [
+          {
+            "client": 1,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "position": {
+              "x": 6.1945624351501465,
+              "y": 1.5299999713897705,
+              "z": 7.498962879180908
+            },
+            "forward": {
+              "x": 0.9998250603675842,
+              "y": 1.2885660538586308e-8,
+              "z": 0.01870483160018921
+            },
+            "held": 4,
+            "speedMultiplier": 0.5,
+            "sprint": false,
+            "feedback": ""
+          },
+          {
+            "client": 0,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "position": {
+              "x": 0,
+              "y": 1.2299995422363281,
+              "z": 4
+            },
+            "forward": {
+              "x": 0.8480480909347534,
+              "y": 0,
+              "z": 0.5299192667007446
+            },
+            "held": "Nobody",
+            "speedMultiplier": 1,
+            "sprint": true,
+            "feedback": ""
+          }
+        ],
+        "items": [
+          {
+            "id": 4,
+            "holder": 1,
+            "owner": 0,
+            "mass": 35,
+            "position": {
+              "x": 7.311731815338135,
+              "y": 2.8719828128814697,
+              "z": 7.520333766937256
+            },
+            "velocity": {
+              "x": 1.1481367349624634,
+              "y": 0.014064488932490349,
+              "z": 0.022088386118412018
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 2,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 3,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 3,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 12,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5250000953674316,
+              "z": 4
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": false,
+            "recovery": true
+          }
+        ]
+      },
+      "client": {
+        "frame": 2204,
+        "sequence": 59,
+        "errors": 0,
+        "time": 38.88954162597656,
+        "role": "CLIENT",
+        "status": "Client bağlı — 127.0.0.1:7777.",
+        "action": "walk",
+        "result": "Reached",
+        "lastError": "",
+        "toggleUtcMillis": 1791282784978,
+        "panel": true,
+        "focused": true,
+        "players": [
+          {
+            "client": 0,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "position": {
+              "x": 0,
+              "y": 1.2299997806549072,
+              "z": 4
+            },
+            "forward": {
+              "x": 0.8480480909347534,
+              "y": 0,
+              "z": 0.5299192667007446
+            },
+            "held": "Nobody",
+            "speedMultiplier": 1,
+            "sprint": true,
+            "feedback": ""
+          },
+          {
+            "client": 1,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "position": {
+              "x": 6.1945624351501465,
+              "y": 1.5299994945526123,
+              "z": 7.498962879180908
+            },
+            "forward": {
+              "x": 0.9998250603675842,
+              "y": 1.2885660538586308e-8,
+              "z": 0.01870483160018921
+            },
+            "held": 4,
+            "speedMultiplier": 0.5,
+            "sprint": false,
+            "feedback": ""
+          }
+        ],
+        "items": [
+          {
+            "id": 3,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 12,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5250000953674316,
+              "z": 4
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 2,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 3,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 4,
+            "holder": 1,
+            "owner": 0,
+            "mass": 35,
+            "position": {
+              "x": 7.1280293464660645,
+              "y": 2.8688149452209473,
+              "z": 7.516634941101074
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": true,
+            "recovery": false
+          }
+        ]
+      }
+    },
+    "race": {
+      "host": {
+        "frame": 2860,
+        "sequence": 36,
+        "errors": 0,
+        "time": 52.47982406616211,
+        "role": "HOST",
+        "status": "Host: 2/2 oyuncu bağlı.",
+        "action": "toggleAt",
+        "result": "Scheduled RPC submitted",
+        "lastError": "",
+        "toggleUtcMillis": 1791282794754,
+        "panel": true,
+        "focused": true,
+        "players": [
+          {
+            "client": 1,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "position": {
+              "x": -0.29973340034484863,
+              "y": 1.2299997806549072,
+              "z": 4.900000095367432
+            },
+            "forward": {
+              "x": 0.7517533302307129,
+              "y": -0.548706591129303,
+              "z": -0.3657706379890442
+            },
+            "held": 3,
+            "speedMultiplier": 0.75,
+            "sprint": true,
+            "feedback": ""
+          },
+          {
+            "client": 0,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "position": {
+              "x": 0,
+              "y": 1.2299995422363281,
+              "z": 4
+            },
+            "forward": {
+              "x": 0.7540518045425415,
+              "y": -0.6568151712417603,
+              "z": -1.4156103134155273e-7
+            },
+            "held": "Nobody",
+            "speedMultiplier": 1,
+            "sprint": true,
+            "feedback": "Başka bir oyuncu taşıyor"
+          }
+        ],
+        "items": [
+          {
+            "id": 4,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 35,
+            "position": {
+              "x": 7.794337749481201,
+              "y": 1.8000000715255737,
+              "z": 7.5294623374938965
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 2,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 3,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 3,
+            "holder": 1,
+            "owner": 0,
+            "mass": 12,
+            "position": {
+              "x": 0.9333440661430359,
+              "y": 1.7616050243377686,
+              "z": 4.300037384033203
+            },
+            "velocity": {
+              "x": -0.5948384404182434,
+              "y": 0.22823351621627808,
+              "z": 0.2894228994846344
+            },
+            "kinematic": false,
+            "recovery": true
+          }
+        ]
+      },
+      "client": {
+        "frame": 2455,
+        "sequence": 63,
+        "errors": 0,
+        "time": 43.93962860107422,
+        "role": "CLIENT",
+        "status": "Client bağlı — 127.0.0.1:7777.",
+        "action": "toggleAt",
+        "result": "Scheduled RPC submitted",
+        "lastError": "",
+        "toggleUtcMillis": 1791282794680,
+        "panel": true,
+        "focused": true,
+        "players": [
+          {
+            "client": 0,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "position": {
+              "x": 0,
+              "y": 1.2299995422363281,
+              "z": 4
+            },
+            "forward": {
+              "x": 0.7540517449378967,
+              "y": -0.6568152904510498,
+              "z": -1.862645149230957e-7
+            },
+            "held": "Nobody",
+            "speedMultiplier": 1,
+            "sprint": true,
+            "feedback": ""
+          },
+          {
+            "client": 1,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "position": {
+              "x": -0.29973340034484863,
+              "y": 1.2299997806549072,
+              "z": 4.900000095367432
+            },
+            "forward": {
+              "x": 0.7517534494400024,
+              "y": -0.5487065315246582,
+              "z": -0.3657708764076233
+            },
+            "held": 3,
+            "speedMultiplier": 0.75,
+            "sprint": true,
+            "feedback": ""
+          }
+        ],
+        "items": [
+          {
+            "id": 3,
+            "holder": 1,
+            "owner": 0,
+            "mass": 12,
+            "position": {
+              "x": 0.9756659865379333,
+              "y": 1.7453665733337402,
+              "z": 4.279445648193359
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 2,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 3,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 4,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 35,
+            "position": {
+              "x": 7.794337749481201,
+              "y": 1.8000003099441528,
+              "z": 7.5294575691223145
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": true,
+            "recovery": false
+          }
+        ]
+      }
+    },
+    "disconnect": {
+      "host": {
+        "frame": 5245,
+        "sequence": 36,
+        "errors": 0,
+        "time": 94.54296875,
+        "role": "HOST",
+        "status": "Client ayrıldı; taşıdığı hurda server'da serbest bırakıldı.",
+        "action": "toggleAt",
+        "result": "Scheduled RPC submitted",
+        "lastError": "",
+        "toggleUtcMillis": 1791282794754,
+        "panel": true,
+        "focused": true,
+        "players": [
+          {
+            "client": 0,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "position": {
+              "x": 0,
+              "y": 1.2299995422363281,
+              "z": 4
+            },
+            "forward": {
+              "x": 0.7540518045425415,
+              "y": -0.6568151712417603,
+              "z": -1.4156103134155273e-7
+            },
+            "held": "Nobody",
+            "speedMultiplier": 1,
+            "sprint": true,
+            "feedback": "Başka bir oyuncu taşıyor"
+          }
+        ],
+        "items": [
+          {
+            "id": 4,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 35,
+            "position": {
+              "x": 7.794337749481201,
+              "y": 1.8000000715255737,
+              "z": 7.5294623374938965
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 2,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 3,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 3,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 12,
+            "position": {
+              "x": 0.8278961181640625,
+              "y": 1.5249985456466675,
+              "z": 4.351342678070068
+            },
+            "velocity": {
+              "x": 0.0001322263851761818,
+              "y": -0.000031635165214538574,
+              "z": 0.0003431156510487199
+            },
+            "kinematic": false,
+            "recovery": true
+          }
+        ]
+      },
+      "client": {
+        "frame": 4923,
+        "sequence": 64,
+        "errors": 0,
+        "time": 85.95618438720703,
+        "role": "SOLO",
+        "status": "Bağlantı kesildi. Tek oyuncu moduna dönüldü.",
+        "action": "disconnect",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 1791282794680,
+        "panel": true,
+        "focused": true,
+        "players": [],
+        "items": []
+      }
+    },
+    "reconnect": {
+      "host": {
+        "frame": 5271,
+        "sequence": 36,
+        "errors": 0,
+        "time": 94.9590072631836,
+        "role": "HOST",
+        "status": "Host: 2/2 oyuncu bağlı.",
+        "action": "toggleAt",
+        "result": "Scheduled RPC submitted",
+        "lastError": "",
+        "toggleUtcMillis": 1791282794754,
+        "panel": true,
+        "focused": true,
+        "players": [
+          {
+            "client": 0,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "position": {
+              "x": 0,
+              "y": 1.2299995422363281,
+              "z": 4
+            },
+            "forward": {
+              "x": 0.7540518045425415,
+              "y": -0.6568151712417603,
+              "z": -1.4156103134155273e-7
+            },
+            "held": "Nobody",
+            "speedMultiplier": 1,
+            "sprint": true,
+            "feedback": "Başka bir oyuncu taşıyor"
+          },
+          {
+            "client": 2,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "position": {
+              "x": -0.8999999761581421,
+              "y": 1.244443416595459,
+              "z": 4.900000095367432
+            },
+            "forward": {
+              "x": 1.0000001192092896,
+              "y": 0,
+              "z": -1.1920928955078125e-7
+            },
+            "held": "Nobody",
+            "speedMultiplier": 1,
+            "sprint": true,
+            "feedback": ""
+          }
+        ],
+        "items": [
+          {
+            "id": 4,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 35,
+            "position": {
+              "x": 7.794337749481201,
+              "y": 1.8000000715255737,
+              "z": 7.5294623374938965
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 2,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 3,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "id": 3,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 12,
+            "position": {
+              "x": 0.8278962969779968,
+              "y": 1.5250000953674316,
+              "z": 4.351342678070068
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": false,
+            "recovery": true
+          }
+        ]
+      },
+      "client": {
+        "frame": 4947,
+        "sequence": 65,
+        "errors": 0,
+        "time": 86.35620880126953,
+        "role": "CLIENT",
+        "status": "Client bağlı — 127.0.0.1:7777.",
+        "action": "client",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 1791282794680,
+        "panel": true,
+        "focused": true,
+        "players": [
+          {
+            "client": 0,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "position": {
+              "x": 0,
+              "y": 1.2299995422363281,
+              "z": 4
+            },
+            "forward": {
+              "x": 0.7540517449378967,
+              "y": -0.6568152904510498,
+              "z": -1.862645149230957e-7
+            },
+            "held": "Nobody",
+            "speedMultiplier": 1,
+            "sprint": true,
+            "feedback": ""
+          },
+          {
+            "client": 2,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "position": {
+              "x": -0.8999999761581421,
+              "y": 1.2300000190734863,
+              "z": 4.900000095367432
+            },
+            "forward": {
+              "x": 1.0000001192092896,
+              "y": 0,
+              "z": -1.1920928955078125e-7
+            },
+            "held": "Nobody",
+            "speedMultiplier": 1,
+            "sprint": true,
+            "feedback": ""
+          }
+        ],
+        "items": [
+          {
+            "id": 3,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 12,
+            "position": {
+              "x": 0.8278962969779968,
+              "y": 1.5250000953674316,
+              "z": 4.351342678070068
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 2,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 3,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "id": 4,
+            "holder": "Nobody",
+            "owner": 0,
+            "mass": 35,
+            "position": {
+              "x": 7.794337749481201,
+              "y": 1.8000000715255737,
+              "z": 7.5294623374938965
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "kinematic": true,
+            "recovery": false
+          }
+        ]
+      }
+    },
+    "hostShutdown": {
+      "host": {
+        "frame": 5300,
+        "sequence": 37,
+        "errors": 0,
+        "time": 95.575439453125,
+        "role": "SOLO",
+        "status": "Bağlantı kesildi. Tek oyuncu moduna dönüldü.",
+        "action": "disconnect",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 1791282794754,
+        "panel": true,
+        "focused": true,
+        "players": [],
+        "items": []
+      },
+      "client": {
+        "frame": 4983,
+        "sequence": 65,
+        "errors": 0,
+        "time": 86.95626068115234,
+        "role": "SOLO",
+        "status": "Host bağlantısı kapandı veya bağlantı başarısız. Disconnected due to host shutting down.",
+        "action": "client",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 1791282794680,
+        "panel": true,
+        "focused": true,
+        "players": [],
+        "items": []
+      }
+    }
+  }
+}

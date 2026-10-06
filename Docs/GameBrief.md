@@ -29,6 +29,10 @@ Hazırlık sonrasında ilk oynanabilir aşama eklendi: HarborPrototype, kıyı/i
 
 İskelede üç hurda: 3 kg hafif kutu, 12 kg metal kasa ve 35 kg motor. Kamera menzili 2,5 metre; E tutar/bırakır. Eşya Rigidbody kuvvetleriyle takip eder, çevreyle çarpışır ve ağır eşya daha yavaş takip eder. Taşıma yürüme hızını azaltır; motor taşırken koşulamaz. HUD hedefi/tutulan eşyayı gösterir. R ve oyuncu kurtarması tutmayı kaldırır; görsel denize düşen hurda kısa gecikmeyle kendi başlangıcına döner. Yerel input ve taşıma fiziği ayrıdır; henüz networking/host otoritesi uygulanmadı. Vinç, fırlatma, satış, düşman ve hareketli tekne kapsam dışındadır.
 
+## Aşama 3 — iki oyunculu ortak hurda
+
+Direct-IP host/client (127.0.0.1:7777 varsayılan), NGO 2.13.3 ve Unity Transport ile aynı limanda iki oyuncu ve üç ortak hurda bulunur. Hurda Rigidbody/kuvvet/kurtarma yalnızca server'da çalışır. Client tutma/bırakma isteği gönderir; server kimlik, menzil, görüş ve tek sahiplik doğrular. Oyuncu CharacterController'ı yerelde tepkili çalışır; server hız/alan/sıklık sınırları ve remote collider hareketiyle pozları doğrulayıp yayınlar. Bu sınırlı co-op modeli tam tahmin/reconciliation veya anti-cheat değildir. Offline oyun bağımsız korunur; bağlantı paneli ve pencere odağı tek bilgisayarda sırayla testi destekler. Steam, Relay, Lobby, hesap ve host migration yoktur. Gerçek doğrulama sonuçları Progress'tedir.
+
 ## Henüz kararlaştırılmayanlar
 
-Başlangıç: Unity 6000.5.6f1, URP 17.5.0, masaüstü ve ilk doğrulama hedefi macOS. Bu sürüm kurulu Editor kullanılarak proje dosyalarına kaydedildi; LTS geçişi yapılmadı. Ticari hedef platformlar, ağ paketi/transport, oturuma katılım yöntemi ve ekipman geliştirmesinin ayrıntıları henüz belirlenmedi. Monetizasyon bu hazırlığın kapsamında değil.
+Başlangıç: Unity 6000.5.6f1, URP 17.5.0, masaüstü ve ilk doğrulama hedefi macOS. LTS geçişi yapılmadı. Ticari hedef platformlar, internette oturum keşfi/katılımı ve ekipman geliştirmesinin ayrıntıları henüz belirlenmedi. Yerel prototip NGO/UTP direct-IP kullanır; monetizasyon kapsam dışıdır.

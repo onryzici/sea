@@ -28,6 +28,8 @@ namespace SalvageCrew
         public bool Grounded => controller != null && controller.isGrounded;
         public event System.Action BeforeRespawn;
         public event System.Action<LocalPlayerInput.Sample> InputSampled;
+        // Optional authority adapter. Offline recovery stays synchronous.
+        public System.Func<bool> RespawnGuard { get; set; }
         public float CarrySpeedMultiplier { get; private set; } = 1f;
         public bool CarryAllowsSprint { get; private set; } = true;
 
@@ -78,6 +80,15 @@ namespace SalvageCrew
         }
 
         public void ReturnToSpawn()
+        {
+            if (RespawnGuard != null && !RespawnGuard()) return;
+            CompleteRespawn();
+        }
+
+        public void ConfigureSpawn(Vector3 position, Quaternion rotation)
+        { spawnPoint = null; initialPosition = position; initialRotation = rotation; }
+
+        public void CompleteRespawn()
         {
             BeforeRespawn?.Invoke();
             controller.enabled = false;

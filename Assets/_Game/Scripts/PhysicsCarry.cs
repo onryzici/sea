@@ -30,14 +30,14 @@ namespace SalvageCrew
             GetComponent<FirstPersonMotor>().BeforeRespawn -= Drop;
         }
         private void Update() { Target = Held == null ? FindTarget() : null; }
-        public ScrapItem FindTarget()
+        public ScrapItem FindTarget(bool includeHeld = false)
         {
             if (view == null) return null;
             foreach (var hit in SortedHits(view.position, view.forward, interactionRange))
             {
                 if (hit.collider.transform.IsChildOf(transform)) continue;
                 var item = hit.collider.GetComponentInParent<ScrapItem>();
-                return item != null && !item.IsHeld ? item : null;
+                return item != null && (includeHeld || !item.IsHeld) ? item : null;
             }
             return null;
         }

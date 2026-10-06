@@ -34,6 +34,7 @@ namespace SalvageCrew
         public float MovementMultiplier => movementMultiplier;
         public bool AllowSprint => allowSprint;
         public bool IsHeld => owner != null;
+        public PhysicsCarry Holder => owner;
 
         private void Awake()
         {

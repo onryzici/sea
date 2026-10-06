@@ -8,7 +8,7 @@
 - Paket sürümlerini projenin `ProjectSettings/ProjectVersion.txt` dosyasında belirtilen Unity sürümüyle uyumlu seç. Makinede kurulu Editor sürümünü proje sürümü sanma.
 - Test edemediğin davranışları test edilmiş diye raporlama. Dosya incelemesi, derleme, EditMode testi ve Play testi sonuçlarını ayrı belirt.
 - Her görev sonunda değişiklikleri, kontrol sonuçlarını, kısa manuel test adımlarını ve kalan sorunları bildir. `Docs/Progress.md` durumunu güncel tut.
-- Ortak tekne ve yük fiziğinde host otoritesi hedefle. Ağ çözümü ve paketleri henüz seçilmedi.
+- Ortak tekne ve yük fiziğinde host otoritesini koru. Aşama 3 NGO 2.13.3 + Unity Transport (Unity 6.5 builtin 6.5.0) kullanır; Relay/Lobby/Steam veya host migration yoktur.
 - İlk prototipte basit şekiller ve geçici materyaller kullan.
 - Unity assetlerini ve klasörlerini `.meta` dosyalarıyla birlikte sürüm kontrolünde tut; GUID'leri koru. Üretilen önbellekleri sürüm kontrolüne alma.
 
@@ -25,8 +25,10 @@
 - `Docs/Progress.md`: aşamalar, inceleme bulguları, doğrulamalar ve bekleyen işler.
 - `Assets/_Game/Scenes`, `Scripts`, `Prefabs`, `Materials`, `Audio`, `Settings`: oyuna ait içerik.
 
-Hazırlık, Aşama 1 liman/birinci şahıs ve Aşama 2 fizik tabanlı hurda taşıma prototipi vardır. Proje Unity 6000.5.6f1, URP 17.5.0 ve masaüstü başlangıç hedefi kullanır. Yerel oyuncu, sabit tekne maketi ve üç hurda prefabı vardır; vinç, tekne sürüşü ve multiplayer henüz yoktur. Sonraki görevlerde yalnızca açıkça istenen aşama uygulanır.
+Hazırlık, Aşama 1 liman/birinci şahıs, Aşama 2 yerel taşıma ve Aşama 3 iki oyunculu direct-IP prototipi vardır. Proje Unity 6000.5.6f1, URP 17.5.0 ve masaüstü başlangıç hedefi kullanır. Vinç, tekne sürüşü, satış ve düşman yoktur. Sonraki görevlerde yalnızca açıkça istenen aşama uygulanır.
 
 Liman sahnesi: `Assets/_Game/Scenes/HarborPrototype.unity`. Yeniden kurulum: `SalvageCrew/Build Harbor Prototype`; yalnızca `HarborPrototypeGenerated` kökünü yeniden üretir. Bu kökte elle yapılan değişiklikler yeniden kurulumda kaybolur; kullanıcı düzenlemelerini korumak için bu komutu çalıştırmadan önce incele. `SampleScene` korunur. `LocalPlayerInput` yalnızca yerel input/imleç işlerini, `FirstPersonMotor` hareket ve kurtarmayı yönetir.
 
-Aşama 2 ek kurulumu: `SalvageCrew/Setup Scrap Carry Prototype`; açık HarborPrototype sahnesine eksik bileşenleri, üç hurda instance'ını ve tek HUD alanını ekler. Var olan hurda instance'larını/prefab ayarlarını yeniden üretmez. `LocalCarryInteraction` yerel input örneğini komuta çevirir; `PhysicsCarry` input cihazı bilmeden hedefleme, sahiplik, kuvvet ve bırakmayı; `ScrapItem` eşya ayarları ve kurtarmayı yönetir. Tutarken parent/Transform ışınlama kullanılmaz. Gelecekte ortak eşya komutlarını ve fizik adımlarını host'a taşı; mevcut yerel yapıyı multiplayer yapılmış sayma.
+Aşama 2 ek kurulumu: `SalvageCrew/Setup Scrap Carry Prototype`; açık HarborPrototype sahnesine eksik bileşenleri, üç hurda instance'ını ve tek HUD alanını ekler. Var olan hurda instance'larını/prefab ayarlarını yeniden üretmez. `LocalCarryInteraction` yerel input örneğini komuta çevirir; `PhysicsCarry` input cihazı bilmeden hedefleme, sahiplik, kuvvet ve bırakmayı; `ScrapItem` eşya ayarları ve kurtarmayı yönetir. Tutarken parent/Transform ışınlama kullanılmaz.
+
+Aşama 3 kurulumu: `SalvageCrew/Setup Multiplayer Prototype`; mevcut limanı yeniden üretmeden ağ prefabları, tek session/panel ve Inspector bağlantılarını tamamlar. Var olan prefab ayarlarını korur. `HarborSession` offline/network geçişini; `NetworkCrewPlayer` yerel CharacterController hareketi, server doğrulaması ve RPC komutlarını; `NetworkScrap` server fizik otoritesi ve tutan oyuncu bilgisini yönetir. Eşya kontrolünü client'a devretme. Offline prefabları bağımsız kalır. Aynı bilgisayar testi: Editor host + macOS client, 127.0.0.1:7777; Tab panel, Escape imleç. Arka planda ağ/simülasyon açık, odak kaybında input kapalıdır. Test listesi `Docs/MultiplayerTest.md`; development-only probe normal açılışta etkin değildir. Sıralı meşgul eşya reddini eşzamanlı yarış kanıtı sayma.

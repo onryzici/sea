@@ -11,7 +11,11 @@ namespace SalvageCrew
         private InputAction move, look, jump, sprint, reset, release, capture, interact;
         private bool focused = true;
         private bool jumpRequested, resetRequested, releaseRequested, captureRequested, interactRequested;
-        public bool GameplayActive => focused && Cursor.lockState == CursorLockMode.Locked;
+        public bool PanelOpen { get; private set; }
+        public event System.Action CursorReleased;
+        public bool GameplayActive => focused && !PanelOpen && Cursor.lockState == CursorLockMode.Locked;
+        public void SetPanelOpen(bool open)
+        { PanelOpen = open; ClearRequests(); SetCursor(!open && focused); }
 
         public struct Sample
         {
@@ -39,28 +43,32 @@ namespace SalvageCrew
             interact.performed += _ => { if (GameplayActive) interactRequested = true; };
         }
 
-        private void OnEnable() { map.Enable(); SetCursor(true); }
+        private void OnEnable() { map.Enable(); SetCursor(!PanelOpen && focused); }
         private void OnDisable() { map.Disable(); ClearRequests(); SetCursor(false); }
         private void OnDestroy() { if (actions != null) Destroy(actions); }
         private void OnApplicationFocus(bool hasFocus)
         {
             focused = hasFocus;
-            if (!hasFocus) { ClearRequests(); SetCursor(false); }
+            if (!hasFocus)
+            {
+                ClearRequests(); map.Disable(); SetCursor(false);
+            }
+            else if (isActiveAndEnabled) map.Enable();
         }
 
         public Sample Read()
         {
             // Latch events until the motor consumes them, including multiple input updates per frame.
-            if (releaseRequested) SetCursor(false);
-            else if (focused && captureRequested) SetCursor(true);
-            bool active = focused && Cursor.lockState == CursorLockMode.Locked;
+            if (releaseRequested) { SetCursor(false); CursorReleased?.Invoke(); }
+            else if (focused && !PanelOpen && captureRequested) SetCursor(true);
+            bool active = GameplayActive;
             var sample = new Sample
             {
                 Move = active ? Vector2.ClampMagnitude(move.ReadValue<Vector2>(), 1f) : Vector2.zero,
                 Look = active ? look.ReadValue<Vector2>() : Vector2.zero,
                 Jump = active && jumpRequested,
                 Sprint = active && sprint.IsPressed(),
-                Reset = focused && resetRequested,
+                Reset = focused && !PanelOpen && resetRequested,
                 Interact = active && !captureRequested && !releaseRequested && interactRequested
             };
             ClearRequests();

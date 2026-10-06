@@ -93,6 +93,7 @@ namespace SalvageCrew.Editor
             BuildHud(root);
             EditorSceneManager.SaveScene(scene, ScenePath);
             ScrapPrototypeSetup.Apply();
+            MultiplayerPrototypeSetup.Apply();
 
             EditorSceneManager.SaveScene(scene, ScenePath);
             var others = EditorBuildSettings.scenes.Where(s => s.path != ScenePath).ToArray();
