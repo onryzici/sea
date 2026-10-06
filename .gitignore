@@ -1,0 +1,38 @@
+# Unity generated directories (project root)
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Bb]uild/
+/[Bb]uilds/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# IDE generated files
+/.vs/
+/.idea/
+/.vscode/
+.consulo/
+*.csproj
+*.sln
+*.slnx
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Crash and operating system files
+sysinfo.txt
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Keep Assets/, Packages/, ProjectSettings/ and asset/folder .meta files.
+# Never add a blanket *.meta ignore rule.
