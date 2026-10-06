@@ -1,0 +1,129 @@
+{
+  "diagnostics": [],
+  "compileMs": 348,
+  "executeMs": 21601,
+  "assemblyName": "PipelineRunScript_CarryPlayChecks_443c485937d7466ba71f78a27bbb807e",
+  "success": true,
+  "result": {
+    "Pickup_3": {
+      "passed": true,
+      "detail": {
+        "DisplayName": "Hafif kutu",
+        "target": null,
+        "position": "(1.55, 1.48, 2.00)",
+        "held": true
+      }
+    },
+    "MovementModifier_3": {
+      "passed": true,
+      "detail": 0.95
+    },
+    "PlayerCollisionIgnored_3": {
+      "passed": true,
+      "detail": true
+    },
+    "Walk_3_(0.25, 0.00, 7.50)": {
+      "passed": true,
+      "detail": "(0.25, 1.23, 7.38)"
+    },
+    "Walk_3_(6.25, 0.00, 7.50)": {
+      "passed": true,
+      "detail": "(6.15, 1.53, 7.50)"
+    },
+    "CarriedToDeck_3": {
+      "passed": true,
+      "detail": "(7.65, 2.93, 7.53)"
+    },
+    "DropRestoration_3": {
+      "passed": true,
+      "detail": true
+    },
+    "SettledOnDeck_3": {
+      "passed": true,
+      "detail": {
+        "position": "(7.65, 1.78, 7.53)",
+        "speed": 0
+      }
+    },
+    "Pickup_12": {
+      "passed": true,
+      "detail": {
+        "DisplayName": "Metal kasa",
+        "target": null,
+        "position": "(1.55, 1.53, 4.00)",
+        "held": true
+      }
+    },
+    "MovementModifier_12": {
+      "passed": true,
+      "detail": 0.75
+    },
+    "PlayerCollisionIgnored_12": {
+      "passed": true,
+      "detail": true
+    },
+    "Walk_12_(0.25, 0.00, 7.50)": {
+      "passed": true,
+      "detail": "(0.25, 1.23, 7.41)"
+    },
+    "Walk_12_(6.25, 0.00, 7.50)": {
+      "passed": true,
+      "detail": "(6.15, 1.53, 7.50)"
+    },
+    "CarriedToDeck_12": {
+      "passed": true,
+      "detail": "(7.65, 2.93, 7.52)"
+    },
+    "DropRestoration_12": {
+      "passed": true,
+      "detail": true
+    },
+    "SettledOnDeck_12": {
+      "passed": true,
+      "detail": {
+        "position": "(7.73, 2.37, 7.54)",
+        "speed": 0
+      }
+    },
+    "Pickup_35": {
+      "passed": true,
+      "detail": {
+        "DisplayName": "Hurda motor",
+        "target": null,
+        "position": "(1.55, 1.50, 6.00)",
+        "held": true
+      }
+    },
+    "MovementModifier_35": {
+      "passed": true,
+      "detail": 0.5
+    },
+    "PlayerCollisionIgnored_35": {
+      "passed": true,
+      "detail": true
+    },
+    "Walk_35_(0.25, 0.00, 7.50)": {
+      "passed": true,
+      "detail": "(0.25, 1.23, 7.40)"
+    },
+    "Walk_35_(6.25, 0.00, 7.50)": {
+      "passed": true,
+      "detail": "(6.18, 1.53, 7.50)"
+    },
+    "CarriedToDeck_35": {
+      "passed": true,
+      "detail": "(7.54, 2.91, 7.52)"
+    },
+    "DropRestoration_35": {
+      "passed": true,
+      "detail": true
+    },
+    "SettledOnDeck_35": {
+      "passed": true,
+      "detail": {
+        "position": "(7.01, 1.90, 7.52)",
+        "speed": 0
+      }
+    }
+  }
+}

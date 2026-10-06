@@ -1,0 +1,48 @@
+{
+  "physics": {
+    "diagnostics": [],
+    "compileMs": 116,
+    "executeMs": 6,
+    "assemblyName": "PipelineRunScript_HarborPlayChecks_95f6649e35f24d22857d51933fcb0d49",
+    "success": true,
+    "result": {
+      "FrameRateIndependent": [
+        4,
+        4
+      ],
+      "DiagonalSpeed": [
+        4,
+        4
+      ],
+      "Sprint": 6.50000048,
+      "PierRampDeck": "(6.67, 1.53, 7.50)",
+      "RailCollision": "(8.49, 1.53, 7.50)",
+      "DeckGrounding": "(8.49, 1.53, 7.50)",
+      "CabinCollision": "(7.00, 1.53, 10.87)",
+      "GroundOnlyJump": [
+        5.991222,
+        5.65788841
+      ],
+      "JumpHeightAndLanding": 0.9473665,
+      "PitchClamp": 279.999969,
+      "ResetState": "(0.00, 1.25, 4.00)",
+      "FallRecovery": "(0.00, 1.25, 4.00)"
+    }
+  },
+  "input": {
+    "diagnostics": [],
+    "compileMs": 44,
+    "executeMs": 2492,
+    "assemblyName": "PipelineRunScript_HarborInputChecks_e7dea084f5824ae396037d5add4f14e2",
+    "success": true,
+    "result": {
+      "LivePlayer": true,
+      "W": "(0.00, 0.00, 4.00)",
+      "S": "(0.00, -0.03, -4.00)",
+      "A": "(-4.00, -0.03, 0.00)",
+      "D": "(4.00, -0.04, 0.00)",
+      "LeftShift": "walk=4.000034, sprint=6.499977",
+      "AutomaticFallRecovery": "(0.00, 1.23, 4.00)"
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "diagnostics": [],
+  "compileMs": 178,
+  "executeMs": 15974,
+  "assemblyName": "PipelineRunScript_CarrySafetyChecks_09935e627bbc4eb986f6ce7076913819",
+  "success": true,
+  "result": {
+    "ActualE_Pickup": {
+      "passed": true,
+      "detail": "LightBox"
+    },
+    "HeldHUD": {
+      "passed": true,
+      "detail": "Hafif kutu  (3 kg)\nE — Bırak"
+    },
+    "ActualE_Drop": {
+      "passed": true,
+      "detail": true
+    },
+    "RapidEToggles": {
+      "passed": true,
+      "detail": true
+    },
+    "EscapeWhileHeld": {
+      "passed": true,
+      "detail": "None"
+    },
+    "UnlockedEIgnored": {
+      "passed": true,
+      "detail": "LightBox"
+    },
+    "RelockClickNoAction": {
+      "passed": true,
+      "detail": true
+    },
+    "RReleasesAndResets": {
+      "passed": true,
+      "detail": "(0.00, 1.23, 4.00)"
+    },
+    "HeavySprintDisabled": {
+      "passed": true,
+      "detail": 0.5
+    },
+    "HeavyActualSprintSpeed": {
+      "passed": true,
+      "detail": 2.00000834
+    },
+    "PlayerFallReleases": {
+      "passed": true,
+      "detail": "(0.00, 1.23, 4.00)"
+    },
+    "WeightResponse": {
+      "passed": true,
+      "detail": [
+        0.427903175,
+        0.192130566,
+        0.113303661
+      ]
+    },
+    "WallFixturePickup": {
+      "passed": true,
+      "detail": "MetalCrate"
+    },
+    "CabinPushStable": {
+      "passed": true,
+      "detail": {
+        "maxZ": 10.8443327,
+        "maxSpeed": 2.32908034,
+        "player": "(7.00, 1.55, 9.70)"
+      }
+    },
+    "PhysicsSettingsRestored": {
+      "passed": true,
+      "detail": true
+    },
+    "DistanceSafeDrop": {
+      "passed": true,
+      "detail": true
+    },
+    "ObstructionSafeDrop": {
+      "passed": true,
+      "detail": true
+    },
+    "ScrapSeaRecovery": {
+      "passed": true,
+      "detail": {
+        "position": "(1.55, 1.50, 6.00)",
+        "speed": 0.00000275659227
+      }
+    }
+  }
+}

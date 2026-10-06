@@ -8,14 +8,15 @@ namespace SalvageCrew
     {
         [SerializeField] private InputActionAsset actions;
         private InputActionMap map;
-        private InputAction move, look, jump, sprint, reset, release, capture;
+        private InputAction move, look, jump, sprint, reset, release, capture, interact;
         private bool focused = true;
-        private bool jumpRequested, resetRequested, releaseRequested, captureRequested;
+        private bool jumpRequested, resetRequested, releaseRequested, captureRequested, interactRequested;
+        public bool GameplayActive => focused && Cursor.lockState == CursorLockMode.Locked;
 
         public struct Sample
         {
             public Vector2 Move, Look;
-            public bool Jump, Sprint, Reset;
+            public bool Jump, Sprint, Reset, Interact;
         }
 
         private void Awake()
@@ -30,10 +31,12 @@ namespace SalvageCrew
             reset = map.FindAction("Reset", true);
             release = map.FindAction("ReleaseCursor", true);
             capture = map.FindAction("CaptureCursor", true);
+            interact = map.FindAction("Interact", true);
             jump.performed += _ => jumpRequested = true;
             reset.performed += _ => resetRequested = true;
             release.performed += _ => releaseRequested = true;
             capture.performed += _ => captureRequested = true;
+            interact.performed += _ => { if (GameplayActive) interactRequested = true; };
         }
 
         private void OnEnable() { map.Enable(); SetCursor(true); }
@@ -57,14 +60,15 @@ namespace SalvageCrew
                 Look = active ? look.ReadValue<Vector2>() : Vector2.zero,
                 Jump = active && jumpRequested,
                 Sprint = active && sprint.IsPressed(),
-                Reset = focused && resetRequested
+                Reset = focused && resetRequested,
+                Interact = active && !captureRequested && !releaseRequested && interactRequested
             };
             ClearRequests();
             return sample;
         }
 
         private void ClearRequests()
-        { jumpRequested = resetRequested = releaseRequested = captureRequested = false; }
+        { jumpRequested = resetRequested = releaseRequested = captureRequested = interactRequested = false; }
 
         private static void SetCursor(bool locked)
         {

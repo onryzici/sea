@@ -1,0 +1,32 @@
+{
+  "unity": "6000.5.6f1",
+  "urp": "17.5.0",
+  "compile": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "integrity": {
+    "filesScanned": 221,
+    "errors": 0,
+    "warnings": 0
+  },
+  "build": {
+    "status": "completed",
+    "result": "Succeeded",
+    "buildTimeMs": 17320,
+    "totalErrors": 0,
+    "totalWarnings": 1,
+    "outputPath": "/Users/trexoinnovation/salvage/Builds/Stage2/macOS/SalvageCrew.app",
+    "warnings": [
+      {
+        "message": "Pipeline: No RuntimePipelineConfig asset found (Project Settings > Pipeline > Runtime). Pipeline will be disabled in Player builds."
+      }
+    ]
+  },
+  "playStopped": true,
+  "runInBackground": false,
+  "console": {
+    "newRuntimeErrors": 0,
+    "knownBuildWarning": "RuntimePipelineConfig missing; Pipeline disabled in Player builds"
+  }
+}

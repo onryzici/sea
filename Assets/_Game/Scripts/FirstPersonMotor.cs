@@ -26,6 +26,16 @@ namespace SalvageCrew
         private float verticalSpeed, pitch;
         public float VerticalSpeed => verticalSpeed;
         public bool Grounded => controller != null && controller.isGrounded;
+        public event System.Action BeforeRespawn;
+        public event System.Action<LocalPlayerInput.Sample> InputSampled;
+        public float CarrySpeedMultiplier { get; private set; } = 1f;
+        public bool CarryAllowsSprint { get; private set; } = true;
+
+        public void SetCarryMovement(float multiplier, bool allowSprint)
+        {
+            CarrySpeedMultiplier = Mathf.Clamp(multiplier, .2f, 1f);
+            CarryAllowsSprint = allowSprint;
+        }
 
         private void Awake()
         {
@@ -44,6 +54,7 @@ namespace SalvageCrew
                 return;
             }
             Step(sample, Time.deltaTime);
+            InputSampled?.Invoke(sample);
         }
 
         public void Step(LocalPlayerInput.Sample sample, float deltaTime)
@@ -60,7 +71,7 @@ namespace SalvageCrew
             verticalSpeed = Mathf.Max(verticalSpeed - gravity * deltaTime, -40f);
             Vector2 movement = Vector2.ClampMagnitude(sample.Move, 1f);
             Vector3 planar = (transform.right * movement.x + transform.forward * movement.y)
-                * (sample.Sprint ? sprintSpeed : walkSpeed);
+                * (sample.Sprint && CarryAllowsSprint ? sprintSpeed : walkSpeed) * CarrySpeedMultiplier;
             CollisionFlags flags = controller.Move((planar + Vector3.up * verticalSpeed) * deltaTime);
             if ((flags & CollisionFlags.Above) != 0 && verticalSpeed > 0f) verticalSpeed = 0f;
             if (transform.position.y < rescueHeight) ReturnToSpawn();
@@ -68,6 +79,7 @@ namespace SalvageCrew
 
         public void ReturnToSpawn()
         {
+            BeforeRespawn?.Invoke();
             controller.enabled = false;
             transform.SetPositionAndRotation(spawnPoint != null ? spawnPoint.position : initialPosition,
                 spawnPoint != null ? spawnPoint.rotation : initialRotation);

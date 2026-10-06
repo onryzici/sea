@@ -2,7 +2,47 @@
 
 ## Mevcut durum — 2026-10-06
 
-Hazırlık, gerçek Unity proje başlangıcı ve kullanıcının Aşama 1 olarak istediği birinci şahıs/yürünebilir liman prototipi tamamlandı. Kök: `/Users/trexoinnovation/salvage`. İlk incelemede klasör tamamen boştu; resmi Universal 3D şablonundan oluşturulan proje korunarak geliştirildi. Görev başlangıcında Git temizdi; kullanıcı değişikliği silinmedi.
+Hazırlık, gerçek Unity proje başlangıcı, Aşama 1 birinci şahıs/yürünebilir liman ve Aşama 2 yerel fizik tabanlı hurda taşıma tamamlandı. Kök: `/Users/trexoinnovation/salvage`. İlk incelemede klasör tamamen boştu; resmi Universal 3D şablonundan oluşturulan proje korunarak geliştirildi. Aşama 2 başlangıcında Git temizdi (önceki commit dd781b0); kullanıcı değişikliği silinmedi.
+
+## Aşama 2 — fizik tabanlı tutma, taşıma ve bırakma
+
+- Canlı Editor bağlantısı yeniden doğrulandı: HarborPrototype açık, Play kapalı; Pier, BoardingRamp, Deck, Cabin, FirstPersonPlayer ve mevcut HUD gerçek Hierarchy'den okundu. Oyuncuda CharacterController, LocalPlayerInput ve FirstPersonMotor vardı. Unity 6000.5.6f1, URP 17.5.0 ve Input System 1.20.0 korundu; paket/pipeline ayarı değiştirilmedi.
+- Prefablar: `LightBox` (3 kg), `MetalCrate` (12 kg), `ScrapEngine` (35 kg). Birer dinamik Rigidbody; basit kutu/compound collider'lar, sürekli çarpışma ve interpolasyon. İsim, kütle, yay/sönüm/kuvvet/hız sınırları, tutma mesafesi, hareket katsayısı, koşu ve kurtarma eşikleri Inspector'da düzenlenebilir. İskelede x=1,55; z=2/4/6; orta geçiş yolu ve rampa girişini kapatmazlar.
+- `PhysicsCarry`: 2,5 m kamera raycast'i, tek eşya sahipliği, FixedUpdate'ta sınırlandırılmış PD kuvveti. Parent/Transform ışınlama veya kinematic taşıma yok. Yerçekimi desteği kuvvetle sağlanır; çevre collider'ları aktif kalır. Oyuncu/eşya collision pair'lerinin önceki ignore değerleri kaydedilip bırakınca geri yüklenir. Interpolation/collision detection ayarları da geri yüklenir; bırakma hızı en çok 2 m/s. Çok uzak eşya (3,2 m) veya 0,45 s boyunca engel arkasında kalan eşya bırakılır.
+- `LocalCarryInteraction` yalnızca yerel örneği tut/bırak komutuna çevirir; PhysicsCarry Input System cihazı bilmez. E action'ı mevcut asset'e eklendi; imleç serbestken E saklanmaz/çalışmaz, yeniden kilitleyen tıklama etkileşimi tetiklemez. HUD hedef adı/kg ve E — Tut/Bırak gösterir.
+- Motorun temel Inspector hızları değiştirilmedi. Geçici hareket katsayıları 0,95 / 0,75 / 0,50; yürüme 3,8 / 3,0 / 2,0 m/s. Ağır motor taşırken koşu kapalıdır. Drop, disable, R ve düşme kurtarması hareketi geri yükler. Oyuncu dönüşü öncesi tutma kaldırılır.
+- `ScrapItem`: y<0,15 veya kendi başlangıcından >100 m uzaklıkta 1,5 s sonra kurtarır; tutmayı kaldırır, başlangıç konum/rotasyonuna döner, doğrusal/açısal hızı sıfırlar ve yerleşmek için fiziği uyandırır. Deniz hâlâ yalnızca görseldir.
+- `SalvageCrew/Setup Scrap Carry Prototype` mevcut limanı yeniden yapmadan eksikleri ekler; iki çalıştırma sonrası üç eşya ve bir etkileşim HUD'u doğrulandı. Var olan hurda ayarları/instance'ları korunur. Tam Harbor kurulum komutu da bu ek kurulumu çağırır; tam komutun kendi kökünü yeniden üretme uyarısı geçerlidir.
+
+### Aşama 2 gerçek doğrulama sonuçları
+
+| Kontrol | Sonuç |
+| --- | --- |
+| Unity C# recompile | 0 hata, 0 uyarı |
+| Inspector / prefab / input | Kamera, HUD, spawn bağlantıları; prefab kütleleri ve E binding'i okundu |
+| Gerçek Play taşıma | 24 kontrol geçti; üç hurda iskele → rampa → güverte rotasından geçti |
+| Bırakma / yerleşme | Üçü güvertede veya güvertedeki diğer hurda üzerinde kararlı durdu; hız 0 |
+| Güvenlik ve input | 18 kontrol geçti: gerçek E olayları, hızlı E, HUD, Escape/tıklama, R ve oyuncu düşmesi |
+| Ağırlık / ağır koşu | Son tur takip ilerlemesi 0,428 / 0,192 / 0,113 m; ağır motor + Shift gerçek hız≈2,0 m/s |
+| Kabine bastırma | Kasa merkezinin en ileri z≈10,844; kabin önü 11,2; en yüksek hız≈2,33 m/s; oyuncu fırlamadı |
+| Bırakma restorasyonu | Ignore collision ve farklı başlangıç interpolation/detection değerleri geri yüklendi |
+| Güvenli bırakma / deniz | Uzaklık ve engel bırakması geçti; denize düşen motor başlangıca döndü ve hız≈0 |
+| Aşama 1 regresyonu | 12 motor/fizik kontrolü ve WASD/Shift/otomatik kurtarma input kontrolleri tekrar geçti |
+| Canlı kare ilerlemesi | wait_for: frame 4274→4281, met=true, timedOut=false |
+| Console | Play aralığında yeni error/warning yok; build'de yalnızca bilinen RuntimePipelineConfig uyarısı tekrarlandı; compilationFailed=false |
+| macOS build | Succeeded, 17,32 s, 0 hata / 1 bilinen araç uyarısı; `Builds/Stage2/macOS/SalvageCrew.app` |
+| Proje bütünlüğü | Strict verify: 221 dosya, 0 hata / 0 uyarı; meta/GUID/manifest kontrolleri geçti |
+| Son Editor durumu | HarborPrototype açık, Play kapalı, runInBackground=false |
+
+Doğrulamalar canlı Unity Play'de gerçek Rigidbody/FixedUpdate, CharacterController ve sahne collider'larıyla yapıldı. Input testleri Input System'e gerçek keyboard/mouse state olayları gönderir; rota testleri normal motor adımını çağırır. Duvar, uzaklık, engel ve düşme uç durumlarında test fixture konumları oluşturulur; normal taşıma kodu eşyayı ışınlamaz. NUnit EditMode süiti, fiziksel klavye/mouse ile insan eliyle tam tur ve standalone uygulama çalıştırma testi yapılmadı. Sonuçlar ve tekrar çalıştırılabilir scriptler `Docs/Verification/Carry*` ve `Stage2RegressionResults.json` içindedir.
+
+[Güvertede tutulan eşya ekran görüntüsü](Screenshots/CarryOnDeck.png) gerçek Game view/HUD'dan alındı ve görsel olarak incelendi. Yakalama aracının Assets altında oluşturduğu yalnızca bu göreve ait geçici kopya Editor AssetDatabase üzerinden silindi; Docs kopyası korunur.
+
+### Aşama 2 deneme notları ve kalan kontroller
+
+İlk taşıma turu geçti. Bir tekrar turunda test scriptinin ağır motor hedeflemesi başarısız oldu; sabit test fixture'ının yerleşmesi için bekleme eklendi, temiz Play oturumunda 24 kontrolün tamamı geçti. Bu aralıkta oyun Console exception'ı oluşmadı; test aracının başarısız assertion'ı başarı diye raporlanmadı. Kurtarma sırasında yüksek spawn'da uyuyan eşya olasılığı görülüp WakeUp ile giderildi ve deniz kurtarması tekrar geçti. Araç kuyruğu arkasında eşzamanlı Inspector sorgusu timeout verdi; script sonucu tamamlandıktan sonra seri sorgular kullanıldı. Recompile/import sırasında Play kapandığı için bir test çağrısı Play required döndü; hazır ve gerçekten Playing durumu doğrulanıp tekrar çalıştırıldı.
+
+Değişiklikler: oyuncu prefabı/sahne/input asset'i, iki mevcut runtime scripti, beş yeni runtime scripti, üç hurda prefabı ve üç URP materyali, Editor ek kurulum scripti ve ana kurulum entegrasyonu; assetlerin meta'ları; AGENTS/GameBrief/Progress; doğrulama kodu/JSON ve screenshot. SampleScene, paket manifest/lock, URP pipeline assetleri ve mevcut liman geometrisi korunur. Unity sahneyi kaydederken Daylight'a varsayılan URP AdditionalLightData ekledi; ışık/renk/geometri ayarları değiştirilmedi. Türkçe HUD fallback'i kullanıldıktan sonra Unity/TMP mevcut LiberationSans SDF - Fallback asset'ini güncel serializer biçiminde kaydetti; font kaynağı ve fallback bağlantıları değiştirilmedi. Build çıktıları Git dışında, kaynak/meta ve Docs artefaktları commit kapsamındadır.
 
 ## Aşama 1 — birinci şahıs ve yürünebilir liman
 
@@ -103,11 +143,12 @@ Unity modülleri manifestte listelenir. Multiplayer Center şablonun araç paket
 | 0 — Hazırlık | Talimatlar, kapsam, ilerleme, klasörler, ignore | Tamamlandı |
 | Hazırlık — Unity başlangıcı | Gerçek proje, pipeline, Editor bağlantısı, Play/build kontrolü | Tamamlandı |
 | 1 — Birinci şahıs liman | Oyuncu, kamera, iskele/rampa/sabit tekne ve HUD | Tamamlandı |
-| 2 — İki oyuncu temeli | Ağ paketi/transport, host/client ve oyuncu eşleme | Başlanmadı |
-| 3 — Ortak tekne ve yük | Host otoriteli fizik | Başlanmadı |
-| 4 — Hurda ve vinç | Çıkarma ve güverteye yükleme | Başlanmadı |
-| 5 — Liman ve ekonomi | Satış ve basit ekipman geliştirmesi | Başlanmadı |
-| 6 — Doğrulama | İki oyuncuyla tam döngü, ardından 1–4 oyuncu | Başlanmadı |
+| 2 — Fizik tabanlı hurda taşıma | Yerel tutma, taşıma, bırakma ve kurtarma | Tamamlandı |
+| Sonraki — İki oyuncu temeli | Ağ paketi/transport, host/client ve oyuncu eşleme | Başlanmadı |
+| Sonraki — Ortak tekne ve yük | Host otoriteli fizik | Başlanmadı |
+| Sonraki — Hurda ve vinç | Çıkarma ve güverteye yükleme | Başlanmadı |
+| Sonraki — Liman ve ekonomi | Satış ve basit ekipman geliştirmesi | Başlanmadı |
+| Sonraki — Doğrulama | İki oyuncuyla tam döngü, ardından 1–4 oyuncu | Başlanmadı |
 
 Her görev yalnızca açıkça istenen aşamayı uygular. Aşama 1'de tekne statik makettir; su/tekne fiziği, eşya taşıma, vinç, satış, düşman ve multiplayer eklenmedi. Şablonun SampleScene, render ayarları ve Readme araç kodu korundu.
 
@@ -118,10 +159,13 @@ Her görev yalnızca açıkça istenen aşamayı uygular. Aşama 1'de tekne stat
 3. WASD/Left Shift/Space ile iskelede yürü, koş ve zıpla; rampadan güverteye geç. Korkuluk ve kabine yürüyerek çarpışmayı kontrol et.
 4. Mouse ile bak; yukarı/aşağı sınırını dene. Escape ile imleci bırak, Game view'a tıklayıp yeniden kilitle. R ile iskeleye dön; iskele kenarından denize düşüp otomatik kurtarmayı kontrol et.
 5. HUD ve Console'u kontrol et; Play'den çık. İsteğe bağlı olarak Builds/HarborPrototype/macOS/SalvageCrew.app çıktısını aç; standalone çalıştırma ayrıca doğrulanmadı.
+6. İskelede sağ taraftaki üç hurdaya yaklaş/bak. E ile sırayla tut; rampadan güverteye taşı ve E ile bırak. İsim/kg ve Tut/Bırak bilgisi, ağırlık farkı ve motor taşırken koşmanın kapanmasını kontrol et.
+7. Kasayı kabine/korkuluğa bastır; geçmediğini ve fırlamadığını kontrol et. E'ye hızlı bas; tutarken Escape, serbest imleçte E, tıklama, R ve denize düşmeyi dene. Bırakınca normal hız geri gelmeli.
+8. Hurdayı denize düşür; yaklaşık 1,5 s sonra iskelede kendi başlangıcına dönmesini kontrol et. Console'da yeni error/exception olmamalı.
 
 ## Kalanlar ve sonraki aşama
 
-Sonraki planlanan aşama iki oyuncu temeli; kapsamı ayrıca istenmeli. Ticari hedef platformlar ve networking tercihi henüz belirlenmedi. Kurulu 6000.5.6f1 korundu; LTS sürümüne geçiş yapılmadı. Windows/Linux build ve iki oyunculu test yapılmadı. Pipeline paketi experimental sürümdür. Önceden belgelenen araç/paket uyarıları dışında Aşama 1 için bilinen oyun engeli yok.
+Sonraki planlanan aşama iki oyuncu temeli; kapsamı ayrıca istenmeli. Ticari hedef platformlar ve networking tercihi henüz belirlenmedi. Kurulu 6000.5.6f1 korundu; LTS sürümüne geçiş yapılmadı. Windows/Linux build ve iki oyunculu test yapılmadı. Pipeline paketi experimental sürümdür. Son başarılı Aşama 2 kontrollerinde bilinen oyun engeli yok; gerçek insan kullanımı ve standalone çalıştırma kontrolü hâlâ önerilir. Multiplayer, vinç, fırlatma, satış, düşman veya tekne hareketi eklenmedi.
 
 Console geçmişinde URP Core paketinin `RuntimeDebugWindow_PanelSettings.asset` dosyasının immutable package içinde değiştiği uyarısı da görüldü. Paket kaynakları elle değiştirilmedi; bu uyarı package cache/import sırasında ortaya çıktı. Kaynak kontrolüne dahil olmayan Library/PackageCache içindedir; kök nedeni bu hazırlıkta giderilmedi. Build başarılı ve son Console kontrolünde compile hatası yok; ileride paket importunda yeniden kontrol edilmeli.
 

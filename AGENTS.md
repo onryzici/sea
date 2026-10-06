@@ -25,6 +25,8 @@
 - `Docs/Progress.md`: aşamalar, inceleme bulguları, doğrulamalar ve bekleyen işler.
 - `Assets/_Game/Scenes`, `Scripts`, `Prefabs`, `Materials`, `Audio`, `Settings`: oyuna ait içerik.
 
-Hazırlık ve Aşama 1 liman/birinci şahıs prototipi tamamlandı. Proje Unity 6000.5.6f1, URP 17.5.0 ve masaüstü başlangıç hedefi kullanır. Yerel oyuncu ve sabit tekne maketi vardır; vinç, tekne sürüşü ve multiplayer henüz yoktur. Sonraki görevlerde yalnızca açıkça istenen aşama uygulanır.
+Hazırlık, Aşama 1 liman/birinci şahıs ve Aşama 2 fizik tabanlı hurda taşıma prototipi vardır. Proje Unity 6000.5.6f1, URP 17.5.0 ve masaüstü başlangıç hedefi kullanır. Yerel oyuncu, sabit tekne maketi ve üç hurda prefabı vardır; vinç, tekne sürüşü ve multiplayer henüz yoktur. Sonraki görevlerde yalnızca açıkça istenen aşama uygulanır.
 
 Liman sahnesi: `Assets/_Game/Scenes/HarborPrototype.unity`. Yeniden kurulum: `SalvageCrew/Build Harbor Prototype`; yalnızca `HarborPrototypeGenerated` kökünü yeniden üretir. Bu kökte elle yapılan değişiklikler yeniden kurulumda kaybolur; kullanıcı düzenlemelerini korumak için bu komutu çalıştırmadan önce incele. `SampleScene` korunur. `LocalPlayerInput` yalnızca yerel input/imleç işlerini, `FirstPersonMotor` hareket ve kurtarmayı yönetir.
+
+Aşama 2 ek kurulumu: `SalvageCrew/Setup Scrap Carry Prototype`; açık HarborPrototype sahnesine eksik bileşenleri, üç hurda instance'ını ve tek HUD alanını ekler. Var olan hurda instance'larını/prefab ayarlarını yeniden üretmez. `LocalCarryInteraction` yerel input örneğini komuta çevirir; `PhysicsCarry` input cihazı bilmeden hedefleme, sahiplik, kuvvet ve bırakmayı; `ScrapItem` eşya ayarları ve kurtarmayı yönetir. Tutarken parent/Transform ışınlama kullanılmaz. Gelecekte ortak eşya komutlarını ve fizik adımlarını host'a taşı; mevcut yerel yapıyı multiplayer yapılmış sayma.

@@ -91,6 +91,8 @@ namespace SalvageCrew.Editor
             motor.FindProperty("spawnPoint").objectReferenceValue = spawn;
             motor.ApplyModifiedPropertiesWithoutUndo();
             BuildHud(root);
+            EditorSceneManager.SaveScene(scene, ScenePath);
+            ScrapPrototypeSetup.Apply();
 
             EditorSceneManager.SaveScene(scene, ScenePath);
             var others = EditorBuildSettings.scenes.Where(s => s.path != ScenePath).ToArray();

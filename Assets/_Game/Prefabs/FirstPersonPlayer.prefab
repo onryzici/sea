@@ -44,6 +44,8 @@ GameObject:
   - component: {fileID: 7790738375783297685}
   - component: {fileID: 8954682910735158384}
   - component: {fileID: 5493020528868702105}
+  - component: {fileID: 2210754671742810676}
+  - component: {fileID: 4635837343258302731}
   m_Layer: 0
   m_Name: FirstPersonPlayer
   m_TagString: Untagged
@@ -126,6 +128,36 @@ MonoBehaviour:
   mouseSensitivity: 0.12
   pitchLimit: 80
   rescueHeight: 0.2
+--- !u!114 &2210754671742810676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102934953493783901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d0126b48a4c041fea1756089134f1ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SalvageCrew.PhysicsCarry
+  view: {fileID: 220476278578783221}
+  interactionRange: 2.5
+  releaseDistance: 3.2
+  obstructionGrace: 0.45
+  releaseSpeedLimit: 2
+  angularSpeedLimit: 3
+--- !u!114 &4635837343258302731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102934953493783901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb869dd87cf8d4937897ec208258ea42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SalvageCrew.LocalCarryInteraction
 --- !u!1 &2487670916757719701
 GameObject:
   m_ObjectHideFlags: 0

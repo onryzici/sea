@@ -25,6 +25,10 @@ Proje incelemesi, talimatlar, belgeler, klasör yapısı ve `.gitignore` hazırl
 
 Hazırlık sonrasında ilk oynanabilir aşama eklendi: HarborPrototype, kıyı/iskele, rampa, yaklaşık 10×4 metre sabit tekne ve yeniden kullanılabilir CharacterController oyuncu prefabı. WASD, mouse, Space, Left Shift, Escape/tıklama, R ve düşme sonrası kurtarma desteklenir. Deniz yalnızca görseldir. HUD nişangâh ve kontrol bilgisi gösterir. Eşya taşıma, vinç, tekne sürüşü, düşman, satış ve multiplayer bu aşamanın dışında kalır.
 
+## Aşama 2 — yerel fizik tabanlı hurda taşıma
+
+İskelede üç hurda: 3 kg hafif kutu, 12 kg metal kasa ve 35 kg motor. Kamera menzili 2,5 metre; E tutar/bırakır. Eşya Rigidbody kuvvetleriyle takip eder, çevreyle çarpışır ve ağır eşya daha yavaş takip eder. Taşıma yürüme hızını azaltır; motor taşırken koşulamaz. HUD hedefi/tutulan eşyayı gösterir. R ve oyuncu kurtarması tutmayı kaldırır; görsel denize düşen hurda kısa gecikmeyle kendi başlangıcına döner. Yerel input ve taşıma fiziği ayrıdır; henüz networking/host otoritesi uygulanmadı. Vinç, fırlatma, satış, düşman ve hareketli tekne kapsam dışındadır.
+
 ## Henüz kararlaştırılmayanlar
 
 Başlangıç: Unity 6000.5.6f1, URP 17.5.0, masaüstü ve ilk doğrulama hedefi macOS. Bu sürüm kurulu Editor kullanılarak proje dosyalarına kaydedildi; LTS geçişi yapılmadı. Ticari hedef platformlar, ağ paketi/transport, oturuma katılım yöntemi ve ekipman geliştirmesinin ayrıntıları henüz belirlenmedi. Monetizasyon bu hazırlığın kapsamında değil.
