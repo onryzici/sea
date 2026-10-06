@@ -2,6 +2,8 @@
 
 ## GitHub kaynak teslimi — 2026-10-06
 
+Kaynak teslimi **tamamlandı**: `2f1e91c` commit'i origin/main'e normal push ile gönderildi; GitHub main SHA'sı yerel commit ile birebir doğrulandı. Beş LFS nesnesi (132 MB) başarıyla yüklendi; yerel LFS bütünlük kontrolü geçti. Aşağıdaki eski “commit/push yapılmadı” kayıtları ilgili önceki görevlerin tarihsel durumudur, bu teslimden sonraki durumu anlatmaz.
+
 Kullanıcının açık yükleme talebiyle hedef `https://github.com/onryzici/sea` olarak ayarlandı. İlk kontrolde uzak depo boş ve public, yerel dal main idi. Önceki görsel/fizik, HUD, enkaz ve mürettebat değişiklikleri birlikte kaynak teslimine hazırlanmıştır; çalışan dosyalar veya geçmiş commit'ler silinmedi, force-push kullanılmaz. Unity kaynakları, prefab/sahne bağlantıları, `.meta`, kaynak modeller, lisanslar ve gerçek test raporları dahil; Library/Temp/Logs/Builds/UserSettings hariçtir. Mevcut `.gitattributes` ile büyük Blender kaynakları ve iki büyük doku Git LFS kullanır. Bu kaynak teslimi macOS uygulamasının GitHub Release olarak dağıtımı değildir.
 
 Bu görevde yeni oynanış değişikliği veya yeniden Play testi yapılmadı; aşağıdaki önceki gerçek test sonuçları geçerlidir. İndirdikten sonra Git LFS kurulu olmalı (`git lfs pull`); projeyi Unity 6000.5.6f1 ile açıp HarborPrototype sahnesinde Play ve iki-pencere Host/Client kontrolü yap. Kullanıcının sağladığı Meshy tekne modelinin ticari lisans belgesi hâlâ sağlanmadı; kaynak kaydı bu sınırlamayı korur.
