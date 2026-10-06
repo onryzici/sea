@@ -1,0 +1,8 @@
+{
+  "method": "Live Editor Play, actual CharacterController and Rigidbody, queued motor samples; not native keyboard testing",
+  "checks": {"rootAtWaterline": true, "walkRampToDeck": true, "walkBackToPier": true},
+  "rootY": -0.6786794,
+  "deckWorld": [5.96, 1.00, 7.50],
+  "deckLocal": [-1.06, 1.53, -2.52],
+  "pierWorld": [-1.23, 1.23, 7.50]
+}

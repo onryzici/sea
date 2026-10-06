@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-06",
+  "environment": "Unity 6000.5.6f1 Editor, real advancing Play loop",
+  "missionChecks": {
+    "sixPhysicalCargo": true,
+    "stableOnWreck": true,
+    "shoreScanRejected": true,
+    "scanDiscoversInRange": true,
+    "cooldown": true,
+    "allWeightsPickupDrop": true,
+    "loadedThree": true,
+    "notCompleteAwayFromHarbor": true,
+    "returnCompletes": true,
+    "uncollectedCargoRescuesToWreck": true
+  },
+  "physicalTransfer": [
+    {"kg":3,"rayTarget":true,"pickup":true,"retained":true,"onDeck":true,"finalBoatLocal":[-1.34,1.78,-2.84]},
+    {"kg":12,"rayTarget":true,"pickup":true,"retained":true,"onDeck":true,"finalBoatLocal":[-0.95,1.87,-1.53]},
+    {"kg":35,"rayTarget":true,"pickup":true,"retained":true,"onDeck":true,"finalBoatLocal":[-0.98,1.80,0.12]}
+  ],
+  "offlineDriving": {
+    "checksPassed":9,"checksTotal":9,"forwardMetres":3.721531,"turnDegrees":16.02356,
+    "includes":"helm targeting, held-item rejection, acquire, depart/ramp, turn, coast, reverse, passenger support, rescue release"
+  },
+  "build": {"target":"macOS development","path":"Builds/WreckSearch/macOS/SalvageCrew.app","result":"Succeeded","errors":0,"warnings":1,"warning":"Existing missing RuntimePipelineConfig; tooling disabled in Player build"},
+  "limitations": [
+    "Programmatic fixture positions boat/player; not a native keyboard/mouse full voyage.",
+    "Mission count/return rule test also positions cargo. Separate physicalTransfer test never teleports cargo: real camera ray, PhysicsCarry, walk and drop.",
+    "First transfer attempts aligned cargo with cabin or stern and one load failed; parallel aft-deck alignment at boat (24.5, draft, 43.6) transferred all three.",
+    "Old driving fixture first ran against stale interpolated Transform after teleport; synchronizing body/transform before fixture made all nine pass.",
+    "No new latency/loss or native focus test in this task."
+  ]
+}

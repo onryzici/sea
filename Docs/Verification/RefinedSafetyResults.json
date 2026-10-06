@@ -1,0 +1,92 @@
+{
+  "diagnostics": [],
+  "compileMs": 191,
+  "executeMs": 15819,
+  "assemblyName": "PipelineRunScript_CarrySafetyChecks_89e295823c70423e93bd362e5dae9129",
+  "success": true,
+  "result": {
+    "ActualE_Pickup": {
+      "passed": false,
+      "detail": null
+    },
+    "HeldHUD": {
+      "passed": false,
+      "detail": "Hafif kutu  (3 kg)\nClick — Devam et"
+    },
+    "ActualE_Drop": {
+      "passed": true,
+      "detail": true
+    },
+    "RapidEToggles": {
+      "passed": true,
+      "detail": true
+    },
+    "EscapeWhileHeld": {
+      "passed": false,
+      "detail": "None"
+    },
+    "UnlockedEIgnored": {
+      "passed": false,
+      "detail": null
+    },
+    "RelockClickNoAction": {
+      "passed": false,
+      "detail": true
+    },
+    "RReleasesAndResets": {
+      "passed": false,
+      "detail": "(0.25, 1.23, 2.00)"
+    },
+    "HeavySprintDisabled": {
+      "passed": false,
+      "detail": 1
+    },
+    "HeavyActualSprintSpeed": {
+      "passed": false,
+      "detail": 7.54785333e-7
+    },
+    "PlayerFallReleases": {
+      "passed": true,
+      "detail": "(0.00, 1.23, 4.00)"
+    },
+    "WeightResponse": {
+      "passed": true,
+      "detail": [
+        0.427903175,
+        0.192130566,
+        0.09761572
+      ]
+    },
+    "WallFixturePickup": {
+      "passed": true,
+      "detail": "MetalCrate"
+    },
+    "CabinPushStable": {
+      "passed": true,
+      "detail": {
+        "maxZ": 10.8452625,
+        "maxSpeed": 2.32908034,
+        "player": "(7.00, 1.55, 9.70)"
+      }
+    },
+    "PhysicsSettingsRestored": {
+      "passed": true,
+      "detail": true
+    },
+    "DistanceSafeDrop": {
+      "passed": true,
+      "detail": true
+    },
+    "ObstructionSafeDrop": {
+      "passed": true,
+      "detail": true
+    },
+    "ScrapSeaRecovery": {
+      "passed": true,
+      "detail": {
+        "position": "(1.55, 1.50, 6.00)",
+        "speed": 0.000003208638
+      }
+    }
+  }
+}

@@ -1,5 +1,131 @@
 # SalvageCrew ilerleme
 
+## GitHub kaynak teslimi — 2026-10-06
+
+Kullanıcının açık yükleme talebiyle hedef `https://github.com/onryzici/sea` olarak ayarlandı. İlk kontrolde uzak depo boş ve public, yerel dal main idi. Önceki görsel/fizik, HUD, enkaz ve mürettebat değişiklikleri birlikte kaynak teslimine hazırlanmıştır; çalışan dosyalar veya geçmiş commit'ler silinmedi, force-push kullanılmaz. Unity kaynakları, prefab/sahne bağlantıları, `.meta`, kaynak modeller, lisanslar ve gerçek test raporları dahil; Library/Temp/Logs/Builds/UserSettings hariçtir. Mevcut `.gitattributes` ile büyük Blender kaynakları ve iki büyük doku Git LFS kullanır. Bu kaynak teslimi macOS uygulamasının GitHub Release olarak dağıtımı değildir.
+
+Bu görevde yeni oynanış değişikliği veya yeniden Play testi yapılmadı; aşağıdaki önceki gerçek test sonuçları geçerlidir. İndirdikten sonra Git LFS kurulu olmalı (`git lfs pull`); projeyi Unity 6000.5.6f1 ile açıp HarborPrototype sahnesinde Play ve iki-pencere Host/Client kontrolü yap. Kullanıcının sağladığı Meshy tekne modelinin ticari lisans belgesi hâlâ sağlanmadı; kaynak kaydı bu sınırlamayı korur.
+
+## Mürettebat görünürlüğü ve yakın liman detayları — 2026-10-06
+
+İstek: multiplayer hissinin zayıf olması ve yakın çevrenin boş görünmesi. Mevcut kirli çalışma ağacı korundu; ana sahne/Art kurulumları çalıştırılmadı, paket/pipeline/deniz/oynanış otoritesi değiştirilmedi. Canlı Editor'da HarborPrototype, HarborPrototypeGenerated ve gerçek tekne/Harbor nesneleri okundu. Başlangıçta Play açıktı; düzenlemeden önce durduruldu. Unity CLI ve uGUI becerileri kullanıldı: sahne/prefab/Animator/Inspector bağlantıları Editor API'leriyle yerinde tamamlandı.
+
+### Yapılan değişiklikler
+
+- **Gerçek mürettebat bilgisi:** ConnectionHUD altında tek CrewCard. Yalnız spawn edilmiş gerçek network oyuncuları; yerel SEN etiketi, mesafe, kabul edilmiş hurda tutma durumu/ismi ve dümen sahipliği. Diğer oyuncunun baş üstünde ekran-uzayı isim/durum etiketi; kabin/çevre görüşü kapatırsa gizlenir. Solo mod açıkça tek kişilik sefer olarak gösterilir; sahte mürettebat yok. Bağlantı paneli açıkken kart/etiket gizlenir.
+- **Animasyon ve model oranları:** mevcut CC0 KayKit karakterinin Idle/Walking_A/Running_A klipleri bağlandı. Animasyon yalnız remote görseli hareket ettirir; root motion kapalıdır. Hız tekne referansında ölçülür, platformla taşınma yürüyüş sayılmaz. Eski eksen bazlı ölçekleme karakteri daraltıyordu; boy üzerinden eşit ölçekle düzeltildi. Tüm atlası turuncu/maviye boyayan renk çarpımı kaldırıldı, isteğe bağlı silah görselleri gizlendi. Taşıma için el IK veya özel dümen tutuş animasyonu henüz yok.
+- **40 yakın çevre detay kökü:** yürünebilir ikmal iskelesi/çatı, kasa/varil/ikmal kümeleri, küçük servis kayığı/kürek, kıyı atölyesi/ev, palmiyeler/kayalar ve iki gerçek yer tanımlama yazısı. Lisanslı stilize FBX/OBJ kullanıldı; görünür primitive veya yeni özel dekor mesh'i üretilmedi. 43 model Renderer gölge atar/alır; 2 yazı gölge üretmez. Yeni statik modellerde mesh collider; dekorlarda Rigidbody/NetworkObject yok. Mevcut iskele/rampa, oyuncu, dümen ve ortak hurda kökleri korundu. Dekor kasaları yeni taşınabilir hurda değildir.
+- `CrewHarborSetup`: tekrar uygulanabilir, ayrı ve dar kapsamlı Editor menüsü. Yeni varlık/lisans kaydı `ArtSources.md`. Ana değişiklikler: CrewPresence.cs, RemoteCrewAnimation.cs, Editor/CrewHarborSetup.cs, CrewLocomotion.controller; NetworkCrewPlayer atlas koruması; Development-only NetworkTestProbe gözlem/hedefleme; HarborPrototype ve NetworkFirstPersonPlayer prefabı; 7 özgün Kenney FBX ve metaları.
+
+### Gerçek kontroller
+
+- C# derleme: son kontrolde **0 hata / 0 uyarı**. İlk reload sırasında bir Pipeline main-thread timeout'u oldu; bağlantı geri geldikten sonra derleme/uygulama başarılı. Bu araç hatası oyun exception'ı değildir, Console geçmişi silinmedi.
+- macOS Development build: `Builds/CrewHarbor/macOS/SalvageCrew.app`, **Succeeded, 0 hata / 1 bilinen RuntimePipelineConfig uyarısı**. Bu uyarı yalnız Pipeline araç sunucusunun Player'da kapalı olduğunu söyler.
+- **Gerçek Editor host + çalıştırılmış yeni macOS client:** `Verification/CrewHarborNetworkResults.json`, **10/10**. Gerçek iki oyunculu liste; remote yürüyüş animasyonu ve durunca idle; mevcut rampadan host geçişi; iki tarafta dümen/taşıma durumunun görünmesi; isim etiketi; client ayrılınca listeden çıkma ve kasayı bırakma; yeniden bağlanmada oyuncu çoğalmaması; her iki instance probe'unda 0 runtime error/exception.
+- Test köprüsü başlangıçtaki iki denemede aynı adlı üç kasadan uzaktakini hedefledi. Client GameObject adları server'ın WreckCargo adlarını paylaşmaz. Development-only hedefleme NetworkObjectId kabul edecek biçimde düzeltildi; son test geçti. Server mesafe/görüş doğrulaması gevşetilmedi. Testte kasa başlangıçta fixture ile menzile yerleştirilir; ardından gerçek istemci isteği ve host taşıma kuvveti kullanılır. Bu, native elle oynanan kesintisiz sefer değildir.
+- Animasyon ayrıca canlı kemik dönüşüyle kontrol edildi: Animator zamanı ilerledi, 480 ms aralıkta bacak kemiği 2.58° değişti; root motion false. İlk görüntüde görülen dar karakter oranı düzeltildikten sonra yeni build ve iki-instance testi tekrarlandı.
+- **Offline gerçek CharacterController + collider:** yeni ikmal bölümüne gidiş, iskeleye dönüş, rampadan güverteye geçiş ve platform takibi geçti. Test doğrudan motor input örneği verir; native klavye testi değildir. İlk fixture sadece network Support alanını okuduğu için offline destek yanlış false raporlandı; gerçek offlineSupport ayrı okunarak doğrulandı.
+- Editor/idempotence: **94 → 94 Transform**, 40 detay; aynı Helm referansı; 1 CrewCard; 0 eksik materyal/shader; ek Rigidbody/NetworkObject 0. Son strict project verify: 753 dosya, **0 hata / 0 uyarı**. Console cursor161 sonrası yeni error/exception yok; native Console son okumada 0 hata/0 uyarı. Play kapalı, sahne kaydedilmiş ve temiz bırakıldı.
+- Aynı kıyı kamerasında detaylar kapalı/açık 160'ar kare kısa Editor örneği: medyan **16.64 → 16.75 ms**, p95 **18.01 → 18.17 ms**; etkin model Renderer 312 → 355. 60 FPS sınırlı Editor ölçümüdür; GPU benchmark veya farklı donanım garantisi değildir. Eksik/pink shader bulunmadı.
+- `Screenshots/CrewQuayBefore.png` / `CrewQuayAfter.png`: aynı kamera, 3840×2160, yalnız yeni detay kökü kapalı/açık A/B. `CrewTogether.png`: gerçek bağlı client kasayı tutarken host görüntüsü. İlk kullanıcı açısındaki başlangıç kaydı ayrıca CrewHarborBefore.png. 4K oyun ayarı değiştirilmedi.
+
+### Kalanlar ve manuel kontrol
+
+Native computer-use bağlantısı `Sky Computer Use native pipe startup failed` döndürdü; gerçek pencere odağı/klavye/fare kontrolleri bu tur doğrulanmadı. Yeni gecikme/kayıp testi, tam üç-ağırlıklı sefer, gerçek eşzamanlı tutma yarışı ve uzun oturum testi tekrarlanmadı. Çevre dekoru statik; yeni NPC, ekonomi, sesli sohbet veya dört oyunculu destek yok. Mevcut karakter bir KayKit maceracısıdır, özel denizci karakteri değildir; el/eşya teması için IK hâlâ eksik. Bu geçiş tam Sea of Thieves kalite eşdeğerliği olarak sunulmaz.
+
+Manuel: Editor Host + yukarıdaki yeni uygulamada 127.0.0.1 Client; TAB ile panelleri kapat. İkinci oyuncuyu yürüt/koştur/durdur; model, isim, mesafe ve animasyonu gözle. E ile bir hurda tut, diğer pencerede TAŞIYOR yazısını gör; dümeni kullanıp DÜMENDE durumunu kontrol et. Client taşıyorken bağlantıyı kes, tekrar bağlan; liste tek/iki kişiye inmeli/çıkmalı, kasa serbest kalmalı. İkmal iskelesine yürü, rampa ve yük taşıma koridorunun açık olduğunu kontrol et. Üç eski hurdayı tekneye taşı/bırak; R ve Escape/tıklama dene.
+
+Önceki kullanıcı değişiklikleriyle örtüşen geniş çalışma ağacı topluca commit/push edilmedi. Derleme yalnız yerel `Builds/CrewHarbor` altındadır. Kaynak/Inspector/meta değişiklikleri yerel projede durur.
+
+## Gerçek dümen ve enkaz arama seferi — 2026-10-06
+
+Kullanıcının yeni isteği kapsamında gerçek gemi dümeni ve oynanabilir ilk enkaz kurtarma döngüsü eklendi. Önceki çalışma ağacındaki kapsamlı görsel/UI/fizik değişiklikleri korundu; Unity 6000.5.6f1, URP 17.5.0 ve kurulu ağ paketleri değiştirilmedi. Canlı Editor bağlantısı HarborPrototype, HarborPrototypeGenerated ve HarborNetworkSession nesneleriyle doğrulandı. Sahne/prefab/Inspector değişiklikleri Play kapalıyken Unity Editor API'leriyle yapıldı, ham YAML yazılmadı.
+
+### Uygulanan
+
+- Vana yerine ücretsiz CC0 ahşap/pirinç **gemi dümeni**. Kaynak model Blender'da açıldı; hatalı çember/aks yönleri düzeltildi, otomatik spin kaldırıldı, FBX/URP materyallerle offline ve NetworkBoat'a görsel çocuk olarak takıldı. Mevcut Helm kimliği korundu; collider yeni görsele uyarlandı. A/D ile görsel dönüş; client mevcut server dönüş verisini kullanır.
+- İki statik, sığ **enkaz alanı**; lisanslı Kenney ship-wreck modeli, gerçek mesh collider ve altı ayrı 3/12/35 kg fizik yükü. Mevcut liman eğitim hurdaları ve tekne korunur. Yeni görünür primitive model üretilmedi.
+- **F / Sonar**: yalnız teknedeyken, 60 m tarama, 5 sn bekleme. Bulunan enkaza tekne burnuna göre yön/mesafe. İlk alan limandan yaklaşık 35 m, ikinci yaklaşık 69 m uzaklıktadır. Input System action'ı mevcut Player map'inde; panel, imleç ve odak kapıları korunur.
+- **Kurtarma seferi**: E ile gerçek kuvvet tabanlı taşıma; arka güvertede tutulmadan 2 sn kararlı duran üç enkaz yükü sayılır. Liman merkezine 12 m içinde, düşük hızda dönünce sefer tamamlanır. İskele eğitim yükleri sayılmaz. Mevcut suya düşme/yük kurtarması kullanılır.
+- `WreckExpedition` kuralları offline/server'da; `NetworkWreckExpedition` yalnız istek/doğrulama ve ortak keşif/sayaç/tamamlanma verisidir. Server gönderen oyuncu ve güncel pozunu doğrular, teknede olmayı ve global tarama beklemesini kontrol eder. Hurda otoritesi client'a geçmez. Geç katılma/ayrılma aynı mevcut NetworkScrap yaşam döngüsünü kullanır.
+- uGUI becerisi doğrultusunda mevcut ConnectionHUD Canvas'ına tek kompakt sefer kartı eklendi; mevcut HUD/panel komple yeniden kurulmadı. Oyuncu prefabları çoğaltılmadı.
+- `SalvageCrew/Expedition/Install Wreck Search`: idempotent, yalnız ilgili çocuklar/bağlantılar. Kaynaklar ve lisanslar `ArtSources.md`; manuel liste `WreckSearchTest.md`.
+
+### Gerçek doğrulama
+
+- **C# derleme**: son derleme 0 hata / 0 uyarı. İlk uygulama sırasında NetworkObject.IsServer ve Editor namespace kullanımı derleme hatası verdi; düzeltilip yeniden derlendi.
+- **macOS Development build**: `Builds/WreckSearch/macOS/SalvageCrew.app`, Succeeded, 0 hata / 1 bilinen Pipeline uyarısı: RuntimePipelineConfig yok, araç sunucusu Player'da kapalı. Bu bir oynanış/ağ hatası değil.
+- **Editor Play**: frame ilerlemesi doğrulandı. `WreckPlayResults.json`: 10/10 sefer kuralı kontrolü, 9/9 offline dümen/sürüş regresyonu. Ayrıca her üç ağırlık için gerçek ray hedefi → tutma kuvveti → bakışla kaldırma → CharacterController ile geri yürüme → bırakma gerçekleşti; üç yük de güvertede kaldı. Bu ayrı transfer testinde hurda ışınlanmadı.
+- Testler bazı başlangıç pozlarını fixture ile hazırlar. İlk transfer hizalarında kabin/kıç engeline denk gelen yük alınamadı; teknenin açık arka güvertesini enkaza paralel hizalayınca üçü geçti. Eski sürüş fixture'ı teleport sonrası gecikmiş interpolasyon Transform'u nedeniyle ilk denemede başarısızdı; Body/Transform eşitlenip tekrarlandığında 9/9 geçti. Baştan sona native elle oynanan sefer denmiş değildir.
+- **Gerçek Editor host + çalıştırılmış macOS client**: `WreckNetworkResults.json`, son tur **13/13**. Client yeni dümeni kullanıp sürdü; geç katılmada keşifler geldi; client sonar cevabı aldı; host yükleri dynamic/client kinematic; client gerçek tutma RPC'siyle enkaz kasasını taşıdı; ayrılınca bıraktı; yeniden bağlanmada kopya oluşmadı ve keşif kaldı; ortak 3/3 yük ve sefer tamamlandı durumu eşleşti; host kapanınca offline döndü. İki probe da 0 runtime error/exception kaydetti. Network fixture hedefi seçmek için diğer yükleri yalnız test oturumunda despawn eder; teslim sahnesinden kaldırmaz. İlk genişletilmiş script sabit client ID=1 varsaydığı için timeout verdi; gerçek atanmış ID ile son tur geçti.
+- **Editor bağlantı/idempotence**: `WreckEditorResults.json`, 998 → 998 Transform; 2 alan/6 spawn; aynı oyuncu ve Helm referansları; tek sefer HUD'u; network prefab listesinde kayıt; dümen yaklaşık 1.13×1.14 m; materyal/shader referansları geçerli.
+- **Bütünlük**: strict project verify, 719 dosya, 0 hata/0 uyarı; meta/GUID/conflict/manifest/sürüm sapması yok. Yeni kaynakların meta dosyaları üretildi.
+- Console cursor135–140 arasında yalnız yukarıdaki bilinen build uyarısı; yeni oyun error/exception yok. Önceden kalan tarihsel Console/tool hataları silinmedi.
+- 3840×2160 `Screenshots/NewHelm.png`, `FirstWreck.png`, `WreckCarry.png` görüntüleri alındı. Editor 4K preset korunur; ekran görüntüsü fixture konumundan, kesintisiz sefer kanıtı değildir.
+
+### Sınırlar / teslim
+
+Bu ilk sürüm **sığ enkaz arama ve kurtarma**: dalış/yüzme, sualtı enkaz iç mekânı, vinç, satış/ödül, kalıcı kayıt veya prosedürel sefer üretimi yok. Yanaşma otomatik değildir; bordaya/kabine sıkıştırılan yük güvenli bırakılabilir, yeniden hizalamak gerekir. Yeni gecikme/kayıp, native odak ve klavye/fare ile kesintisiz tam sefer turu yapılmadı; eski sonuçlar bu özellik için yeni test sayılmadı. Gerçek eşzamanlı tutma yarışı bu turda tekrarlanmadı.
+
+Değişiklik grupları: dört yeni runtime script + Editor kurulum aracı; mevcut local/network input köprüleri, HarborSession ve development probe; InputActions/NetworkPrefabs; HarborPrototype/NetworkBoat; lisanslı dümen ve enkaz kaynakları; test ve dokümanlar. Önceki çok sayıda commit edilmemiş değişiklik bu dosyalarla örtüştüğünden otomatik toplu commit/push yapılmadı. Kullanıcı değişiklikleri silinmedi. Blender'ın bu görevde üretilen `.blend1` yedeği `/tmp/salvage-wreck-assets/ShipsWheelAdapted.blend1` konumuna taşındı; asıl GLB ve uyarlanmış Blender dosyası projede saklandı.
+
+## HUD ve özgün ikonlar — 2026-10-06
+
+Kapsam yalnız arayüzdür. Önceki görsel/fizik değişiklikleri korunur. Unity UI → uGUI becerisi doğrultusunda mevcut Canvas nesneleri **yerinde** düzenlendi; panel/HUD komple silinip yeniden yapılmadı. Canlı Editor HarborPrototype ve gerçek ConnectionHUD/HarborHUD hiyerarşilerini doğruladı; değişiklikler Play kapalıyken Editor API'leriyle sahneye ve NetworkFirstPersonPlayer prefabına kaydedildi.
+
+- Lacivert/krem/turkuaz/sarı bağlantı paneli; ayrılmış adres/port başlıkları, Host/Client düğmeleri, durum alanı, bağlantıyı kes ve oyuna devam et. Varsayılan 127.0.0.1:7777, mevcut callback'ler ve input davranışı korunur.
+- Sol üstte küçük oyun etiketi, sağ üstte gerçek SOLO/HOST/CLIENT rolü; altta daha küçük kontrol şeridi. Dümen kullanımında şerit sürüş kontrollerine dönüşür.
+- Hurda adı/kg ve tut/bırak bilgisi ikonlu etkileşim kartında; dümen hedefi/sürüşü ayrı ikonla gösterilir. Panel açıkken nişangâh, kontrol şeridi ve etkileşim kartı gizlenir. İmleç serbestken geri dönüş ipucu görünür. Yeni ekonomi/can/envanter sistemi yoktur.
+- `image_gen` ile özgün Cargo, Helm ve Anchor PNG'leri üretildi. Gerçek alpha, 1280² kaynak, Unity Sprite importunda 512 px; kaynak/meta dosyaları proje içinde. Promptlar/kullanım `UIArtPrompts.md` içinde. Yeni paket/font/render pipeline eklenmedi.
+- Yeniden uygulama: `SalvageCrew/UI/Apply Nautical HUD`. Yalnız mevcut sahne HUD'u ve ağ oyuncusu HUD'unu günceller; ana Harbor kurulumunu çalıştırmaz.
+
+### Gerçek kontroller
+
+- C# derleme: 0 hata, 0 uyarı. Editor doğrulama scripti ilk denemede Unity 6.5'te kaldırılmış GetInstanceID nedeniyle derlenmedi; GetEntityId ve güncel FindObjectsByType ile düzeltildi. Bu hata proje runtime derleme hatası değildi.
+- İlk kurulumdaki Unity fake-null/CanvasGroup erişimi düzeltildi; yeniden uygulama başarılı. Son bütünlük sonucu `Verification/UIEditorResults.json`: 44 → 44 RectTransform, çoğalma yok; dokuz session referansı aynı; network HUD'un dokuz sunum referansı dolu; üç PNG'de hem saydam hem opak piksel var.
+- Gerçek ilerleyen Editor Play'de `Verification/UIPlayResults.json`: **21/21** programatik kontrol geçti (son kodla tekrarlandı). Bir EventSystem; altı kontrolün GraphicRaycaster alanı; hatalı IPv4 bildirimi; Resume; Host başlangıcı/yerel network HUD; HOST rolü; düğme disable; background simülasyon; Disconnect sonrası tek Solo HUD ve panel dönüşü. Bunlar native mouse tıklaması veya ikinci gerçek client değildir.
+- Gerçek PhysicsCarry ile 12 kg kasa tutulurken Cargo kartı, gerçek offline dümen kullanımında Helm kartı ve sürüş yönergeleri gözlendi. Ekran görüntüsü için fixture konumlandırması yapıldı; bu UI turunda rampadan taşıma regresyonu tekrarlanmadı.
+- 3840×2160 panel/taşıma/dümen görüntüleri ve 1280×720 panel görüntüsü incelendi. 720p kamera pixelRect gerçekten 1280×720 okundu; mesh güncellemesinden sonra metin taşması yok. 4K preset geri seçildi. `Screenshots/UIConnection.png`, `UICarry.png`, `UIHelm.png`, `UIConnection720.png`.
+- Pipeline cursor129 sonrasında oyun error/exception kaydı yok. Play çıkışında native Console'daki tek yeni araç hatası ayrıca doğrudan okundu: `Command execution failed: Thread was being aborted`, stack `Unity.Pipeline.BasePipelineServer.ExecuteCommandDirect`. Bu nedenle Console bütünüyle sıfır hata diye raporlanmaz. Play kapalı bırakıldı.
+
+### Yapılmayanlar / manuel tur
+
+Yeni macOS build, gerçek ikinci client, gecikme/kayıp, fiziksel klavye/mouse ve native odak testi bu UI turunda yapılmadı. Ayrı Test Runner EditMode süiti çalıştırılmadı; Editor bütünlük scripti suite değildir. Önceki deniz/tekne/çevre kalite sorunları bu arayüz göreviyle çözülmüş sayılmaz. Tam görsel/ağ kabulü beklediğinden commit/push yapılmadı.
+
+Manuel: HarborPrototype → Play → Oyuna devam et; E ile hurda tut/bırak; dümeni E ile kullan/bırak ve alt yönergeleri kontrol et. Tab ile paneli aç/kapat, Escape/tıklama dene. Host başlat → bağlantıyı kes → Solo dönüşünü dene. Yeni standalone build alındığında ikinci pencerede Client, 127.0.0.1:7777, rol ve yalnız yerel HUD görünürlüğünü kontrol et.
+
+Bu tur dosyaları: `HarborHudPresentation.cs`, `Editor/HarborHudStyle.cs`, CarryHud/NetworkCarryHud sunum bağlantıları, HarborSession rol metni, HarborPrototype sahnesi, NetworkFirstPersonPlayer prefabı; UI PNG/meta dosyaları, üç UI doğrulama scripti/iki sonuç JSON'u, ekran görüntüleri ve belgeler. Rigidbody/NetworkObject/input action/taşıma otoritesi kodu değiştirilmedi.
+
+## Odaklı görsel düzeltme — 2026-10-06
+
+4K tesliminden sonra kullanıcının görünüm eleştirisi üzerine aynı başlangıç kadrajında dört iterasyon yapıldı. Önceki çalışma ağacı korundu; bu turda oyun/network/fizik hareket kodları değiştirilmedi. Native Computer Use tekrar `Sky Computer Use native pipe startup failed` verdi. Gerçek Editor bağlantısı HarborPrototype, HarborPrototypeGenerated, HarborNetworkSession, StaticBoat_10m_x_4m, BoardingRamp ve RefinedWater ile doğrulandı; düzenlemeler Play dışında Editor API'leriyle uygulandı.
+
+- Su: sürekli tepe-rengi şeritleri kaldırıldı; yüzey ve derinlik rengi, kırılma/ışık soğurumu ve dar temas köpüğü yeniden ayarlandı. MatrixRex MIT lisanslı normal dokusu çift yönlü örnekleniyor. Normal ayrıntısı uzaklıkla azalıyor. Yakın yüzeyde yalnız görsel ±9 cm küçük dalga var; fizik dalgası/HarborWater CPU yüksekliği değiştirilmedi. Tekne/yük hareketi bu küçük ayrıntıyı izlemez. Mesh 513² vertex (263.169), yakın bölgede 75 cm aralık; 4K render korunur.
+- Gökyüzü: özgün 8192×4096 AllSky panoraması korunup `PainterlyPanorama` shader'ıyla renk aralığı ve bulut tonları sadeleştirildi. Bu hacimsel bulut simülasyonu değildir. İlk maske bulutları fazla sildi; sonraki iterasyonda gölgeli kütleler geri getirildi. Pow uyarısı clamp ile giderildi.
+- Çevre: var olan lisanslı kaya/palmiye/çalı modelleriyle daha alçak, asimetrik ada profilleri ve parçalı kıyı yerleşimi; yeni primitive dekor yok. Uzak kaya MeshCollider'ları ilgili model konumlarını izler, oynanış iskele/rampa/tekne collider ölçüleri korunur. Güneş/ambient dengesi yeniden ayarlandı. Tek taraflı ithal rampa korkuluğunun karanlık arka yüzü, ters yönlü ikinci ithal model yüzü ve back-face culling ile düzeltildi; collider eklenmedi. Hurda materyallerindeki tek renk yerine mevcut üretici atlasları bağlandı.
+
+Doğrulamalar: C# derlemesi 0 hata/0 uyarı; iki shader mesaj listesi boş. Tekrar kurulum 267 → 267 etkin renderer, çoğalma yok. Beş ağ prefabı mevcut. Play frameCount 1 → 4 ilerledi. 12 hareket/rampa/kurtarma kontrolü, 24 taşıma/bırakma kontrolü (`FocusedCarryResults.json`), 7 kabin/giriş/dümen kontrolü, 9 offline sürüş kontrolü geçti. Sürüş: 3,7466 m ileri, 15,938° dönüş; rampa ayrılması, geri, yavaşlama, yolcu desteği ve R kontrolü başarılı. Bunlar gerçek fiziğe programatik komut veren testlerdir, native giriş veya iki-instance ağ testi değildir. Son görsel-only korkuluk/materyal ayarları oyun davranışı değiştirmedi.
+
+4K kısa Editor örneklemi 160 kare: median 16,815 ms, p95 18,853 ms; eksik/desteklenmeyen materyal yok. Başlangıçtaki Editor main-thread timeout araç hatası aktivasyon sonrası düzeldi; cursor129 sonrasında yeni oyun error/exception yok. Ayrı EditMode süiti, yeni standalone build, iki gerçek instance, gecikme/kayıp ve native odak testi bu turda yapılmadı. `git diff --check`, Unity'nin kendi serialize ettiği boş YAML alanlarında trailing whitespace bildirdi; ham sahne/prefab YAML değiştirilmedi.
+
+Görüntüler: önce `Screenshots/UhdHarbor.png`, sonra `FocusedAfterStart.png`; aynı başlangıç konumu/yaw/FOV, dalga zamanı farklı. Ayrıca `FocusedAfterDeck.png` ve `FocusedAfterCarry.png`, gerçek Game View 3840×2160. Taşıma fotoğrafı fixture yerleşimi + gerçek tutma; rampa testi ayrı çalıştırıldı.
+
+**Hedef henüz tamamlanmadı:** uzaktaki su desen/aliasing, kabinin kesilmiş kenarları ve iç kaplama, tekne ile basit Kenney hurda modellerinin detay farkı, ada kıyılarının hâlâ basit oluşu devam ediyor. Sea of Thieves kalitesine ulaşıldığı iddia edilmez. Ortak ağ regresyonu ve görsel kabul tamamlanmadığından commit/push yapılmadı.
+
+Manuel tur: HarborPrototype → Play/Solo; aynı iskele kadrajını önce/sonra karşılaştır; rampadan geç, kabine gir ve E/WASD ile sür; üç hurdadan her birini taşı/bırak; R ve Escape/tıklama dene. Sonra yeni build ile Editor host/client regresyonu gerekir. Son durumda Play kapalı bırakılır.
+
+## Güncel ek çalışma — 4K UHD, 2026-10-06
+
+- Masaüstü varsayılan çözünürlüğü 1280 × 720 yerine **3840 × 2160**; native çözünürlük otomatik seçimi kapalı, Retina desteği açık, pencere yeniden boyutlandırılabilir. URP render scale **1.0**. Unity/URP sürümü değiştirilmedi.
+- `UhdDisplaySetup` Editor menüleri ayarları yeniden uygulayabilir ve sabit 3840 × 2160 Game View seçebilir. Editor önizleme pencereye sığacak şekilde küçülebilir; bu, kamera render çözünürlüğünden farklıdır.
+- Gerçek HarborPrototype Play oturumunda Camera.main 3840 × 2160 okundu. FrameCount 23600 → 23607 ilerledi. Aynı çözünürlükte PNG kaydedilip incelendi: `Docs/Screenshots/UhdHarbor.png`. Salt ekran görüntüsünü büyütme yapılmadı.
+- Kısa Editor örneklemi: 160 ölçüm, ortanca 16.795 ms, p95 19.543 ms; 184 etkin renderer, eksik/desteklenmeyen materyal bulunmadı. Bu GPU profili veya standalone FPS garantisi değildir. Derleme kontrolü up_to_date, 0 hata / 0 uyarı.
+- Önceki uzun görsel çalışma da çalışma ağacında duruyor: lisanslı yüksek çözünürlüklü gökyüzü, Blender'da açılan kabin, güncellenen su/tekne/iskele. Bu değişikliklerin tamamı son iki-instance regresyonuyla henüz doğrulanmış değildir. Eski build ve eski ağ sonuçları yeni 4K/kabin sürümünün doğrulaması sayılmaz.
+- Son Play kontrolleri: `UhdHarborResults.json` 12/12, `CabinResults.json` 7/7; taşıma kontrollerinin son çalıştırması 24/24. Bunlar programatik Editor testleridir, native klavye/mouse testi değildir. Kabin testinden sonra küçük pencere/duvar mesh düzeltmeleri yapıldığı için son mesh görsel kontrolü ayrıca gerekir.
+- **Bekleyenler:** yeni macOS standalone build ve gerçek 4K pencere ölçümü, uzun süreli performans, son kabinle iki-instance tekne/ağ regresyonu, native odak testi. Deniz desen tekrarı, kıyı geçişleri ve model/ışık uyumu hâlâ görsel iyileştirme ister; 4K bu sorunların çözüldüğü anlamına gelmez. Kullanıcının “her şey doğrulandıktan sonra” koşulu nedeniyle GitHub'a yükleme yapılmadı.
+
+Manuel 4K kontrol: HarborPrototype aç → `SalvageCrew/Display/Select 3840 x 2160 Game View` → Play. HUD okunurluğunu ve pencereye sığdırılmış görüntüyü kontrol et. Standalone için yeni build gerekir; eski uygulama yeni varsayılanları içermez. Test bitiminde Play kapatıldı.
+
 ## Mevcut durum — 2026-10-06
 
 Hazırlık, Aşama 1/2/3, Aşama 4A tekne sürüşü/hareketli güverte ve ilk konsept görsel geçişi uygulanmıştır. Görsel geçişin başlangıcı `6dc4906`, Git temizdi; kullanıcı değişikliği silinmedi. Yeni macOS build + gerçek Editor host/client normal ağ regresyon turu geçti. 100 ms/yön + %1 kayıp sonuçları **önceki 4A aşamasına** aittir; görsel geçişte yeniden yapılmadı. Native pencere odağı, fiziksel klavye/mouse turu ve iki native pencerenin gözle görsel değerlendirmesi manuel kontroldür. Kök: `/Users/trexoinnovation/salvage`. Aşağıdaki önceki aşama bölümleri tarihsel sonuçları korur.

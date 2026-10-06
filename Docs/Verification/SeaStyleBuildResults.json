@@ -1,0 +1,14 @@
+{
+  "buildId": "build_a19638dce508",
+  "result": "Succeeded",
+  "platform": "StandaloneOSX",
+  "outputPath": "Builds/ArtRefined/macOS/SalvageCrew.app",
+  "totalSizeBytes": 354308757,
+  "buildTimeMs": 89295,
+  "totalErrors": 0,
+  "totalWarnings": 1,
+  "warning": "Pipeline: No RuntimePipelineConfig asset found. Pipeline tools disabled in Player builds; game transport remains enabled.",
+  "license": "Active Unity Personal",
+  "editor": "6000.5.6f1",
+  "buildEndedAt": "2026-10-06T11:39:03.0494430Z"
+}

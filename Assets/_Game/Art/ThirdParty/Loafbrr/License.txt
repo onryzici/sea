@@ -1,0 +1,6 @@
+Modular Wooden Docks — loafbrr_1
+https://opengameart.org/content/modular-wooden-docks
+Source download: https://opengameart.org/sites/default/files/woodendock_fbxgltftextures.zip
+License: CC0 1.0, https://creativecommons.org/publicdomain/zero/1.0/
+Commercial use permitted; attribution not required. Source page checked 2026-10-06.
+Selected original FBX files and original DockTrim textures only; no external scripts imported.

@@ -44,7 +44,7 @@ begin
   raise output unless status.success?
   send_command.call(host, 'host')
   wait_for { s = state(host); s if s && s['role'] == 'HOST' }
-  binary = File.join(root, 'Builds/ArtPass/macOS/SalvageCrew.app/Contents/MacOS/SalvageCrew')
+  binary = File.join(root, ARGV[0] || 'Builds/ArtPass/macOS/SalvageCrew.app/Contents/MacOS/SalvageCrew')
   pid = Process.spawn(binary, '--salvage-probe', client, '-logFile', File.join(temp, 'client.log'), '-screen-width', '1024', '-screen-height', '576', '-windowed', out: File::NULL, err: File::NULL)
   wait_for(25) { state(client) }
   send_command.call(client, 'client')
@@ -71,18 +71,45 @@ begin
   checks['ClientCarryVisibleInHostState'] = state(host)['items'].any? { |i| i['mass'] == 3 && i['holder'] == 1 && i['position']['x'] > 5 }
   evidence['ClientCarry'] = { host: state(host), client: state(client) }
   send_command.call(client, 'toggle'); walk.call(client, 6, 8.2)
-  walk.call(host, 7, 9.8)
+  walk.call(host, 7, 11.8)
   send_command.call(host, 'lookHelm'); send_command.call(host, 'toggle')
   wait_for { owned.call(state(host))['driving'] }
   before = state(client); send_command.call(host, 'drive', { x: 0.35, z: 1, duration: 4 })
   sleep 2
   walk.call(client, -1, -3.2, true)
   after = state(client)
-  checks['MovingDeckClientWalk'] = after['boat']['departed'] && owned.call(after)['supported'] && owned.call(after)['position']['y'] > 1
+  # Use deck-local height: hull draft/heave deliberately changes the world-space waterline.
+  checks['MovingDeckClientWalk'] = after['boat']['departed'] && owned.call(after)['supported'] && owned.call(after)['boatLocal']['y'].between?(1.4, 1.85)
   checks['ServerBoatClientKinematic'] = state(host)['boat']['kinematic'] == false && after['boat']['kinematic'] == true
   checks['CargoRemainsFinite'] = state(host)['items'].all? { |i| i['position'].values.all?(&:finite?) && Math.sqrt(i['velocity'].values.sum { |v| v*v }) < 8 }
   evidence['MovingDeck'] = { before: before, after: after, host: state(host) }
   send_command.call(host, 'toggle')
+  walk.call(host, 0.8, -3.4, true)
+  walk.call(client, 0, -1, true)
+  walk.call(client, 0, 1.8, true)
+  send_command.call(client, 'lookHelm'); send_command.call(client, 'toggle')
+  wait_for { owned.call(state(client))['driving'] }
+  before_client_drive = state(host)['boat']['position']
+  send_command.call(client, 'drive', { x: -0.3, z: 1, duration: 6 })
+  sleep 2
+  walk.call(host, 0.8, -3.4, true)
+  after_client_drive = state(host)
+  moved = Math.sqrt(%w[x z].sum { |axis| (after_client_drive['boat']['position'][axis] - before_client_drive[axis])**2 })
+  checks['ClientHelmHostPassenger'] = moved > 0.5 && owned.call(after_client_drive)['supported'] && state(host)['boat']['driver'] == 1
+  evidence['ClientHelm'] = { metres: moved, host: state(host), client: state(client) }
+  send_command.call(client, 'disconnect')
+  wait_for { state(host)['players'].length == 1 }
+  wait_for { state(host)['boat']['driver'] == none }
+  checks['DisconnectReleasesHelm'] = state(host)['boat']['drive'].values.all? { |v| v.abs < 0.01 }
+  send_command.call(client, 'client')
+  wait_for(25) { s = state(client); s if s && s['role'] == 'CLIENT' && s['players'].length == 2 && s['items'].length == 3 }
+  sleep 1
+  h = state(host); c = state(client)
+  checks['LateRejoinState'] = c['boat']['departed'] && c['items'].all? do |item|
+    authoritative = h['items'].find { |v| v['mass'] == item['mass'] }
+    authoritative && authoritative['holder'] == item['holder'] && Math.sqrt(%w[x y z].sum { |axis| (authoritative['position'][axis] - item['position'][axis])**2 }) < 0.6
+  end
+  evidence['LateRejoin'] = { host: h, client: c }
   send_command.call(client, 'disconnect')
   wait_for { state(host)['players'].length == 1 }
   checks['DisconnectClean'] = state(host)['errors'] == 0 && state(client)['errors'] == 0
@@ -91,7 +118,7 @@ rescue => error
   checks['Completed'] = false
   evidence['Failure'] = { message: error.message, host: state(host), client: state(client) }
 ensure
-  File.write(File.join(root, 'Docs/Verification/ArtNetworkResults.json'), JSON.pretty_generate({ checks: checks, evidence: evidence, temp: temp }))
+  File.write(File.join(root, ARGV[1] || 'Docs/Verification/ArtNetworkResults.json'), JSON.pretty_generate({ checks: checks, evidence: evidence, temp: temp }))
   puts JSON.pretty_generate(checks)
   begin
     send_command.call(host, 'disconnect') if state(host) && state(host)['role'] == 'HOST'

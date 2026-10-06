@@ -8,9 +8,11 @@ namespace SalvageCrew
     {
         public Vector3 Position, Velocity;
         public float Yaw, TurnRate;
+        public Quaternion Rotation;
+        public Vector3 AngularVelocity;
         public void NetworkSerialize<T>(BufferSerializer<T> s) where T : IReaderWriter
-        { s.SerializeValue(ref Position); s.SerializeValue(ref Velocity); s.SerializeValue(ref Yaw); s.SerializeValue(ref TurnRate); }
-        public bool Equals(BoatPose b) => Position == b.Position && Velocity == b.Velocity && Yaw == b.Yaw && TurnRate == b.TurnRate;
+        { s.SerializeValue(ref Position); s.SerializeValue(ref Velocity); s.SerializeValue(ref Yaw); s.SerializeValue(ref TurnRate);s.SerializeValue(ref Rotation);s.SerializeValue(ref AngularVelocity); }
+        public bool Equals(BoatPose b) => Position == b.Position && Velocity == b.Velocity && Yaw == b.Yaw && TurnRate == b.TurnRate && Rotation==b.Rotation && AngularVelocity==b.AngularVelocity;
     }
 
     // One server-owned dynamic compound body. Client replicas render snapshots, never simulate propulsion.
@@ -40,6 +42,7 @@ namespace SalvageCrew
         public Rigidbody Body { get; private set; }
         public Transform Helm => helm;
         public Vector2 Drive => drive;
+        public float SteeringVisual => IsServer ? drive.x : Mathf.Clamp(state.Value.TurnRate / turnSpeed, -1, 1);
         public Vector3 Velocity => IsServer ? Body.linearVelocity : state.Value.Velocity;
 
         private void Awake() { Body = GetComponent<Rigidbody>(); Body.isKinematic = true; }
@@ -47,13 +50,15 @@ namespace SalvageCrew
         {
             Instance = this;
             // Docking clamp: avoid the boarding ramp imparting impulses before departure.
-            Body.isKinematic = true;
+            Body.isKinematic = !IsServer;
             Body.interpolation = IsServer ? RigidbodyInterpolation.Interpolate : RigidbodyInterpolation.None;
             Body.collisionDetectionMode = IsServer ? CollisionDetectionMode.ContinuousDynamic : CollisionDetectionMode.Discrete;
             if (IsServer)
             {
-                // No waves/load balancing in 4A: pitch and roll are deliberately locked.
-                Body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                var floating=GetComponent<CalmWaterBuoyancy>();
+                if(floating!=null){var spawn=Body.position;spawn.y=floating.RestHeight;Body.position=spawn;}
+                // Moored hull can heave/pitch/roll; the server alone simulates wave forces.
+                Body.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationY;
                 // Compound cabin/rails tilt principal inertia axes; use the calm-water hull approximation.
                 Body.inertiaTensorRotation = Quaternion.identity;
                 Body.inertiaTensor = Body.mass / 12f * new Vector3(101.44f, 116f, 17.44f);
@@ -64,14 +69,14 @@ namespace SalvageCrew
         }
         private void Changed(BoatPose before, BoatPose after) { receivedAt = Time.unscaledTime; }
         private void Apply(BoatPose pose)
-        { transform.SetPositionAndRotation(pose.Position, Quaternion.Euler(0, pose.Yaw, 0)); Physics.SyncTransforms(); }
+        { transform.SetPositionAndRotation(pose.Position, pose.Rotation); Physics.SyncTransforms(); }
         private void Update()
         {
             if (!IsSpawned || IsServer) return;
             float age = Mathf.Clamp(Time.unscaledTime - receivedAt, 0, .12f);
             float blend = 1 - Mathf.Exp(-interpolationRate * Time.deltaTime);
             transform.SetPositionAndRotation(Vector3.Lerp(transform.position, state.Value.Position + state.Value.Velocity * age, blend),
-                Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, state.Value.Yaw + state.Value.TurnRate * age, 0), blend));
+                Quaternion.Slerp(transform.rotation, Quaternion.AngleAxis(state.Value.AngularVelocity.magnitude*Mathf.Rad2Deg*age,state.Value.AngularVelocity.normalized)*state.Value.Rotation, blend));
             Physics.SyncTransforms();
         }
         private void FixedUpdate()
@@ -80,8 +85,8 @@ namespace SalvageCrew
             if (Driver.Value != NetworkScrap.Nobody && !NetworkManager.ConnectedClients.ContainsKey(Driver.Value)) ReleaseDriver();
             if (Driver.Value == NetworkScrap.Nobody || Time.unscaledTime - lastInput > inputTimeout) drive = Vector2.zero;
             if (drive.sqrMagnitude > .001f && !Departed.Value)
-            { Departed.Value = true; HarborSession.Instance.SetRampActive(false); Body.isKinematic = false; Body.WakeUp(); }
-            if (!Departed.Value) return;
+            { Departed.Value = true; HarborSession.Instance.SetRampActive(false); Body.constraints=RigidbodyConstraints.None;Body.isKinematic = false; Body.WakeUp(); }
+            if (!Departed.Value){if(Time.unscaledTime>=nextPublish){nextPublish=Time.unscaledTime+.05f;Publish();}return;}
             Vector3 velocity = Body.linearVelocity;
             Vector3 forward = Body.rotation * Vector3.forward;
             Vector3 planar = Vector3.ProjectOnPlane(velocity, Vector3.up);
@@ -91,7 +96,7 @@ namespace SalvageCrew
             if (Mathf.Abs(drive.y) < .01f) thrust = 0;
             Vector3 force = forward * thrust - planar * waterResistance - lateral * lateralResistance;
             // Spring around the calm waterline; cancel gravity without using cargo-dependent buoyancy.
-            force.y = -Physics.gravity.y + Mathf.Clamp((waterline - Body.position.y) * buoyancySpring - velocity.y * buoyancyDamping, -3, 3);
+            force.y = GetComponent<CalmWaterBuoyancy>() != null ? 0 : -Physics.gravity.y + Mathf.Clamp((waterline - Body.position.y) * buoyancySpring - velocity.y * buoyancyDamping, -3, 3);
             Body.AddForce(force, ForceMode.Acceleration);
             float targetTurn = drive.x * turnSpeed * Mathf.Deg2Rad;
             float turnDelta = Mathf.Clamp(targetTurn - Body.angularVelocity.y, -turnAcceleration * Mathf.Deg2Rad * Time.fixedDeltaTime,
@@ -100,9 +105,9 @@ namespace SalvageCrew
             if (Time.unscaledTime >= nextPublish) { nextPublish = Time.unscaledTime + .05f; Publish(); }
         }
         private void Publish() => state.Value = new BoatPose { Position = Body.position, Yaw = Body.rotation.eulerAngles.y,
-            Velocity = Body.linearVelocity, TurnRate = Body.angularVelocity.y * Mathf.Rad2Deg };
+            Velocity = Body.linearVelocity, TurnRate = Body.angularVelocity.y * Mathf.Rad2Deg,Rotation=Body.rotation,AngularVelocity=Body.angularVelocity };
         public Vector3 PointVelocity(Vector3 point) => IsServer ? Body.GetPointVelocity(point)
-            : state.Value.Velocity + Vector3.Cross(Vector3.up * state.Value.TurnRate * Mathf.Deg2Rad, point - transform.position);
+            : state.Value.Velocity + Vector3.Cross(state.Value.AngularVelocity, point - transform.position);
         public Vector3 PhysicsPoint(Vector3 local) => Body.position + Body.rotation * local;
         public Vector3 RescuePoint(ulong client)
         {

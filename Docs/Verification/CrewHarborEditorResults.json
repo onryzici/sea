@@ -1,0 +1,46 @@
+{
+  "success": true,
+  "command": "command run_script",
+  "data": {
+    "command": "run_script",
+    "parameters": {
+      "file": "Docs/Verification/CrewHarborChecks.cs",
+      "entry": "CrewHarborChecks.EditorChecks",
+      "timeout_ms": "30000"
+    },
+    "result": {
+      "diagnostics": [
+
+      ],
+      "compileMs": 95,
+      "executeMs": 574,
+      "assemblyName": "PipelineRunScript_CrewHarborChecks_a68a4a7ea865443ab4c0f1b41ae83098",
+      "success": true,
+      "result": {
+        "before": 94,
+        "after": 94,
+        "details": 40,
+        "sameHelm": true,
+        "addedRigidbodies": 0,
+        "addedNetworkObjects": 0,
+        "missingMaterials": 0,
+        "castShadows": 43,
+        "renderers": 45,
+        "crewCards": 1,
+        "avatarController": "CrewLocomotion",
+        "sceneDirty": false
+      }
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "/Users/trexoinnovation/salvage"
+    }
+  },
+  "errors": [
+
+  ],
+  "warnings": [
+
+  ]
+}

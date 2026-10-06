@@ -1,0 +1,86 @@
+[
+  {
+    "source": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/main/LICENSE.txt",
+    "file": "Assets/_Game/Art/ThirdParty/KayKit/LICENSE.txt",
+    "bytes": 1027,
+    "sha256": "881e50d3629fba90629bedc65e9e6f47cfab3609598c296dcb7f70ea83174360"
+  },
+  {
+    "source": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/main/addons/kaykit_medieval_hexagon_pack/Assets/fbx(unity)/buildings/red/building_home_A_red.fbx",
+    "file": "Assets/_Game/Art/ThirdParty/KayKit/building_home_A_red.fbx",
+    "bytes": 48620,
+    "sha256": "31c681427c20ef13a734ca96e5edaccf3e89ce084c4f8f64e651de8f51ddd067"
+  },
+  {
+    "source": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/main/addons/kaykit_medieval_hexagon_pack/Assets/fbx(unity)/buildings/red/building_home_B_red.fbx",
+    "file": "Assets/_Game/Art/ThirdParty/KayKit/building_home_B_red.fbx",
+    "bytes": 61516,
+    "sha256": "ad52016722466b266981c86d16c0d53a3f6520f7c08e63e5820deed4c8848bd4"
+  },
+  {
+    "source": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/main/addons/kaykit_medieval_hexagon_pack/Assets/fbx(unity)/buildings/red/building_tavern_red.fbx",
+    "file": "Assets/_Game/Art/ThirdParty/KayKit/building_tavern_red.fbx",
+    "bytes": 113900,
+    "sha256": "bb87684519b25176f0ca55181844367a166f9d995d7e79e692fdb17ffa4b6f32"
+  },
+  {
+    "source": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/main/addons/kaykit_medieval_hexagon_pack/Assets/fbx(unity)/buildings/red/building_windmill_red.fbx",
+    "file": "Assets/_Game/Art/ThirdParty/KayKit/building_windmill_red.fbx",
+    "bytes": 106028,
+    "sha256": "f755d639333e5d54a510c9d5e8a170033d1a99a74b7f379e191c6ebed1ac0d94"
+  },
+  {
+    "source": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/main/addons/kaykit_medieval_hexagon_pack/Assets/fbx(unity)/buildings/neutral/building_bridge_A.fbx",
+    "file": "Assets/_Game/Art/ThirdParty/KayKit/building_bridge_A.fbx",
+    "bytes": 38460,
+    "sha256": "ba2ecbff36845569ac6a737a19a2d35dedbf94abc0d614279f8169d890eb36e4"
+  },
+  {
+    "source": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/main/addons/kaykit_medieval_hexagon_pack/Assets/fbx(unity)/decoration/nature/mountain_A_grass.fbx",
+    "file": "Assets/_Game/Art/ThirdParty/KayKit/mountain_A_grass.fbx",
+    "bytes": 26892,
+    "sha256": "af32b876d472fd8d94006aa709b4a49b6ae82c28c8bd48d6bca0bef9ec9ced67"
+  },
+  {
+    "source": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/main/addons/kaykit_medieval_hexagon_pack/Assets/fbx(unity)/decoration/nature/mountain_B_grass.fbx",
+    "file": "Assets/_Game/Art/ThirdParty/KayKit/mountain_B_grass.fbx",
+    "bytes": 26876,
+    "sha256": "268e07adff99a7e4696a096f21e635500064085d6a4b502faa4c9bd6b983d83d"
+  },
+  {
+    "source": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/main/addons/kaykit_medieval_hexagon_pack/Assets/fbx(unity)/decoration/nature/rock_single_A.fbx",
+    "file": "Assets/_Game/Art/ThirdParty/KayKit/rock_single_A.fbx",
+    "bytes": 19420,
+    "sha256": "5119847421e08c4c2ea4b6750a4c27087518e905365032b96026beac07f57e23"
+  },
+  {
+    "source": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/main/addons/kaykit_medieval_hexagon_pack/Assets/fbx(unity)/decoration/nature/rock_single_C.fbx",
+    "file": "Assets/_Game/Art/ThirdParty/KayKit/rock_single_C.fbx",
+    "bytes": 20444,
+    "sha256": "fa8c867e7b917940854fee02adf09ae0587f713d3c171b0826482ab353820264"
+  },
+  {
+    "source": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/main/addons/kaykit_medieval_hexagon_pack/Assets/fbx(unity)/decoration/nature/tree_single_A.fbx",
+    "file": "Assets/_Game/Art/ThirdParty/KayKit/tree_single_A.fbx",
+    "bytes": 20572,
+    "sha256": "f713e1299b01b57b789af197592400f8e9e254e4817bddf3d3c476574f89b0c2"
+  },
+  {
+    "source": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/main/addons/kaykit_medieval_hexagon_pack/Assets/fbx(unity)/decoration/nature/tree_single_B.fbx",
+    "file": "Assets/_Game/Art/ThirdParty/KayKit/tree_single_B.fbx",
+    "bytes": 25132,
+    "sha256": "29ca9b5ed77f3c1786fb6639d892849dff5cccaf57cfe5d8f4349f3aa926e9b6"
+  },
+  {
+    "source": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/main/addons/kaykit_medieval_hexagon_pack/Assets/fbx(unity)/decoration/nature/hill_single_A.fbx",
+    "file": "Assets/_Game/Art/ThirdParty/KayKit/hill_single_A.fbx",
+    "bytes": 20876,
+    "sha256": "bdfffdbf1f9710a5363359aef54ab8109a9cb6ee8a1661ab15f80302fc736239"
+  },
+  {
+    "source": "https://raw.githubusercontent.com/KayKit-Game-Assets/KayKit-Medieval-Hexagon-Pack-1.0/main/addons/kaykit_medieval_hexagon_pack/Assets/fbx(unity)/buildings/red/hexagons_medieval.png",
+    "file": "Assets/_Game/Art/ThirdParty/KayKit/hexagons_medieval.png",
+    "bytes": 15783,
+    "sha256": "5301a06866ba3be68dcc14cc429bd6d0f69004b72884283715d7e233f2e9782e"
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "method": "Programmatic UI raycast + onClick in real Editor Play. Not native OS clicks or a second client.",
+  "results": {
+    "panel_free_cursor": true,
+    "single_event_system": true,
+    "panel_hides_reticle": true,
+    "raycast_Host": true,
+    "raycast_Client": true,
+    "raycast_Disconnect": true,
+    "raycast_Resume": true,
+    "raycast_Address": true,
+    "raycast_Port": true,
+    "invalid_endpoint_feedback": true,
+    "resume_closes_panel": true,
+    "controls_restored": true,
+    "host_button_starts_session": true,
+    "host_role_label": true,
+    "single_network_hud": true,
+    "network_hud_presentation": true,
+    "host_button_disabled": true,
+    "background_simulation": true,
+    "disconnect_restores_solo": true,
+    "no_network_hud_left": true,
+    "one_offline_hud": true
+  }
+}

@@ -11,6 +11,11 @@ namespace SalvageCrew
         private void OnEnable() { GetComponent<FirstPersonMotor>().InputSampled += Process; }
         private void OnDisable() { GetComponent<FirstPersonMotor>().InputSampled -= Process; }
         private void Process(LocalPlayerInput.Sample sample)
-        { if (sample.Interact && input.GameplayActive) carry.Toggle(); }
+        {
+            if(sample.Scan && input.GameplayActive) WreckExpedition.Instance?.RequestScan(transform);
+            var boat=OfflineBoatController.Instance;
+            if(boat!=null&&boat.HandleInput(carry,sample))return;
+            if(sample.Interact&&input.GameplayActive)carry.Toggle();
+        }
     }
 }

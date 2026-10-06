@@ -86,7 +86,7 @@ namespace SalvageCrew
 
             Vector3 target = view.position + view.forward * Held.HoldDistance - Vector3.up * .25f;
             var boat = motor.Passenger != null ? motor.Passenger.Reference : null;
-            Vector3 platformVelocity = boat != null ? boat.PointVelocity(target) : Vector3.zero;
+            Vector3 platformVelocity = boat != null ? boat.PointVelocity(target) : motor.Passenger != null ? motor.Passenger.PlatformVelocity : Vector3.zero;
             // Render/CC support follows interpolated poses; server forces use the matching physics pose.
             if (boat != null && boat.IsServer) target = boat.PhysicsPoint(boat.transform.InverseTransformPoint(target));
             // A capped PD force, with no accumulated integral or stored spring energy.

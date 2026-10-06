@@ -1,0 +1,1431 @@
+{
+  "checks": {
+    "realTwoInstanceRoster": true,
+    "remoteWalkAnimationActive": true,
+    "remoteIdleAfterStop": true,
+    "hostRampStillTraversable": true,
+    "helmStateVisibleBothInstances": true,
+    "carryStateVisibleBothInstances": true,
+    "remoteMarkerVisible": true,
+    "disconnectRemovesRosterAndDropsCargo": true,
+    "reconnectNoDuplicatePlayers": true,
+    "noRuntimeExceptions": true
+  },
+  "evidence": {
+    "walking": {
+      "frame": 940,
+      "sequence": 2,
+      "errors": 0,
+      "time": 16.027034759521484,
+      "role": "HOST",
+      "status": "Host: 2/2 oyuncu bağlı.",
+      "action": "resume",
+      "result": "OK",
+      "lastError": "",
+      "toggleUtcMillis": 0,
+      "panel": false,
+      "focused": true,
+      "players": [
+        {
+          "client": 0,
+          "owner": true,
+          "motor": true,
+          "input": true,
+          "camera": true,
+          "grounded": true,
+          "supported": false,
+          "driving": false,
+          "position": {
+            "x": 0.0,
+            "y": 1.2299997806549072,
+            "z": 4.0
+          },
+          "forward": {
+            "x": 0.8480480909347534,
+            "y": 0.0,
+            "z": 0.5299192667007446
+          },
+          "boatLocal": {
+            "x": -6.958608627319336,
+            "y": 2.065804958343506,
+            "z": -6.001156330108643
+          },
+          "held": 18446744073709551615,
+          "speedMultiplier": 1.0,
+          "sprint": true,
+          "feedback": "",
+          "corrections": 0,
+          "visualSpeed": 0.0,
+          "animatorReady": false
+        },
+        {
+          "client": 1,
+          "owner": false,
+          "motor": false,
+          "input": false,
+          "camera": false,
+          "grounded": true,
+          "supported": false,
+          "driving": false,
+          "position": {
+            "x": -0.770650327205658,
+            "y": 1.2300002574920654,
+            "z": 5.417398929595947
+          },
+          "forward": {
+            "x": 0.24253563582897186,
+            "y": 0.0,
+            "z": 0.9701424837112427
+          },
+          "boatLocal": {
+            "x": -7.730299472808838,
+            "y": 2.080148696899414,
+            "z": -4.5843963623046875
+          },
+          "held": 18446744073709551615,
+          "speedMultiplier": 1.0,
+          "sprint": true,
+          "feedback": "",
+          "corrections": 0,
+          "visualSpeed": 1.5055826902389526,
+          "animatorReady": true
+        }
+      ],
+      "items": [
+        {
+          "name": "WreckCargo_1_1",
+          "id": 8,
+          "holder": 18446744073709551615,
+          "owner": 0,
+          "mass": 12.0,
+          "position": {
+            "x": -3.065342903137207,
+            "y": 1.0785095691680908,
+            "z": 77.41324615478516
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "kinematic": false,
+          "recovery": true
+        },
+        {
+          "name": "WreckCargo_1_2",
+          "id": 9,
+          "holder": 18446744073709551615,
+          "owner": 0,
+          "mass": 35.0,
+          "position": {
+            "x": -2.397097587585449,
+            "y": 1.5092655420303345,
+            "z": 78.79633331298828
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "kinematic": false,
+          "recovery": true
+        },
+        {
+          "name": "WreckCargo_0_1",
+          "id": 5,
+          "holder": 18446744073709551615,
+          "owner": 0,
+          "mass": 12.0,
+          "position": {
+            "x": 21.100868225097656,
+            "y": 1.078048825263977,
+            "z": 41.92130661010742
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "kinematic": false,
+          "recovery": true
+        },
+        {
+          "name": "NetworkLightBox(Clone)",
+          "id": 10,
+          "holder": 18446744073709551615,
+          "owner": 0,
+          "mass": 3.0,
+          "position": {
+            "x": 1.5499999523162842,
+            "y": 1.475000023841858,
+            "z": 2.0
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "kinematic": false,
+          "recovery": true
+        },
+        {
+          "name": "NetworkMetalCrate(Clone)",
+          "id": 11,
+          "holder": 18446744073709551615,
+          "owner": 0,
+          "mass": 12.0,
+          "position": {
+            "x": 1.5499999523162842,
+            "y": 1.5250000953674316,
+            "z": 4.0
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "kinematic": false,
+          "recovery": true
+        },
+        {
+          "name": "WreckCargo_1_0",
+          "id": 7,
+          "holder": 18446744073709551615,
+          "owner": 0,
+          "mass": 3.0,
+          "position": {
+            "x": -3.5780856609344482,
+            "y": 0.9600000381469727,
+            "z": 76.41529083251953
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "kinematic": false,
+          "recovery": true
+        },
+        {
+          "name": "WreckCargo_0_0",
+          "id": 4,
+          "holder": 18446744073709551615,
+          "owner": 0,
+          "mass": 3.0,
+          "position": {
+            "x": 21.101829528808594,
+            "y": 0.9600006341934204,
+            "z": 40.75938415527344
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "kinematic": false,
+          "recovery": true
+        },
+        {
+          "name": "WreckCargo_0_2",
+          "id": 6,
+          "holder": 18446744073709551615,
+          "owner": 0,
+          "mass": 35.0,
+          "position": {
+            "x": 21.041236877441406,
+            "y": 1.5094025135040283,
+            "z": 43.45603942871094
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "kinematic": false,
+          "recovery": true
+        },
+        {
+          "name": "NetworkScrapEngine(Clone)",
+          "id": 12,
+          "holder": 18446744073709551615,
+          "owner": 0,
+          "mass": 35.0,
+          "position": {
+            "x": 1.5499999523162842,
+            "y": 1.5000001192092896,
+            "z": 6.0
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "kinematic": false,
+          "recovery": true
+        }
+      ],
+      "boat": {
+        "driver": 18446744073709551615,
+        "departed": false,
+        "kinematic": false,
+        "position": {
+          "x": 7.012324333190918,
+          "y": -0.6438350677490234,
+          "z": 10.001642227172852
+        },
+        "velocity": {
+          "x": 0.0,
+          "y": 0.050864800810813904,
+          "z": 0.0
+        },
+        "rotation": {
+          "x": 359.8106994628906,
+          "y": 0.04689571633934975,
+          "z": 1.4122921228408813
+        },
+        "drive": {
+          "x": 0.0,
+          "y": 0.0
+        }
+      },
+      "wreckMask": 0,
+      "securedCargo": 0,
+      "expeditionComplete": false,
+      "sonarFeedback": "",
+      "crewRoster": "<color=#67DAD5>KAPTAN</color>  <size=14>SEN</size>\n<size=15>GÜVERTE / KEŞİF</size>\n\n<color=#F0AD4A>TAYFA 1</color>  <size=14>1 m</size>\n<size=15>GÜVERTE / KEŞİF</size>"
+    },
+    "carrying": {
+      "host": {
+        "frame": 1717,
+        "sequence": 10,
+        "errors": 0,
+        "time": 29.569067001342773,
+        "role": "HOST",
+        "status": "Host: 2/2 oyuncu bağlı.",
+        "action": "walkBoat",
+        "result": "Reached",
+        "lastError": "",
+        "toggleUtcMillis": 1791311087955,
+        "panel": false,
+        "focused": true,
+        "players": [
+          {
+            "client": 0,
+            "owner": true,
+            "motor": false,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 6.489155292510986,
+              "y": 0.9162988662719727,
+              "z": 7.6061201095581055
+            },
+            "forward": {
+              "x": -0.992794930934906,
+              "y": 1.804814968813327e-39,
+              "z": 0.11982572078704834
+            },
+            "boatLocal": {
+              "x": -0.4948940575122833,
+              "y": 1.4870624542236328,
+              "z": -2.3921420574188232
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0,
+            "visualSpeed": 0.0,
+            "animatorReady": false
+          },
+          {
+            "client": 1,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": true,
+            "supported": false,
+            "driving": false,
+            "position": {
+              "x": -0.026856986805796623,
+              "y": 1.2299997806549072,
+              "z": 8.392572402954102
+            },
+            "forward": {
+              "x": 0.4831598401069641,
+              "y": -0.838959813117981,
+              "z": 0.2504062056541443
+            },
+            "boatLocal": {
+              "x": -7.007234573364258,
+              "y": 1.884472131729126,
+              "z": -1.613157868385315
+            },
+            "held": 11,
+            "speedMultiplier": 0.75,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0,
+            "visualSpeed": 1.401298464324817e-45,
+            "animatorReady": true
+          }
+        ],
+        "items": [
+          {
+            "name": "WreckCargo_1_1",
+            "id": 8,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": -3.065342903137207,
+              "y": 1.0785095691680908,
+              "z": 77.41324615478516
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "WreckCargo_1_2",
+            "id": 9,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": -2.397097587585449,
+              "y": 1.5092655420303345,
+              "z": 78.79633331298828
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "WreckCargo_0_1",
+            "id": 5,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 21.100868225097656,
+              "y": 1.078048825263977,
+              "z": 41.92130661010742
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "NetworkLightBox(Clone)",
+            "id": 10,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "NetworkMetalCrate(Clone)",
+            "id": 11,
+            "holder": 1,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 0.7498799562454224,
+              "y": 1.5249868631362915,
+              "z": 8.799958229064941
+            },
+            "velocity": {
+              "x": 0.0006631668657064438,
+              "y": -0.0014915093779563904,
+              "z": 0.00020504463464021683
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "WreckCargo_1_0",
+            "id": 7,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": -3.5780856609344482,
+              "y": 0.9600000381469727,
+              "z": 76.41529083251953
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "WreckCargo_0_0",
+            "id": 4,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 21.101829528808594,
+              "y": 0.9600006341934204,
+              "z": 40.75938415527344
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "WreckCargo_0_2",
+            "id": 6,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 21.041236877441406,
+              "y": 1.5094025135040283,
+              "z": 43.45603942871094
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "NetworkScrapEngine(Clone)",
+            "id": 12,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5000001192092896,
+              "z": 6.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          }
+        ],
+        "boat": {
+          "driver": 18446744073709551615,
+          "departed": false,
+          "kinematic": false,
+          "position": {
+            "x": 7.0065717697143555,
+            "y": -0.5583001375198364,
+            "z": 10.00121021270752
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.023369595408439636,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 359.86041259765625,
+            "y": 0.07236204296350479,
+            "z": 0.7528809309005737
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "wreckMask": 0,
+        "securedCargo": 0,
+        "expeditionComplete": false,
+        "sonarFeedback": "",
+        "crewRoster": "<color=#67DAD5>KAPTAN</color>  <size=14>SEN</size>\n<size=15>GÜVERTE / KEŞİF</size>\n\n<color=#F0AD4A>TAYFA 1</color>  <size=14>7 m</size>\n<size=15>TAŞIYOR · Metal kasa</size>"
+      },
+      "client": {
+        "frame": 888,
+        "sequence": 5,
+        "errors": 0,
+        "time": 14.97083568572998,
+        "role": "CLIENT",
+        "status": "Client bağlı — 127.0.0.1:7777.",
+        "action": "toggle",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 1791311092385,
+        "panel": false,
+        "focused": true,
+        "players": [
+          {
+            "client": 0,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": false,
+            "supported": false,
+            "driving": false,
+            "position": {
+              "x": 6.490628242492676,
+              "y": 0.920916736125946,
+              "z": 7.606215476989746
+            },
+            "forward": {
+              "x": -0.9927948117256165,
+              "y": 1.8048163701117914e-39,
+              "z": 0.11982667446136475
+            },
+            "boatLocal": {
+              "x": -0.491624653339386,
+              "y": 1.5014146566390991,
+              "z": -2.3918073177337646
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0,
+            "visualSpeed": 8.298184548038989e-05,
+            "animatorReady": true
+          },
+          {
+            "client": 1,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": false,
+            "driving": false,
+            "position": {
+              "x": -0.026856986805796623,
+              "y": 1.2299997806549072,
+              "z": 8.392572402954102
+            },
+            "forward": {
+              "x": 0.4831600785255432,
+              "y": -0.8389596343040466,
+              "z": 0.2504063546657562
+            },
+            "boatLocal": {
+              "x": -7.004621505737305,
+              "y": 1.9083282947540283,
+              "z": -1.6128344535827637
+            },
+            "held": 11,
+            "speedMultiplier": 0.75,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0,
+            "visualSpeed": 0.0,
+            "animatorReady": false
+          }
+        ],
+        "items": [
+          {
+            "name": "NetworkLightBox(Clone)",
+            "id": 7,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": -3.5780856609344482,
+              "y": 0.9600000381469727,
+              "z": 76.41529083251953
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkScrapEngine(Clone)",
+            "id": 6,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 21.041236877441406,
+              "y": 1.5094025135040283,
+              "z": 43.45603942871094
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkLightBox(Clone)",
+            "id": 4,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 21.101829528808594,
+              "y": 0.9600006341934204,
+              "z": 40.75938415527344
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkMetalCrate(Clone)",
+            "id": 8,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": -3.065342903137207,
+              "y": 1.0785095691680908,
+              "z": 77.41324615478516
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkScrapEngine(Clone)",
+            "id": 9,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": -2.397097587585449,
+              "y": 1.5092655420303345,
+              "z": 78.79633331298828
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkMetalCrate(Clone)",
+            "id": 11,
+            "holder": 1,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 0.7505730986595154,
+              "y": 1.5249581336975098,
+              "z": 8.796294212341309
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkLightBox(Clone)",
+            "id": 10,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkMetalCrate(Clone)",
+            "id": 5,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 21.100868225097656,
+              "y": 1.078048825263977,
+              "z": 41.92130661010742
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkScrapEngine(Clone)",
+            "id": 12,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5000001192092896,
+              "z": 6.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          }
+        ],
+        "boat": {
+          "driver": 18446744073709551615,
+          "departed": false,
+          "kinematic": true,
+          "position": {
+            "x": 7.008235454559326,
+            "y": -0.5663619041442871,
+            "z": 10.001370429992676
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": 0.041155070066452026,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 359.8463134765625,
+            "y": 0.0721735954284668,
+            "z": 0.8786143660545349
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "wreckMask": 0,
+        "securedCargo": 0,
+        "expeditionComplete": false,
+        "sonarFeedback": "",
+        "crewRoster": "<color=#67DAD5>KAPTAN</color>  <size=14>7 m</size>\n<size=15>GÜVERTE / KEŞİF</size>\n\n<color=#F0AD4A>TAYFA 1</color>  <size=14>SEN</size>\n<size=15>TAŞIYOR · Metal kasa</size>"
+      }
+    },
+    "final": {
+      "host": {
+        "frame": 1776,
+        "sequence": 10,
+        "errors": 0,
+        "time": 30.605224609375,
+        "role": "HOST",
+        "status": "Host: 2/2 oyuncu bağlı.",
+        "action": "walkBoat",
+        "result": "Reached",
+        "lastError": "",
+        "toggleUtcMillis": 1791311087955,
+        "panel": false,
+        "focused": true,
+        "players": [
+          {
+            "client": 2,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": false,
+            "supported": false,
+            "driving": false,
+            "position": {
+              "x": -0.8999999761581421,
+              "y": 1.2299997806549072,
+              "z": 4.900000095367432
+            },
+            "forward": {
+              "x": 1.0000001192092896,
+              "y": 0.0,
+              "z": -1.1920928955078125e-07
+            },
+            "boatLocal": {
+              "x": -7.893770217895508,
+              "y": 1.7629894018173218,
+              "z": -5.111917972564697
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0,
+            "visualSpeed": 0.0,
+            "animatorReady": true
+          },
+          {
+            "client": 0,
+            "owner": true,
+            "motor": false,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 6.489155292510986,
+              "y": 0.9162988662719727,
+              "z": 7.6061201095581055
+            },
+            "forward": {
+              "x": -0.992794930934906,
+              "y": 1.804814968813327e-39,
+              "z": 0.11982572078704834
+            },
+            "boatLocal": {
+              "x": -0.5080214142799377,
+              "y": 1.4550449848175049,
+              "z": -2.395854949951172
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0,
+            "visualSpeed": 0.0,
+            "animatorReady": false
+          }
+        ],
+        "items": [
+          {
+            "name": "WreckCargo_1_1",
+            "id": 8,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": -3.065342903137207,
+              "y": 1.0785095691680908,
+              "z": 77.41324615478516
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "WreckCargo_1_2",
+            "id": 9,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": -2.397097587585449,
+              "y": 1.5092655420303345,
+              "z": 78.79633331298828
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "WreckCargo_0_1",
+            "id": 5,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 21.100868225097656,
+              "y": 1.078048825263977,
+              "z": 41.92130661010742
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "NetworkLightBox(Clone)",
+            "id": 10,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "NetworkMetalCrate(Clone)",
+            "id": 11,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 0.7499803900718689,
+              "y": 1.524999976158142,
+              "z": 8.800027847290039
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "WreckCargo_1_0",
+            "id": 7,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": -3.5780856609344482,
+              "y": 0.9600000381469727,
+              "z": 76.41529083251953
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "WreckCargo_0_0",
+            "id": 4,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 21.101829528808594,
+              "y": 0.9600006341934204,
+              "z": 40.75938415527344
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "WreckCargo_0_2",
+            "id": 6,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 21.041236877441406,
+              "y": 1.5094025135040283,
+              "z": 43.45603942871094
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "NetworkScrapEngine(Clone)",
+            "id": 12,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5000001192092896,
+              "z": 6.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          }
+        ],
+        "boat": {
+          "driver": 18446744073709551615,
+          "departed": false,
+          "kinematic": false,
+          "position": {
+            "x": 6.9998626708984375,
+            "y": -0.5421865582466125,
+            "z": 9.999310493469238
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": -0.006618067622184753,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 0.0789986252784729,
+            "y": 0.0737859308719635,
+            "z": 359.9844055175781
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "wreckMask": 0,
+        "securedCargo": 0,
+        "expeditionComplete": false,
+        "sonarFeedback": "",
+        "crewRoster": "<color=#67DAD5>KAPTAN</color>  <size=14>SEN</size>\n<size=15>GÜVERTE / KEŞİF</size>\n\n<color=#F0AD4A>TAYFA 2</color>  <size=14>8 m</size>\n<size=15>GÜVERTE / KEŞİF</size>"
+      },
+      "client": {
+        "frame": 948,
+        "sequence": 7,
+        "errors": 0,
+        "time": 16.00406265258789,
+        "role": "CLIENT",
+        "status": "Client bağlı — 127.0.0.1:7777.",
+        "action": "client",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 1791311092385,
+        "panel": true,
+        "focused": true,
+        "players": [
+          {
+            "client": 0,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": false,
+            "supported": false,
+            "driving": false,
+            "position": {
+              "x": 6.489430904388428,
+              "y": 0.9165138602256775,
+              "z": 7.606200695037842
+            },
+            "forward": {
+              "x": -0.992794930934906,
+              "y": 1.8048163701117914e-39,
+              "z": 0.11982619762420654
+            },
+            "boatLocal": {
+              "x": -0.5062074065208435,
+              "y": 1.4568930864334106,
+              "z": -2.3953347206115723
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0,
+            "visualSpeed": 0.010807863436639309,
+            "animatorReady": true
+          },
+          {
+            "client": 2,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": false,
+            "driving": false,
+            "position": {
+              "x": -0.8999999761581421,
+              "y": 1.2300000190734863,
+              "z": 4.900000095367432
+            },
+            "forward": {
+              "x": 1.0000001192092896,
+              "y": 0.0,
+              "z": -1.1920928955078125e-07
+            },
+            "boatLocal": {
+              "x": -7.891681671142578,
+              "y": 1.7788716554641724,
+              "z": -5.111320495605469
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0,
+            "visualSpeed": 0.0,
+            "animatorReady": false
+          }
+        ],
+        "items": [
+          {
+            "name": "NetworkScrapEngine(Clone)",
+            "id": 9,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": -2.397097587585449,
+              "y": 1.5092655420303345,
+              "z": 78.79633331298828
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkMetalCrate(Clone)",
+            "id": 11,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 0.7499803900718689,
+              "y": 1.524999976158142,
+              "z": 8.800027847290039
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkScrapEngine(Clone)",
+            "id": 12,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.5000001192092896,
+              "z": 6.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkLightBox(Clone)",
+            "id": 4,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 21.101829528808594,
+              "y": 0.9600006341934204,
+              "z": 40.75938415527344
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkLightBox(Clone)",
+            "id": 7,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": -3.5780856609344482,
+              "y": 0.9600000381469727,
+              "z": 76.41529083251953
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkMetalCrate(Clone)",
+            "id": 5,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 21.100868225097656,
+              "y": 1.078048825263977,
+              "z": 41.92130661010742
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkScrapEngine(Clone)",
+            "id": 6,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 21.041236877441406,
+              "y": 1.5094025135040283,
+              "z": 43.45603942871094
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkMetalCrate(Clone)",
+            "id": 8,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": -3.065342903137207,
+              "y": 1.0785095691680908,
+              "z": 77.41324615478516
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkLightBox(Clone)",
+            "id": 10,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 1.5499999523162842,
+              "y": 1.475000023841858,
+              "z": 2.0
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          }
+        ],
+        "boat": {
+          "driver": 18446744073709551615,
+          "departed": false,
+          "kinematic": true,
+          "position": {
+            "x": 7.000865936279297,
+            "y": -0.5417390465736389,
+            "z": 9.99959659576416
+          },
+          "velocity": {
+            "x": 0.0,
+            "y": -0.0016846656799316406,
+            "z": 0.0
+          },
+          "rotation": {
+            "x": 0.0504196435213089,
+            "y": 0.07375950366258621,
+            "z": 0.08442243933677673
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "wreckMask": 0,
+        "securedCargo": 0,
+        "expeditionComplete": false,
+        "sonarFeedback": "",
+        "crewRoster": "<color=#67DAD5>KAPTAN</color>  <size=14>8 m</size>\n<size=15>GÜVERTE / KEŞİF</size>\n\n<color=#F0AD4A>TAYFA 2</color>  <size=14>SEN</size>\n<size=15>GÜVERTE / KEŞİF</size>"
+      }
+    }
+  },
+  "temp": "/var/folders/0v/f03lpblj5wd7y2wqgzqxxr7w0000gn/T/salvage-crew.20261006-44092-m3kp1r"
+}

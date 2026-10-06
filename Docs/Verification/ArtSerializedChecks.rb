@@ -19,7 +19,18 @@ paths.each do |path|
     elsif type == 114 && content.include?('GlobalObjectIdHash:')
       'networkObjects'
     elsif type == 4
-      'existingTransforms'
+      # ArtVisuals is explicitly replaceable. Physics/gameplay components in it
+      # would still be checked by the categories above.
+      ancestor=id; visual=false
+      while ancestor && before[ancestor]
+        node=before[ancestor].last
+        go=node[/m_GameObject: \{fileID: (\d+)/,1]
+        if before[go]&.last&.include?('m_Name: ArtVisuals')
+          visual=true;break
+        end
+        ancestor=node[/m_Father: \{fileID: (\d+)/,1]
+      end
+      visual ? nil : 'existingTransforms'
     end
     next unless category
     counts[category] += 1

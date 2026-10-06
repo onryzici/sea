@@ -12,6 +12,7 @@ public static class HarborPlayChecks
         if (!Application.isPlaying) throw new InvalidOperationException("Play mode required.");
         var p = UnityEngine.Object.FindAnyObjectByType<FirstPersonMotor>();
         var cc = p.GetComponent<CharacterController>();
+        var boat=UnityEngine.Object.FindAnyObjectByType<CalmWaterBuoyancy>().transform;
         var results = new Dictionary<string, object>();
         p.enabled = false;
         void Assert(bool value, string name, object detail)
@@ -51,14 +52,14 @@ public static class HarborPlayChecks
 
             Place(new Vector3(0, 1.25f, 7.5f), 90);
             for (int i = 0; i < 100; i++) p.Step(new LocalPlayerInput.Sample { Move = Vector2.up }, 1f / 60f);
-            Assert(p.transform.position.x > 6.3f && p.transform.position.y > 1.45f && p.Grounded, "PierRampDeck", p.transform.position.ToString());
+            Assert(p.transform.position.x > 6.3f && boat.InverseTransformPoint(p.transform.position).y > 1.45f && p.Grounded, "PierRampDeck", p.transform.position.ToString());
             for (int i = 0; i < 120; i++) p.Step(new LocalPlayerInput.Sample { Move = Vector2.up }, 1f / 60f);
             Assert(p.transform.position.x < 8.65f && p.transform.position.x > 8.3f, "RailCollision", p.transform.position.ToString());
             for (int i = 0; i < 120; i++) p.Step(default, 1f / 60f);
-            Assert(p.transform.position.y > 1.45f && p.Grounded, "DeckGrounding", p.transform.position.ToString());
-            Place(new Vector3(7, 1.55f, 10), 0);
+            Assert(boat.InverseTransformPoint(p.transform.position).y > 1.45f && p.Grounded, "DeckGrounding", p.transform.position.ToString());
+            Place(boat.TransformPoint(new Vector3(0,1.55f,0)), 0);
             for (int i = 0; i < 60; i++) p.Step(new LocalPlayerInput.Sample { Move = Vector2.up }, 1f / 60f);
-            Assert(p.transform.position.z < 10.95f, "CabinCollision", p.transform.position.ToString());
+            Assert(p.transform.position.z > 11.7f && p.transform.position.z < 12.95f, "CabinEntryAndFrontCollision", p.transform.position.ToString());
 
             Place(new Vector3(0, 1.25f, 4), 0);
             float floor = p.transform.position.y;

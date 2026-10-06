@@ -1,0 +1,39 @@
+{
+  "diagnostics": [],
+  "compileMs": 1628,
+  "executeMs": 13689,
+  "assemblyName": "PipelineRunScript_BoatWaveChecks_d69be31fcee842829125db9835352f9c",
+  "success": true,
+  "result": {
+    "checks": {
+      "dynamicHull": true,
+      "visibleHeave": true,
+      "boundedTilt": true,
+      "passengerStable": true,
+      "cargoStable": true
+    },
+    "heave": 0.1327354,
+    "maximumTilt": 1.99203575,
+    "passengerDrift": 0.000970379566,
+    "groundedFraction": 1,
+    "maximumCargoSpeed": 0.3039681,
+    "items": [
+      {
+        "mass": 3,
+        "local": "(-1.10, 1.78, -1.78)",
+        "speed": 0.05161668
+      },
+      {
+        "mass": 12,
+        "local": "(0.00, 1.83, -1.78)",
+        "speed": 0.04973252
+      },
+      {
+        "mass": 35,
+        "local": "(1.10, 1.80, -1.78)",
+        "speed": 0.0476930477
+      }
+    ],
+    "samples": 623
+  }
+}

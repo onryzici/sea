@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-06",
+  "scene": "HarborPrototype",
+  "method": "Observed live Editor Play + programmatic motor/carry commands, not native input",
+  "harbor": {"passed": 12, "failed": 0},
+  "carry": {"passed": 24, "failed": 0, "rawReport": "FocusedCarryResults.json"},
+  "cabin": {"passed": 7, "failed": 0, "eyeHeightBoatLocal": 3.180104},
+  "soloBoat": {"passed": 9, "failed": 0, "forwardMetres": 3.74660015, "turnDegrees": 15.93805},
+  "setupIdempotency": {"firstRenderers": 267, "secondRenderers": 267},
+  "shaderMessagesAfterFix": {"water": [], "sky": []},
+  "editorCompile": {"errors": 0, "warnings": 0},
+  "playSample": {"renderWidth": 3840, "renderHeight": 2160, "framesSampled": 160, "medianMs": 16.8149586, "p95Ms": 18.8532028, "badMaterials": []},
+  "console": {"sinceCursor": 129, "newErrors": [], "priorToolTimeoutExcluded": true},
+  "notTested": ["new standalone build", "two-instance networking", "native window focus", "long-run GPU performance", "latency and loss"],
+  "visualAcceptance": "Incomplete: distant water repetition/aliasing, cabin cut edges, differing prop fidelity and simple island shorelines remain. Not equivalent to the Sea of Thieves reference."
+}

@@ -77,6 +77,15 @@
                     "priority": 0
                 },
                 {
+                    "name": "Scan",
+                    "type": "Button",
+                    "id": "bead0012-3344-4cc3-8bee-001200120012",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "53fc5fa3-e600-43bd-9a2b-8a8429d1c227",
@@ -206,6 +215,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "CaptureCursor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bead0012-3344-4cc3-8bee-002200220022",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scan",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -1,0 +1,8 @@
+{
+ "method":"Real offline Editor Play; actual physics, local adapter commands and CharacterController. Not native key input.",
+ "checks":{"helmTarget":true,"heldScrapRejected":true,"helmEntered":true,"forwardAndRampDetached":true,"steering":true,"neutralSlows":true,"reverse":true,"passengerStaysOnDeck":true,"recoveryReleasesHelm":true},
+ "forwardMetres":3.466487,
+ "turnDegrees":16.0131989,
+ "finalSpeed":1.08097517,
+ "previousAttempt":"Failed because RaycastHit.transform resolved compound Rigidbody root instead of collider.transform. Fixed and rerun; previous attempt was not a pass."
+}

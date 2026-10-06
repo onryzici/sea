@@ -1,0 +1,30 @@
+{
+  "diagnostics": [],
+  "compileMs": 2065,
+  "executeMs": 12,
+  "assemblyName": "PipelineRunScript_HarborPlayChecks_3629bb28cbff408e9aaf1d3878d822a9",
+  "success": true,
+  "result": {
+    "FrameRateIndependent": [
+      4,
+      4
+    ],
+    "DiagonalSpeed": [
+      4,
+      4
+    ],
+    "Sprint": 6.50000048,
+    "PierRampDeck": "(6.67, 0.79, 7.50)",
+    "RailCollision": "(8.52, 0.76, 7.51)",
+    "DeckGrounding": "(8.52, 0.76, 7.51)",
+    "CabinEntryAndFrontCollision": "(7.02, 0.82, 12.42)",
+    "GroundOnlyJump": [
+      5.991222,
+      5.65788841
+    ],
+    "JumpHeightAndLanding": 0.9473665,
+    "PitchClamp": 279.999969,
+    "ResetState": "(0.00, 1.25, 4.00)",
+    "FallRecovery": "(0.00, 1.25, 4.00)"
+  }
+}

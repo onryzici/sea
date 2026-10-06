@@ -8,9 +8,9 @@ namespace SalvageCrew
     {
         [SerializeField] private InputActionAsset actions;
         private InputActionMap map;
-        private InputAction move, look, jump, sprint, reset, release, capture, interact;
+        private InputAction move, look, jump, sprint, reset, release, capture, interact, scan;
         private bool focused = true;
-        private bool jumpRequested, resetRequested, releaseRequested, captureRequested, interactRequested;
+        private bool jumpRequested, resetRequested, releaseRequested, captureRequested, interactRequested, scanRequested;
         public bool PanelOpen { get; private set; }
         public event System.Action CursorReleased;
         public bool GameplayActive => focused && !PanelOpen && Cursor.lockState == CursorLockMode.Locked;
@@ -20,7 +20,7 @@ namespace SalvageCrew
         public struct Sample
         {
             public Vector2 Move, Look;
-            public bool Jump, Sprint, Reset, Interact;
+            public bool Jump, Sprint, Reset, Interact, Scan;
         }
 
         private void Awake()
@@ -36,11 +36,13 @@ namespace SalvageCrew
             release = map.FindAction("ReleaseCursor", true);
             capture = map.FindAction("CaptureCursor", true);
             interact = map.FindAction("Interact", true);
+            scan = map.FindAction("Scan", true);
             jump.performed += _ => jumpRequested = true;
             reset.performed += _ => resetRequested = true;
             release.performed += _ => releaseRequested = true;
             capture.performed += _ => captureRequested = true;
             interact.performed += _ => { if (GameplayActive) interactRequested = true; };
+            scan.performed += _ => { if (GameplayActive) scanRequested = true; };
         }
 
         private void OnEnable() { map.Enable(); SetCursor(!PanelOpen && focused); }
@@ -69,14 +71,15 @@ namespace SalvageCrew
                 Jump = active && jumpRequested,
                 Sprint = active && sprint.IsPressed(),
                 Reset = focused && !PanelOpen && resetRequested,
-                Interact = active && !captureRequested && !releaseRequested && interactRequested
+                Interact = active && !captureRequested && !releaseRequested && interactRequested,
+                Scan = active && !captureRequested && !releaseRequested && scanRequested
             };
             ClearRequests();
             return sample;
         }
 
         private void ClearRequests()
-        { jumpRequested = resetRequested = releaseRequested = captureRequested = interactRequested = false; }
+        { jumpRequested = resetRequested = releaseRequested = captureRequested = interactRequested = scanRequested = false; }
 
         private static void SetCursor(bool locked)
         {

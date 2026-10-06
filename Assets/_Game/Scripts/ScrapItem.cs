@@ -24,6 +24,7 @@ namespace SalvageCrew
         private float submergedTime;
         private PhysicsCarry owner;
         private NetworkBoat recoveryBoat;
+        private OfflineBoatController offlineRecoveryBoat;
         public Rigidbody Body { get; private set; }
         public string DisplayName => displayName;
         public float Mass => mass;
@@ -60,7 +61,10 @@ namespace SalvageCrew
         {
             var boat = NetworkBoat.Instance;
             if (boat != null && boat.IsServer && boat.ContainsPassenger(boat.transform.InverseTransformPoint(Body.position))) recoveryBoat = boat;
-            Vector3 recoveryCenter = recoveryBoat != null ? recoveryBoat.Body.position : spawnPosition;
+            var solo=OfflineBoatController.Instance;
+            if(solo!=null&&solo.Contains(Body.position))offlineRecoveryBoat=solo;
+            bool soloRescue=offlineRecoveryBoat!=null&&offlineRecoveryBoat.isActiveAndEnabled&&offlineRecoveryBoat.Departed;
+            Vector3 recoveryCenter = recoveryBoat != null ? recoveryBoat.Body.position : soloRescue?offlineRecoveryBoat.Body.position:spawnPosition;
             bool outside = Body.position.y < rescueHeight
                 || Vector3.Distance(Body.position, recoveryCenter) > rescueDistance;
             submergedTime = outside ? submergedTime + Time.fixedDeltaTime : 0f;
@@ -70,6 +74,8 @@ namespace SalvageCrew
         {
             if (owner != null) owner.Drop();
             Body.position = recoveryBoat != null ? recoveryBoat.ScrapRescuePoint(this) : spawnPosition;
+            if(recoveryBoat==null&&offlineRecoveryBoat!=null&&offlineRecoveryBoat.isActiveAndEnabled&&offlineRecoveryBoat.Departed)
+                Body.position=offlineRecoveryBoat.transform.TransformPoint(new Vector3(Mass<5?-1.1f:Mass<20?0:1.1f,2.4f,-2.2f));
             Body.rotation = recoveryBoat != null ? recoveryBoat.Body.rotation : spawnRotation;
             Body.linearVelocity = recoveryBoat != null ? recoveryBoat.PointVelocity(Body.position) : Vector3.zero;
             Body.angularVelocity = Vector3.zero;

@@ -1,0 +1,9 @@
+Handpainted style rocks — rubberduck, 2018-05-01
+Source: https://opengameart.org/content/handpainted-style-rocks
+Download: https://opengameart.org/sites/default/files/handpainted_rocks.zip
+License: CC0 1.0 Universal (asset page explicitly identifies CC0).
+https://creativecommons.org/publicdomain/zero/1.0/legalcode
+Commercial use, modification and redistribution allowed; attribution not required.
+Selected original files: rock1/rock2/rock3 OBJ, MTL, diffuse and normal PNGs.
+Usage: distant harbor cliffs / shoreline. No scripts or source collision meshes imported.
+This project-authored notice records the source; it does not replace the CC0 legal instrument.

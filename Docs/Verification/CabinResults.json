@@ -1,0 +1,24 @@
+{
+  "diagnostics": [],
+  "compileMs": 78,
+  "executeMs": 2575,
+  "assemblyName": "PipelineRunScript_CabinPlayChecks_6a76b65f978b40b683149f29b53de844",
+  "success": true,
+  "result": {
+    "checks": {
+      "enterThroughDoor": true,
+      "standingHeadroom": true,
+      "sideWallCollision": true,
+      "insideHelmTarget": true,
+      "insideHelmEnter": true,
+      "insideHelmExit": true,
+      "leaveThroughDoor": true
+    },
+    "inside": "(0.00, 1.53, 2.43)",
+    "side": "(0.32, 1.53, 2.43)",
+    "outside": "(-0.22, 1.53, -0.57)",
+    "eyeHeight": 3.179973,
+    "renderWidth": 3840,
+    "renderHeight": 2160
+  }
+}

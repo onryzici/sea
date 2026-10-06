@@ -1,0 +1,14 @@
+{
+  "before": 998,
+  "after": 998,
+  "noDuplicates": true,
+  "sites": 2,
+  "spawns": 6,
+  "sameHelm": true,
+  "samePlayer": true,
+  "registered": true,
+  "wheelWidth": 1.12689972,
+  "wheelHeight": 1.13926411,
+  "materialsValid": true,
+  "singleMissionHud": true
+}

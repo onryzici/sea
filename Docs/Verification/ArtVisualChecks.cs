@@ -13,10 +13,12 @@ public static class ArtVisualChecks
         HarborSession.Instance.SetPanelOpen(false);
         var p=UnityEngine.Object.FindAnyObjectByType<FirstPersonMotor>();var carry=p.GetComponent<PhysicsCarry>();var cc=p.GetComponent<CharacterController>();
         carry.Drop();p.ReturnToSpawn();p.enabled=false;cc.enabled=false;
-        p.transform.SetPositionAndRotation(angle=="Start"?new Vector3(0,1.25f,4):angle=="Deck"?new Vector3(6.3f,1.53f,6.3f):new Vector3(6.6f,1.53f,6.2f),Quaternion.Euler(0,angle=="Start"?58:angle=="Deck"?15:0,0));
+        carry.View.localRotation=Quaternion.identity;
+        var boat=UnityEngine.Object.FindAnyObjectByType<CalmWaterBuoyancy>();
+        p.transform.SetPositionAndRotation(angle=="Start"?new Vector3(0,1.25f,4):boat.transform.TransformPoint(angle=="Deck"?new Vector3(-.7f,1.58f,-3.7f):new Vector3(-.4f,1.58f,-3.8f)),Quaternion.Euler(0,angle=="Start"?58:angle=="Deck"?15:0,0));
         cc.enabled=true;Physics.SyncTransforms();
         bool held=false;
-        if(angle=="Carry") {var i=UnityEngine.Object.FindObjectsByType<ScrapItem>().First(x=>x.Mass==12);i.Body.position=new Vector3(6.6f,2.35f,7.65f);i.Body.linearVelocity=Vector3.zero;Physics.SyncTransforms();carry.View.LookAt(i.Body.worldCenterOfMass);held=carry.TryPickup(i);}
+        if(angle=="Carry") {var i=UnityEngine.Object.FindObjectsByType<ScrapItem>().First(x=>x.Mass==12);i.Body.position=boat.transform.TransformPoint(new Vector3(-.4f,2.35f,-2.35f));i.Body.linearVelocity=Vector3.zero;Physics.SyncTransforms();carry.View.LookAt(i.Body.worldCenterOfMass);held=carry.TryPickup(i);}
         await Task.Delay(500);
         return new {angle,position=p.transform.position.ToString(),rotation=p.transform.eulerAngles.ToString(),held,frames=Time.frameCount};
     }

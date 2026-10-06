@@ -55,6 +55,8 @@ public static class CarryPlayChecks
         motor.enabled = false;
         try
         {
+            foreach(var existing in UnityEngine.Object.FindObjectsByType<ScrapItem>())existing.Recover();
+            var boat=UnityEngine.Object.FindAnyObjectByType<CalmWaterBuoyancy>().transform;
             foreach (var item in UnityEngine.Object.FindObjectsByType<ScrapItem>().OrderBy(i => i.Mass))
             {
                 item.Recover(); await Wait(.25f);
@@ -77,9 +79,12 @@ public static class CarryPlayChecks
                 Check(motor.CarrySpeedMultiplier == 1 && motor.CarryAllowsSprint && !item.IsHeld
                     && !Physics.GetIgnoreCollision(cc, item.GetComponentInChildren<Collider>()), "DropRestoration_" + item.Mass, true);
                 await Wait(2);
-                Check(item.Body.position.x > 5 && item.Body.position.x < 9 && item.Body.position.y > 1.6f
+                // Preserve the deck-relative threshold now that the hull has draft and heave.
+                var onBoat=boat.InverseTransformPoint(item.Body.position);
+                Check(Mathf.Abs(onBoat.x)<2 && Mathf.Abs(onBoat.z)<5 && onBoat.y > 1.6f
                     && item.Body.linearVelocity.magnitude < .15f, "SettledOnDeck_" + item.Mass,
                     new { position = item.Body.position.ToString(), speed = item.Body.linearVelocity.magnitude });
+                item.Recover();
             }
         }
         finally { carry.Drop(); carry.View.localRotation = Quaternion.identity; motor.ReturnToSpawn(); motor.enabled = true; }

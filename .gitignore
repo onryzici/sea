@@ -33,6 +33,8 @@ sysinfo.txt
 .DS_Store
 Thumbs.db
 Desktop.ini
+*.blend1
+*.blend2
 
 # Keep Assets/, Packages/, ProjectSettings/ and asset/folder .meta files.
 # Never add a blanket *.meta ignore rule.

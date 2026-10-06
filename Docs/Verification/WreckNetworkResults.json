@@ -1,0 +1,676 @@
+{
+  "checks": {
+    "twoRealInstances": true,
+    "lateJoinGetsDiscovery": true,
+    "clientCargoKinematic": true,
+    "hostCargoDynamic": true,
+    "clientScanServerReply": true,
+    "clientUsesNewHelmAndDrives": true,
+    "clientCarriesWreckCargo": true,
+    "disconnectReleasesMissionCargo": true,
+    "reconnectNoDuplicateNetworkCargo": true,
+    "reconnectDiscoveryPersists": true,
+    "sharedCargoCountAndCompletion": true,
+    "hostShutdownRestoresOffline": true,
+    "noProbeRuntimeErrors": true
+  },
+  "evidence": {
+    "carrying": {
+      "host": {
+        "frame": 30692,
+        "sequence": 3,
+        "errors": 0,
+        "time": 514.9906005859375,
+        "role": "HOST",
+        "status": "Host: 2/2 oyuncu bağlı.",
+        "action": "resume",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 0,
+        "panel": false,
+        "focused": true,
+        "players": [
+          {
+            "client": 0,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 23.48212432861328,
+              "y": 0.887640655040741,
+              "z": 42.6778678894043
+            },
+            "forward": {
+              "x": 0.15630106627941132,
+              "y": 0.0,
+              "z": 0.9877094626426697
+            },
+            "boatLocal": {
+              "x": -0.8999736309051514,
+              "y": 1.5286933183670044,
+              "z": -2.8031487464904785
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          },
+          {
+            "client": 4,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": false,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 24.50951385498047,
+              "y": 0.9343186020851135,
+              "z": 43.41257095336914
+            },
+            "forward": {
+              "x": -0.10621760785579681,
+              "y": -0.8249070644378662,
+              "z": -0.5551993250846863
+            },
+            "boatLocal": {
+              "x": 0.0006043016910552979,
+              "y": 1.530625343322754,
+              "z": -1.9163273572921753
+            },
+            "held": 5,
+            "speedMultiplier": 0.75,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          }
+        ],
+        "items": [
+          {
+            "name": "WreckCargo_0_1",
+            "id": 5,
+            "holder": 4,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 24.349872589111328,
+              "y": 1.2163913249969482,
+              "z": 42.52589416503906
+            },
+            "velocity": {
+              "x": 0.04686474800109863,
+              "y": 0.073740653693676,
+              "z": 0.19591371715068817
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "WreckCargo_0_2",
+            "id": 6,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 21.041303634643555,
+              "y": 1.5093954801559448,
+              "z": 43.45599365234375
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "WreckCargo_0_0",
+            "id": 4,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 21.102083206176758,
+              "y": 0.9600000381469727,
+              "z": 40.7594108581543
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          }
+        ],
+        "boat": {
+          "driver": 18446744073709551615,
+          "departed": true,
+          "kinematic": false,
+          "position": {
+            "x": 24.86614990234375,
+            "y": -0.5685195922851562,
+            "z": 45.31767272949219
+          },
+          "velocity": {
+            "x": 0.0313396081328392,
+            "y": 0.07339021563529968,
+            "z": 0.19908954203128815
+          },
+          "rotation": {
+            "x": 359.2026062011719,
+            "y": 8.992417335510254,
+            "z": 2.0623254776000977
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "wreckMask": 3,
+        "securedCargo": 0,
+        "expeditionComplete": false,
+        "sonarFeedback": "SONAR · 2 enkaz sinyali bulundu."
+      },
+      "client": {
+        "frame": 588,
+        "sequence": 12,
+        "errors": 0,
+        "time": 9.888211250305176,
+        "role": "CLIENT",
+        "status": "Client bağlı — 127.0.0.1:7777.",
+        "action": "toggle",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 1791308983434,
+        "panel": false,
+        "focused": true,
+        "players": [
+          {
+            "client": 0,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": false,
+            "supported": false,
+            "driving": false,
+            "position": {
+              "x": 23.482620239257812,
+              "y": 0.8884134292602539,
+              "z": 42.6793327331543
+            },
+            "forward": {
+              "x": 0.15630275011062622,
+              "y": 0.0,
+              "z": 0.9877091646194458
+            },
+            "boatLocal": {
+              "x": -0.8999528288841248,
+              "y": 1.528801679611206,
+              "z": -2.8028786182403564
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          },
+          {
+            "client": 4,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 24.5092830657959,
+              "y": 0.9332100749015808,
+              "z": 43.41071701049805
+            },
+            "forward": {
+              "x": -0.10621735453605652,
+              "y": -0.8249070644378662,
+              "z": -0.5551996231079102
+            },
+            "boatLocal": {
+              "x": 0.0003592967987060547,
+              "y": 1.5290300846099854,
+              "z": -1.9194737672805786
+            },
+            "held": 5,
+            "speedMultiplier": 0.75,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          }
+        ],
+        "items": [
+          {
+            "name": "NetworkMetalCrate(Clone)",
+            "id": 5,
+            "holder": 4,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 24.345233917236328,
+              "y": 1.2097139358520508,
+              "z": 42.50730895996094
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkScrapEngine(Clone)",
+            "id": 6,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 21.041303634643555,
+              "y": 1.5093954801559448,
+              "z": 43.45599365234375
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkLightBox(Clone)",
+            "id": 4,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 21.102083206176758,
+              "y": 0.9600000381469727,
+              "z": 40.7594108581543
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          }
+        ],
+        "boat": {
+          "driver": 18446744073709551615,
+          "departed": true,
+          "kinematic": true,
+          "position": {
+            "x": 24.866409301757812,
+            "y": -0.5680162906646729,
+            "z": 45.31888198852539
+          },
+          "velocity": {
+            "x": 0.030729129910469055,
+            "y": 0.07270941138267517,
+            "z": 0.19534827768802643
+          },
+          "rotation": {
+            "x": 359.20343017578125,
+            "y": 8.992504119873047,
+            "z": 2.055387258529663
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "wreckMask": 3,
+        "securedCargo": 0,
+        "expeditionComplete": false,
+        "sonarFeedback": "Sonar hazırlanıyor · 1 sn"
+      }
+    },
+    "reconnected": {
+      "host": {
+        "frame": 30729,
+        "sequence": 3,
+        "errors": 0,
+        "time": 515.6072387695312,
+        "role": "HOST",
+        "status": "Host: 2/2 oyuncu bağlı.",
+        "action": "resume",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 0,
+        "panel": false,
+        "focused": true,
+        "players": [
+          {
+            "client": 5,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": false,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 25.286922454833984,
+              "y": 1.0285987854003906,
+              "z": 42.50819778442383
+            },
+            "forward": {
+              "x": 0.15644831955432892,
+              "y": 0.0,
+              "z": 0.9876861572265625
+            },
+            "boatLocal": {
+              "x": 0.9006044268608093,
+              "y": 1.5755704641342163,
+              "z": -2.7946691513061523
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          },
+          {
+            "client": 0,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 23.509096145629883,
+              "y": 0.9365078806877136,
+              "z": 42.78329086303711
+            },
+            "forward": {
+              "x": 0.156435027718544,
+              "y": 0.0,
+              "z": 0.9876882433891296
+            },
+            "boatLocal": {
+              "x": -0.9001146554946899,
+              "y": 1.5289344787597656,
+              "z": -2.80234432220459
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          }
+        ],
+        "items": [
+          {
+            "name": "WreckCargo_0_1",
+            "id": 5,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 24.380573272705078,
+              "y": 1.255373477935791,
+              "z": 42.629825592041016
+            },
+            "velocity": {
+              "x": 0.05124184116721153,
+              "y": 0.049145013093948364,
+              "z": 0.1428808718919754
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "WreckCargo_0_2",
+            "id": 6,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 21.041303634643555,
+              "y": 1.5093954801559448,
+              "z": 43.45599365234375
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          },
+          {
+            "name": "WreckCargo_0_0",
+            "id": 4,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 21.102083206176758,
+              "y": 0.9600000381469727,
+              "z": 40.7594108581543
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": false,
+            "recovery": true
+          }
+        ],
+        "boat": {
+          "driver": 18446744073709551615,
+          "departed": true,
+          "kinematic": false,
+          "position": {
+            "x": 24.877473831176758,
+            "y": -0.5308103561401367,
+            "z": 45.424407958984375
+          },
+          "velocity": {
+            "x": 0.02310379035770893,
+            "y": 0.04741835594177246,
+            "z": 0.14662879705429077
+          },
+          "rotation": {
+            "x": 359.2167053222656,
+            "y": 9.000300407409668,
+            "z": 1.4438557624816895
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "wreckMask": 3,
+        "securedCargo": 0,
+        "expeditionComplete": false,
+        "sonarFeedback": "SONAR · 2 enkaz sinyali bulundu."
+      },
+      "client": {
+        "frame": 624,
+        "sequence": 14,
+        "errors": 0,
+        "time": 10.504289627075195,
+        "role": "CLIENT",
+        "status": "Client bağlı — 127.0.0.1:7777.",
+        "action": "client",
+        "result": "OK",
+        "lastError": "",
+        "toggleUtcMillis": 1791308983434,
+        "panel": true,
+        "focused": true,
+        "players": [
+          {
+            "client": 5,
+            "owner": true,
+            "motor": true,
+            "input": true,
+            "camera": true,
+            "grounded": true,
+            "supported": true,
+            "driving": false,
+            "position": {
+              "x": 25.28671646118164,
+              "y": 0.9828481674194336,
+              "z": 42.50713348388672
+            },
+            "forward": {
+              "x": 0.15644697844982147,
+              "y": 0.0,
+              "z": 0.9876863360404968
+            },
+            "boatLocal": {
+              "x": 0.8988606929779053,
+              "y": 1.5296040773391724,
+              "z": -2.7980663776397705
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          },
+          {
+            "client": 0,
+            "owner": false,
+            "motor": false,
+            "input": false,
+            "camera": false,
+            "grounded": false,
+            "supported": false,
+            "driving": false,
+            "position": {
+              "x": 23.5097599029541,
+              "y": 0.9372233152389526,
+              "z": 42.784706115722656
+            },
+            "forward": {
+              "x": 0.15643829107284546,
+              "y": 0.0,
+              "z": 0.9876877069473267
+            },
+            "boatLocal": {
+              "x": -0.9002174139022827,
+              "y": 1.5288523435592651,
+              "z": -2.80252742767334
+            },
+            "held": 18446744073709551615,
+            "speedMultiplier": 1.0,
+            "sprint": true,
+            "feedback": "",
+            "corrections": 0
+          }
+        ],
+        "items": [
+          {
+            "name": "NetworkLightBox(Clone)",
+            "id": 4,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 3.0,
+            "position": {
+              "x": 21.102083206176758,
+              "y": 0.9600000381469727,
+              "z": 40.7594108581543
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkMetalCrate(Clone)",
+            "id": 5,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 12.0,
+            "position": {
+              "x": 24.376161575317383,
+              "y": 1.2509467601776123,
+              "z": 42.6169548034668
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          },
+          {
+            "name": "NetworkScrapEngine(Clone)",
+            "id": 6,
+            "holder": 18446744073709551615,
+            "owner": 0,
+            "mass": 35.0,
+            "position": {
+              "x": 21.041303634643555,
+              "y": 1.5093954801559448,
+              "z": 43.45599365234375
+            },
+            "velocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "kinematic": true,
+            "recovery": false
+          }
+        ],
+        "boat": {
+          "driver": 18446744073709551615,
+          "departed": true,
+          "kinematic": true,
+          "position": {
+            "x": 24.87784767150879,
+            "y": -0.5303017497062683,
+            "z": 45.42604064941406
+          },
+          "velocity": {
+            "x": 0.022876715287566185,
+            "y": 0.046591319143772125,
+            "z": 0.14516571164131165
+          },
+          "rotation": {
+            "x": 359.21722412109375,
+            "y": 9.00051212310791,
+            "z": 1.4274406433105469
+          },
+          "drive": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "wreckMask": 3,
+        "securedCargo": 0,
+        "expeditionComplete": false,
+        "sonarFeedback": ""
+      }
+    }
+  },
+  "temporaryDirectory": "/var/folders/0v/f03lpblj5wd7y2wqgzqxxr7w0000gn/T/salvage-wreck-network.20261006-19650-1r4xbeb"
+}

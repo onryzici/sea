@@ -1,0 +1,21 @@
+Poly Haven source assets — CC0 1.0 Universal
+
+These three original files were downloaded from Poly Haven on 2026-10-06.
+Their individual asset pages explicitly identify the assets as CC0.
+Commercial use, modification and redistribution are permitted; attribution is
+not required. This notice is a project-authored source record, not a substitute
+for the CC0 legal instrument linked below.
+
+wooden_planks_diff_1k.jpg / wooden_planks_nor_gl_1k.jpg
+https://polyhaven.com/a/wooden_planks
+Photography: Charlotte Baglioni. Processing: Dario Barresi.
+
+kloofendal_48d_partly_cloudy_puresky_1k.hdr
+https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky
+Original HDRI: Greg Zaal. Pure sky editing: Jarod Guest.
+
+Source license policy: https://polyhaven.com/license
+CC0 legal instrument: https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+Use in this project: timber deck/pier/ramp material and panoramic sky / softened
+water sky reflection. No external scripts or additional packages were imported.

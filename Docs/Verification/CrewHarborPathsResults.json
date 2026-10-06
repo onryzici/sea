@@ -1,0 +1,50 @@
+{
+  "success": true,
+  "command": "command run_script",
+  "data": {
+    "command": "run_script",
+    "parameters": {
+      "file": "Docs/Verification/CrewHarborChecks.cs",
+      "entry": "CrewHarborChecks.Paths",
+      "timeout_ms": "60000"
+    },
+    "result": {
+      "diagnostics": [
+
+      ],
+      "compileMs": 72,
+      "executeMs": 6471,
+      "assemblyName": "PipelineRunScript_CrewHarborChecks_2d4765834b134c83885b97d37b532207",
+      "success": true,
+      "result": {
+        "newSupplyBerth": {
+          "reached": true,
+          "position": "(0.00, 1.23, 10.91)",
+          "grounded": true
+        },
+        "returnToPier": {
+          "reached": true,
+          "position": "(0.00, 1.23, 7.58)",
+          "grounded": true
+        },
+        "existingRampToDeck": {
+          "reached": true,
+          "position": "(6.78, 0.82, 7.50)",
+          "grounded": true
+        },
+        "supportedOnBoat": true
+      }
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "/Users/trexoinnovation/salvage"
+    }
+  },
+  "errors": [
+
+  ],
+  "warnings": [
+
+  ]
+}

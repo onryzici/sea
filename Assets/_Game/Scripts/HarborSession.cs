@@ -17,6 +17,7 @@ namespace SalvageCrew
         [SerializeField] private Transform offlineScraps;
         [SerializeField] private GameObject[] scrapPrefabs;
         [SerializeField] private GameObject boatPrefab;
+        [SerializeField] private GameObject expeditionPrefab;
         [SerializeField] private GameObject offlineBoat;
         [SerializeField] private GameObject[] boardingRamp;
         [SerializeField] private GameObject panel;
@@ -81,6 +82,7 @@ namespace SalvageCrew
                 || !ushort.TryParse(port.text, out ushort number) || number == 0)
             { Status = "Geçerli bir IPv4 adresi ve 1–65535 port gir."; return; }
             offlinePlayer.GetComponent<PhysicsCarry>().Drop();
+            WreckExpedition.Instance?.EndSession();
             offlinePlayer.SetActive(false); offlineHud.SetActive(false); offlineScraps.gameObject.SetActive(false);
             if (offlineBoat != null) offlineBoat.SetActive(false);
             sessionActive = true; intentionalDisconnect = false; slots.Clear(); localPlayer = null;
@@ -93,6 +95,8 @@ namespace SalvageCrew
             {
                 if (boatPrefab != null)
                     Instantiate(boatPrefab, new Vector3(7, 0, 10), Quaternion.identity).GetComponent<NetworkObject>().Spawn();
+                if (expeditionPrefab != null)
+                    Instantiate(expeditionPrefab).GetComponent<NetworkObject>().Spawn();
                 for (int i = 0; i < scrapPrefabs.Length; i++)
                 {
                     var source = offlineScraps.GetChild(i);
@@ -149,6 +153,7 @@ namespace SalvageCrew
             foreach (var item in offlineScraps.GetComponentsInChildren<ScrapItem>()) item.Recover();
             offlinePlayer.SetActive(true); offlineHud.SetActive(true);
             offlinePlayer.GetComponent<FirstPersonMotor>().ReturnToSpawn();
+            WreckExpedition.Instance?.BeginOffline();
             BindInput(offlinePlayer.GetComponent<LocalPlayerInput>()); SetPanelOpen(true);
         }
         private void Update()
@@ -157,7 +162,7 @@ namespace SalvageCrew
             if (restorePending && !manager.IsListening && !manager.ShutdownInProgress) RestoreOffline();
             statusLabel.text = Status;
             string role = manager.IsHost ? "HOST" : manager.IsConnectedClient ? "CLIENT" : sessionActive ? "CLIENT / CONNECTING" : "SOLO";
-            roleLabel.text = role + "  |  Tab: Panel / Esc: İmleç";
+            roleLabel.text = "<b>" + role + "</b>\n<size=14><color=#A9C6C8>TAB  Oturum   ·   ESC  İmleç</color></size>";
             hostButton.interactable = clientButton.interactable = !sessionActive && !manager.ShutdownInProgress;
             disconnectButton.interactable = sessionActive;
             resumeButton.interactable = !sessionActive || localPlayer != null;

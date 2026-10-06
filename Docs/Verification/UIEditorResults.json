@@ -1,0 +1,24 @@
+{
+  "before": 44,
+  "after": 44,
+  "idempotent": true,
+  "sessionReferencesPreserved": true,
+  "networkPresentationWired": true,
+  "textures": [
+    {
+      "name": "Cargo",
+      "transparent": true,
+      "opaque": true
+    },
+    {
+      "name": "Helm",
+      "transparent": true,
+      "opaque": true
+    },
+    {
+      "name": "Anchor",
+      "transparent": true,
+      "opaque": true
+    }
+  ]
+}

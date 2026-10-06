@@ -1,0 +1,12 @@
+Asset: Ship's wheel (Pirate Port and Tall Ships)
+Creator / publisher: 3D Assets (3DAssets.dev)
+Source: https://3dassets.dev/assets/pirate-port-and-tall-ships-ships-wheel-3a6878c2
+Download: https://cdn.3dassets.dev/assets/30154/v1/model.glb
+License: CC0 1.0 Universal; full text in CC0.txt.
+Attribution: not required; voluntarily credited in Docs/ArtSources.md.
+Retrieved: 2026-10-06. Source describes the model as AI-assisted (Claude Fable 5.1).
+Original GLB: Source/ThirdParty/ShipWheel/ShipsWheel.glb
+Adaptation: Blender conversion to FBX; repaired rim and axle orientations,
+removed the automatic spin animation. Unity uses URP materials and real steering.
+Adaptation script: Docs/Verification/AdaptShipWheel.py
+No source scripts were executed and no new runtime package was installed.

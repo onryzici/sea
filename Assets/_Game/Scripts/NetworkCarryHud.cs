@@ -7,8 +7,11 @@ namespace SalvageCrew
     {
         [SerializeField] private NetworkCrewPlayer player;
         [SerializeField] private TextMeshProUGUI label;
+        [SerializeField] private HarborHudPresentation presentation;
         private void LateUpdate()
         {
+            if (player == null || label == null) return;
+            if (presentation != null) presentation.SetContext(player.Driving || player.HelmTarget, player.Driving);
             if (player.Driving)
             { label.text = "Dümen — W/S: İleri/Geri · A/D: Dönüş\nE — Bırak · Tab/Esc: Girdi durur"; return; }
             if (player.HelmTarget)

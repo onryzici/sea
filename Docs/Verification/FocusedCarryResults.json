@@ -1,0 +1,148 @@
+{
+  "success": true,
+  "command": "command run_script",
+  "data": {
+    "command": "run_script",
+    "parameters": {
+      "file": "Docs/Verification/CarryPlayChecks.cs",
+      "entry": "CarryPlayChecks.Run",
+      "timeout_ms": "60000"
+    },
+    "result": {
+      "diagnostics": [],
+      "compileMs": 186,
+      "executeMs": 21367,
+      "assemblyName": "PipelineRunScript_CarryPlayChecks_7f466b7674f64ce7aef355347aeacba9",
+      "success": true,
+      "result": {
+        "Pickup_3": {
+          "passed": true,
+          "detail": {
+            "DisplayName": "Hafif kutu",
+            "target": null,
+            "position": "(1.55, 1.48, 2.00)",
+            "held": true
+          }
+        },
+        "MovementModifier_3": {
+          "passed": true,
+          "detail": 0.95
+        },
+        "PlayerCollisionIgnored_3": {
+          "passed": true,
+          "detail": true
+        },
+        "Walk_3_(0.25, 0.00, 7.50)": {
+          "passed": true,
+          "detail": "(0.25, 1.23, 7.41)"
+        },
+        "Walk_3_(6.25, 0.00, 7.50)": {
+          "passed": true,
+          "detail": "(6.14, 0.78, 7.50)"
+        },
+        "CarriedToDeck_3": {
+          "passed": true,
+          "detail": "(7.64, 2.18, 7.52)"
+        },
+        "DropRestoration_3": {
+          "passed": true,
+          "detail": true
+        },
+        "SettledOnDeck_3": {
+          "passed": true,
+          "detail": {
+            "position": "(7.63, 1.18, 7.54)",
+            "speed": 0.0535639822
+          }
+        },
+        "Pickup_12": {
+          "passed": true,
+          "detail": {
+            "DisplayName": "Metal kasa",
+            "target": null,
+            "position": "(1.55, 1.53, 4.00)",
+            "held": true
+          }
+        },
+        "MovementModifier_12": {
+          "passed": true,
+          "detail": 0.75
+        },
+        "PlayerCollisionIgnored_12": {
+          "passed": true,
+          "detail": true
+        },
+        "Walk_12_(0.25, 0.00, 7.50)": {
+          "passed": true,
+          "detail": "(0.25, 1.23, 7.40)"
+        },
+        "Walk_12_(6.25, 0.00, 7.50)": {
+          "passed": true,
+          "detail": "(6.17, 0.94, 7.50)"
+        },
+        "CarriedToDeck_12": {
+          "passed": true,
+          "detail": "(7.67, 2.32, 7.53)"
+        },
+        "DropRestoration_12": {
+          "passed": true,
+          "detail": true
+        },
+        "SettledOnDeck_12": {
+          "passed": true,
+          "detail": {
+            "position": "(7.72, 1.08, 7.51)",
+            "speed": 0.03322023
+          }
+        },
+        "Pickup_35": {
+          "passed": true,
+          "detail": {
+            "DisplayName": "Hurda motor",
+            "target": null,
+            "position": "(1.55, 1.50, 6.00)",
+            "held": true
+          }
+        },
+        "MovementModifier_35": {
+          "passed": true,
+          "detail": 0.5
+        },
+        "PlayerCollisionIgnored_35": {
+          "passed": true,
+          "detail": true
+        },
+        "Walk_35_(0.25, 0.00, 7.50)": {
+          "passed": true,
+          "detail": "(0.25, 1.23, 7.39)"
+        },
+        "Walk_35_(6.25, 0.00, 7.50)": {
+          "passed": true,
+          "detail": "(6.16, 0.91, 7.50)"
+        },
+        "CarriedToDeck_35": {
+          "passed": true,
+          "detail": "(7.57, 2.28, 7.52)"
+        },
+        "DropRestoration_35": {
+          "passed": true,
+          "detail": true
+        },
+        "SettledOnDeck_35": {
+          "passed": true,
+          "detail": {
+            "position": "(7.78, 1.24, 7.52)",
+            "speed": 0.04043698
+          }
+        }
+      }
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "/Users/trexoinnovation/salvage"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

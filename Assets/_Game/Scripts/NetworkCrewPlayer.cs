@@ -76,7 +76,10 @@ namespace SalvageCrew
             playerCamera.enabled = IsOwner; playerCamera.GetComponent<AudioListener>().enabled = IsOwner;
             localHud.SetActive(IsOwner); remoteVisual.SetActive(!IsOwner);
             var color = OwnerClientId == NetworkManager.ServerClientId ? new Color(.2f, .7f, .9f) : new Color(.95f, .55f, .2f);
-            foreach (var renderer in remoteVisual.GetComponentsInChildren<Renderer>()) renderer.material.color = color;
+            // Preserve the imported character's painted palette. Only tint untextured fallback meshes.
+            foreach (var renderer in remoteVisual.GetComponentsInChildren<Renderer>())
+                if (renderer.sharedMaterial != null && renderer.sharedMaterial.mainTexture == null)
+                { var block = new MaterialPropertyBlock(); block.SetColor("_BaseColor", color); renderer.SetPropertyBlock(block); }
             if (IsServer)
             {
                 pose.Value = new CrewPose { Position = spawnPosition, Yaw = spawnRotation.eulerAngles.y, Boat = NetworkScrap.Nobody };
@@ -110,6 +113,7 @@ namespace SalvageCrew
         }
         private void Sample(LocalPlayerInput.Sample sample)
         {
+            if (sample.Scan && input.GameplayActive) WreckExpedition.Instance?.RequestScan(transform);
             if (Driving && Time.unscaledTime >= nextDrive)
             { nextDrive = Time.unscaledTime + .1f; NetworkBoat.Instance.SubmitDrive(input.GameplayActive ? sample.Move : Vector2.zero); }
             if (sample.Interact && input.GameplayActive) RequestToggle();

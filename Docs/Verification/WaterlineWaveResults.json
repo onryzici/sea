@@ -1,0 +1,11 @@
+{
+  "method": "Live offline Editor Play, 14 game seconds, real FixedUpdate/Rigidbody; all cargo dynamically on deck, no parenting",
+  "checks": {"dynamicHull": true, "visibleHeave": true, "boundedTilt": true, "passengerStable": true, "cargoStable": true},
+  "heaveMetres": 0.198872626,
+  "maximumTiltDegrees": 3.00028753,
+  "passengerDriftMetres": 0.00140036491,
+  "groundedFraction": 1,
+  "maximumCargoSpeed": 0.218488008,
+  "masses": [3,12,35],
+  "samples": 653
+}

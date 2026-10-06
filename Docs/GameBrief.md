@@ -37,6 +37,10 @@ Direct-IP host/client (127.0.0.1:7777 varsayılan), NGO 2.13.3 ve Unity Transpor
 
 Ağ modunda aynı 10×4 m tekneyi host veya client E ile tek sahipli dümen noktasından kullanabilir. Server sakin su yüzdürmesi/direnci ve düşük hızlı ileri/geri/dönüş fiziğini simüle eder; client tekneyi interpolasyonla gösterir. Pitch/roll prototipte kilitlidir; dalga ve yük dengesi yoktur. CharacterController güverte ötelemesi/dönüşünü izler; zıplama platform hızını alır. Hurdalar server'da dinamik ve sürtünmeli kalır; taşıma kuvvetleri platforma göre hesaplanır. Kalkışta rampa kapanır. Ağ kurtarması güncel güvenli güverteyi kullanır; offline sabit tekne ve iskele kurtarması korunur. Yanaşma/otomatik rampa açılması, vinç, satış ve düşman bu aşamanın dışında kalır. Gerçek iki instance, gecikme ve kalan manuel kontroller Progress ve MultiplayerTest'tedir.
 
-## Henüz kararlaştırılmayanlar
+## Enkaz arama — ilk oynanabilir sefer (2026-10-06)
+
+Oyunun ana işi enkaz bulmak ve yük kurtarmaktır. İlk uygulama, sığ/su üstüne çıkan iki sabit enkazı kapsar: teknedeyken F ile 60 m sonar taraması (5 sn bekleme), keşfedilen enkaza tekneye göre yön/mesafe, mevcut E/kuvvet tabanlı taşıma ile yükleri alma, arka güvertede üç yükü iki saniye kararlı bırakma ve limana düşük hızda dönüş. İskeledeki eğitim hurdaları sefer yükü sayılmaz. Sefer durumu ve fizik ağda host tarafından yönetilir; geç katılan client mevcut keşifleri ve yükleri alır. Offline bağımsızdır. Sefer oturumluk; kayıt/ekonomi/ödül, dalış, vinç ve prosedürel enkaz üretimi bu ilk uygulamada yoktur.
+
+## Henüz kararlaştırılmayanlar (güncel)
 
 Başlangıç: Unity 6000.5.6f1, URP 17.5.0, masaüstü ve ilk doğrulama hedefi macOS. LTS geçişi yapılmadı. Ticari hedef platformlar, internette oturum keşfi/katılımı ve ekipman geliştirmesinin ayrıntıları henüz belirlenmedi. Yerel prototip NGO/UTP direct-IP kullanır; monetizasyon kapsam dışıdır.

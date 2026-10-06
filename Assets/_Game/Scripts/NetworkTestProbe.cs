@@ -14,6 +14,7 @@ namespace SalvageCrew
         {
             public int seq;
             public string action;
+            public string target;
             public string address = "127.0.0.1";
             public int port = 7777;
             public float x, z, mass;
@@ -21,9 +22,9 @@ namespace SalvageCrew
             public long atUtcMillis;
         }
         [Serializable] private class PlayerState
-        { public ulong client; public bool owner, motor, input, camera, grounded, supported, driving; public Vector3 position, forward, boatLocal; public ulong held; public float speedMultiplier; public bool sprint; public string feedback; public int corrections; }
+        { public ulong client; public bool owner, motor, input, camera, grounded, supported, driving; public Vector3 position, forward, boatLocal; public ulong held; public float speedMultiplier; public bool sprint; public string feedback; public int corrections; public float visualSpeed; public bool animatorReady; }
         [Serializable] private class ItemState
-        { public ulong id, holder, owner; public float mass; public Vector3 position, velocity; public bool kinematic, recovery; }
+        { public string name; public ulong id, holder, owner; public float mass; public Vector3 position, velocity; public bool kinematic, recovery; }
         [Serializable] private class Snapshot
         {
             public int frame, sequence, errors;
@@ -34,6 +35,10 @@ namespace SalvageCrew
             public PlayerState[] players;
             public ItemState[] items;
             public BoatState boat;
+            public int wreckMask, securedCargo;
+            public bool expeditionComplete;
+            public string sonarFeedback;
+            public string crewRoster;
         }
         [Serializable] private class BoatState
         { public ulong driver; public bool departed, kinematic; public Vector3 position, velocity, rotation; public Vector2 drive; }
@@ -110,7 +115,7 @@ namespace SalvageCrew
                     player.Motor.enabled = false; walking = true; walkDeadline = Time.time + 20;
                     previousWalkPosition = player.transform.position; break;
                 case "look":
-                    var item = FindObjectsByType<NetworkScrap>().FirstOrDefault(i => i.Item.Mass == command.mass);
+                    var item = FindObjectsByType<NetworkScrap>().FirstOrDefault(i => i.Item.Mass == command.mass && (string.IsNullOrEmpty(command.target)||i.name==command.target||i.NetworkObjectId.ToString()==command.target));
                     if (player == null || item == null) { result = "No player/item"; break; }
                     Vector3 direction = item.Item.Body.worldCenterOfMass - player.Carry.View.position;
                     player.transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
@@ -129,6 +134,7 @@ namespace SalvageCrew
                 case "toggleAt": scheduledToggle = command.atUtcMillis; result = "Scheduled"; break;
                 case "reset": if (player != null) player.Motor.ReturnToSpawn(); break;
                 case "status": break;
+                case "scan": if(player!=null) WreckExpedition.Instance?.RequestScan(player.transform); break;
                 default: result = "Unknown action"; break;
             }
         }
@@ -169,6 +175,11 @@ namespace SalvageCrew
                 status = session.Status, panel = session.PanelOpen, focused = Application.isFocused,
                 action = walking ? "walking" : command?.action, result = result,
                 toggleUtcMillis = lastToggle,
+                wreckMask=WreckExpedition.Instance!=null?WreckExpedition.Instance.DiscoveredMask:0,
+                securedCargo=WreckExpedition.Instance!=null?WreckExpedition.Instance.Secured:0,
+                expeditionComplete=WreckExpedition.Instance!=null&&WreckExpedition.Instance.Complete,
+                sonarFeedback=WreckExpedition.Instance!=null?WreckExpedition.Instance.Feedback:"",
+                crewRoster=FindAnyObjectByType<CrewPresence>()?.RosterText,
                 players = FindObjectsByType<NetworkCrewPlayer>().Select(p => new PlayerState
                 {
                     client = p.OwnerClientId, owner = p.IsOwner, motor = p.Motor.enabled, input = p.Input.enabled,
@@ -177,11 +188,13 @@ namespace SalvageCrew
                     sprint = p.Motor.CarryAllowsSprint, feedback = p.Feedback, grounded = p.Motor.Grounded,
                     supported = p.Motor.Passenger != null && p.Motor.Passenger.Support != null, driving = p.Driving,
                     boatLocal = NetworkBoat.Instance != null ? NetworkBoat.Instance.transform.InverseTransformPoint(p.transform.position) : Vector3.zero,
-                    corrections = p.Corrections
+                    corrections = p.Corrections,
+                    visualSpeed = p.GetComponentInChildren<RemoteCrewAnimation>(true)?.VisualSpeed ?? 0,
+                    animatorReady = p.GetComponentInChildren<Animator>(true)!=null && p.GetComponentInChildren<Animator>(true).isInitialized
                 }).ToArray(),
                 items = FindObjectsByType<NetworkScrap>().Select(i => new ItemState
                 {
-                    id = i.NetworkObjectId, mass = i.Item.Mass, holder = i.Holder.Value, owner = i.OwnerClientId,
+                    name=i.name,id = i.NetworkObjectId, mass = i.Item.Mass, holder = i.Holder.Value, owner = i.OwnerClientId,
                     position = i.Item.Body.position, velocity = i.Item.Body.linearVelocity, kinematic = i.Item.Body.isKinematic,
                     recovery = i.Item.enabled
                 }).ToArray()
