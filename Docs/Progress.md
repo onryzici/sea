@@ -15,7 +15,7 @@ Hazırlık ve gerçek Unity proje başlangıcı tamamlandı. Kök: `/Users/trexo
 | Editor araçları | Unity CLI 1.0.0-beta.12 ve com.unity.pipeline 0.8.0-exp.1; localhost bağlantısı hazır |
 | Sahne | Assets/Scenes/SampleScene.unity; build listesinde etkin |
 | Gerçek Hierarchy | Main Camera (Camera, AudioListener, UniversalAdditionalCameraData), Directional Light (Light, UniversalAdditionalLightData), Global Volume (Volume) |
-| Git | Yerel main deposu; hazırlık ve proje başlangıcı ilk commit'e kaydedilir; uzak depo oluşturulmadı |
+| Git | Yerel main deposu; hazırlık ve proje başlangıcı ilk commit'e kaydedildi (e138bde); uzak depo oluşturulmadı |
 | Asset düzeni | Assets/_Game altında Scenes, Scripts, Prefabs, Materials, Audio ve Settings; Editor'ın ürettiği .meta dosyaları |
 | Unity VCS ayarları | Force Text ve Visible Meta Files |
 
@@ -51,6 +51,7 @@ Unity modülleri manifestte listelenir. Multiplayer Center şablonun araç paket
 - macOS build: başarılı (Succeeded), 0 hata, 1 uyarı; yaklaşık 76 saniye, 120.782.750 byte. Çıktı: `Builds/macOS/SalvageCrew.app`. Uyarı: RuntimePipelineConfig yok; Pipeline araç sunucusu Player build'inde devre dışı. Runtime araç erişimi bu hazırlıkta gerekli olmadığından etkinleştirilmedi.
 - EditMode/otomatik oyun testleri: çalıştırılmadı; oyun kodu ve test süiti henüz yok.
 - Ignore: Library, Temp, Logs ve Builds dışlanıyor; SampleScene ve .meta dosyaları dışlanmıyor.
+- Git whitespace kontrolü: Unity'nin ürettiği YAML/.meta dosyalarında trailing whitespace bildirdi. Unity serializer çıktısı korunarak bu dosyalar elle yeniden biçimlendirilmedi; belgelerin whitespace kontrolü temiz. Üretilen klasörler commit'e dahil edilmedi.
 
 ## Aşamalar
 
